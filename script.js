@@ -3,10 +3,28 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isInte
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
 const modules=document.querySelectorAll('.module');
+const labCore=document.querySelector('.lab-core');
+const ring=document.querySelector('.core-ring:not(.two)');
+const ringTwo=document.querySelector('.core-ring.two');
+const center=document.querySelector('.core-center');
+const states={
+ 'FULL-STACK':{r:'rotate(0deg) scaleX(1)',r2:'rotate(72deg) scaleX(.72)',d:'14s',d2:'9s',label:'Q'},
+ 'AUTOMATION':{r:'rotate(35deg) scaleX(.5)',r2:'rotate(-35deg) scaleX(.85)',d:'6s',d2:'10s',label:'A'},
+ 'DESIGN':{r:'rotate(45deg) scale(.76)',r2:'rotate(-45deg) scale(.58)',d:'18s',d2:'12s',label:'D'},
+ 'MEDIA':{r:'rotate(-28deg) scaleX(1.15) scaleY(.62)',r2:'rotate(28deg) scaleX(.72) scaleY(.45)',d:'5s',d2:'8s',label:'M'}
+};
+const setLabState=name=>{
+ const s=states[name]||states['FULL-STACK'];
+ if(!ring||!ringTwo||!center)return;
+ ring.style.transform=s.r;ring.style.animationDuration=s.d;
+ ringTwo.style.transform=s.r2;ringTwo.style.animationDuration=s.d2;
+ center.textContent=s.label;
+ if(labCore&&!reduced)labCore.animate([{transform:'translate(-50%,-50%) scale(.82)'},{transform:'translate(-50%,-50%) scale(1)'}],{duration:420,easing:'cubic-bezier(.2,.8,.2,1)'});
+};
 modules.forEach(button=>button.addEventListener('click',()=>{
-  modules.forEach(b=>b.classList.remove('active')); button.classList.add('active');
-  const name=document.getElementById('moduleName'),desc=document.getElementById('moduleDesc');
-  if(name){name.textContent=button.dataset.module;desc.textContent=button.dataset.desc;if(!reduced)name.animate([{opacity:.15,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});}
+ modules.forEach(b=>b.classList.remove('active'));button.classList.add('active');
+ const name=document.getElementById('moduleName'),desc=document.getElementById('moduleDesc');
+ if(name){name.textContent=button.dataset.module;desc.textContent=button.dataset.desc;setLabState(button.dataset.module);if(!reduced)name.animate([{opacity:.15,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});}
 }));
 
 if(window.matchMedia('(pointer:fine)').matches&&!reduced){
