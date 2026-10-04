@@ -1,38 +1,63 @@
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}
+  });
+},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-const modules=document.querySelectorAll('.module');
-const labCore=document.querySelector('.lab-core');
-const ring=document.querySelector('.core-ring:not(.two)');
-const ringTwo=document.querySelector('.core-ring.two');
-const center=document.querySelector('.core-center');
-const states={
- 'FULL-STACK':{r:'rotate(0deg) scaleX(1)',r2:'rotate(72deg) scaleX(.72)',d:'14s',d2:'9s',label:'Q'},
- 'AUTOMATION':{r:'rotate(35deg) scaleX(.5)',r2:'rotate(-35deg) scaleX(.85)',d:'6s',d2:'10s',label:'A'},
- 'DESIGN':{r:'rotate(45deg) scale(.76)',r2:'rotate(-45deg) scale(.58)',d:'18s',d2:'12s',label:'D'},
- 'MEDIA':{r:'rotate(-28deg) scaleX(1.15) scaleY(.62)',r2:'rotate(28deg) scaleX(.72) scaleY(.45)',d:'5s',d2:'8s',label:'M'}
+/* LAB SKILL SWITCHER */
+const skillData={
+ build:{code:'01',title:'FULL-STACK',desc:'Von der Oberfläche bis zur Datenbank.',status:'BUILD',tags:['FRONTEND','BACKEND','API','DATABASE']},
+ apps:{code:'02',title:'APPS & SOFTWARE',desc:'Tools und Anwendungen, die wirklich etwas erledigen.',status:'APPS',tags:['DESKTOP','MOBILE','ELECTRON','TOOLS']},
+ systems:{code:'03',title:'SYSTEME & AUTOMATION',desc:'Daten, Schnittstellen und Prozesse miteinander verbinden.',status:'AUTOMATE',tags:['DATABASE','WORKFLOW','API','INTEGRATION']},
+ design:{code:'04',title:'UI / UX & GRAFIK',desc:'Interfaces und Visuals, die Funktion und Charakter verbinden.',status:'DESIGN',tags:['UI','UX','BRANDING','VISUALS']},
+ media:{code:'05',title:'FOTO · VIDEO · SOCIAL',desc:'Aufnehmen, bearbeiten und Content für echte Kanäle bauen.',status:'CREATE',tags:['PHOTO','VIDEO','EDITING','SOCIAL']},
+ it:{code:'06',title:'IT & ADMIN',desc:'Hosting, Infrastruktur und technische Systeme sauber aufsetzen.',status:'SYSTEM',tags:['HOSTING','SETUP','ADMIN','SECURITY']}
 };
-const setLabState=name=>{
- const s=states[name]||states['FULL-STACK'];
- if(!ring||!ringTwo||!center)return;
- ring.style.transform=s.r;ring.style.animationDuration=s.d;
- ringTwo.style.transform=s.r2;ringTwo.style.animationDuration=s.d2;
- center.textContent=s.label;
- if(labCore&&!reduced)labCore.animate([{transform:'translate(-50%,-50%) scale(.82)'},{transform:'translate(-50%,-50%) scale(1)'}],{duration:420,easing:'cubic-bezier(.2,.8,.2,1)'});
-};
-modules.forEach(button=>button.addEventListener('click',()=>{
- modules.forEach(b=>b.classList.remove('active'));button.classList.add('active');
- const name=document.getElementById('moduleName'),desc=document.getElementById('moduleDesc');
- if(name){name.textContent=button.dataset.module;desc.textContent=button.dataset.desc;setLabState(button.dataset.module);if(!reduced)name.animate([{opacity:.15,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});}
-}));
-
-if(window.matchMedia('(pointer:fine)').matches&&!reduced){
- const cursor=document.querySelector('.cursor');let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
- window.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY});
- const loop=()=>{cx+=(x-cx)*.16;cy+=(y-cy)*.16;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)};loop();
- document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.style.width='28px';cursor.style.height='28px'});el.addEventListener('mouseleave',()=>{cursor.style.width='9px';cursor.style.height='9px'})});
+const skillItems=document.querySelectorAll('.skill-item');
+const stage=document.querySelector('.skill-stage');
+if(stage&&skillItems.length){
+  const code=document.getElementById('skillCode');
+  const title=document.getElementById('skillTitle');
+  const desc=document.getElementById('skillDesc');
+  const status=document.getElementById('skillStatus');
+  const tags=document.getElementById('skillTags');
+  const setSkill=(key)=>{
+    const s=skillData[key]||skillData.build;
+    stage.dataset.stage=key;
+    code.textContent=s.code;title.textContent=s.title;desc.textContent=s.desc;status.textContent=s.status;
+    tags.innerHTML=s.tags.map(t=>'<span>'+t+'</span>').join('');
+    if(!reduced) stage.animate([{opacity:.45,transform:'scale(.985)'},{opacity:1,transform:'scale(1)'}],{duration:350,easing:'ease-out'});
+  };
+  skillItems.forEach(item=>item.addEventListener('click',()=>{
+    skillItems.forEach(x=>x.classList.remove('active'));
+    item.classList.add('active');
+    setSkill(item.dataset.skill);
+  }));
 }
 
+/* CUSTOM CURSOR */
+if(window.matchMedia('(pointer:fine)').matches&&!reduced){
+  const cursor=document.querySelector('.cursor');
+  if(cursor){
+    let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
+    window.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY});
+    const loop=()=>{cx+=(x-cx)*.16;cy+=(y-cy)*.16;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)};loop();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.width='28px';cursor.style.height='28px'});
+      el.addEventListener('mouseleave',()=>{cursor.style.width='9px';cursor.style.height='9px'});
+    });
+  }
+}
+
+/* CONTACT */
 const form=document.getElementById('contactForm');
-if(form)form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form);const subject=encodeURIComponent(`PRDXQ Projektanfrage von ${d.get('name')}`);const body=encodeURIComponent(`Name: ${d.get('name')}\nKontakt: ${d.get('contact')}\n\nProjekt:\n${d.get('message')}`);location.href=`mailto:ilias.asdufan@icloud.de?subject=${subject}&body=${body}`});
+if(form)form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=new FormData(form);
+  const subject=encodeURIComponent('PRDXQ Projektanfrage von '+d.get('name'));
+  const body=encodeURIComponent('Name: '+d.get('name')+'\nKontakt: '+d.get('contact')+'\n\nProjekt:\n'+d.get('message'));
+  location.href='mailto:ilias.asdufan@icloud.de?subject='+subject+'&body='+body;
+});
