@@ -105,3 +105,8 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 @media(max-width:800px){
  .hero-word:after{width:min(88vw,390px);height:190px;min-height:0;border-radius:28px;background:#354043;box-shadow:inset 8px 8px 20px rgba(255,255,255,.035),inset -10px -10px 24px rgba(0,0,0,.18),0 16px 34px rgba(45,55,60,.14);}
 }
+
+
+/* RENDERED PRDXQ WORDMARK */
+.brand-word{display:inline-flex;align-items:flex-start;font:800 21px/1 Manrope,sans-serif;letter-spacing:-.09em;color:#111;position:relative;white-space:nowrap}.brand-word sup{font:500 7px/1 DM Mono,monospace;letter-spacing:0;position:relative;top:-1px;margin-left:2px}
+@media(max-width:800px){.brand-word{font-size:19px}.brand-word sup{font-size:6px;top:-1px}}
