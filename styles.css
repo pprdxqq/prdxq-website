@@ -87,3 +87,12 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 }
 @keyframes labRingSpin{to{transform:rotate(360deg)}}@keyframes labRingSpinReverse{to{transform:rotate(-360deg)}}
 @media(prefers-reduced-motion:reduce){.mobile-skill-ring{animation:none!important}.mobile-skill-node,.mobile-skill-core{transition:none!important}}
+
+/* FIX: MOBILE HERO LOGO — use the real PRDXQ Production image, never the old giant pseudo-logo */
+@media(max-width:800px){
+ .hero-word{font-size:0!important;display:flex!important;align-items:center!important;justify-content:center!important;width:100%;height:auto;min-height:180px;margin:auto!important;text-shadow:none!important;}
+ .hero-word:before{content:none!important;display:none!important;background:none!important;}
+ .hero-word img{display:block!important;width:min(78vw,360px)!important;height:auto!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;filter:none!important;transform:none!important;animation:logoFloat 5s ease-in-out infinite!important;}
+ .hero-word img:hover{transform:none!important;}
+}
+@media(prefers-reduced-motion:reduce){.hero-word img{animation:none!important}}
