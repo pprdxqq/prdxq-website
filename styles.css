@@ -127,3 +127,134 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
  .brand .brand-word{font-size:22px!important;font-weight:800!important;letter-spacing:-.1em!important;}
  .brand .brand-word sup{right:-7px!important;bottom:-2px!important;font-size:6px!important;}
 }
+
+
+/* =========================================================
+   PRDXQ MOBILE EXPERIENCE 2.0
+   One coherent mobile interaction system — no duplicate UI.
+   ========================================================= */
+@media (max-width:800px){
+  :root{--mobile-bg:#eef2f4;--mobile-dark:#354043;--mobile-acid:#c7ff38}
+
+  body{overflow-x:hidden;background:var(--mobile-bg);-webkit-tap-highlight-color:transparent}
+  main{overflow:hidden}
+
+  /* HERO — full dark stage */
+  .hero-poster{
+    min-height:calc(100svh - 96px)!important;
+    height:calc(100svh - 96px)!important;
+    margin:10px!important;
+    padding:18px 16px 20px!important;
+    border-radius:30px!important;
+    background:var(--mobile-dark)!important;
+    box-shadow:14px 18px 42px rgba(45,55,60,.22),-8px -8px 26px rgba(255,255,255,.82)!important;
+    transition:transform .18s ease-out;
+  }
+  .hero-poster:before{
+    content:"";position:absolute;z-index:0;width:260px;height:260px;right:-115px;top:34%;
+    border-radius:50%;border:1px solid rgba(199,255,56,.24);
+    box-shadow:0 0 70px rgba(199,255,56,.06);
+    transform:translate3d(var(--hero-x,0),var(--hero-y,0),0);
+  }
+  .hero-poster:after{
+    width:390px!important;height:390px!important;right:-245px!important;top:22%!important;
+    border-color:rgba(255,255,255,.10)!important;
+    transform:translate3d(var(--hero-x2,0),var(--hero-y2,0),0)!important;
+  }
+  .hero-top,.hero-bottom{color:rgba(255,255,255,.66)!important}
+  .hero-word{
+    flex:1;min-height:0!important;margin:auto!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    transform:translate3d(var(--hero-x,0),var(--hero-y,0),0);
+  }
+  .hero-word img{
+    width:min(82vw,390px)!important;
+    filter:drop-shadow(0 20px 28px rgba(0,0,0,.22))!important;
+    transition:transform .12s linear;
+  }
+  .hero-word:after{display:none!important}
+  .hero-bottom a{color:#fff!important;border-color:rgba(255,255,255,.2)!important;background:rgba(255,255,255,.06)!important}
+
+  /* SECTION ENTRY — every major block has one motion language */
+  .identity-section,.statement-block,.capabilities,.numbers,.experience,.final-poster{
+    transform:translateY(18px);opacity:0;filter:blur(6px);
+    transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1),filter .7s ease;
+  }
+  .mobile-visible{
+    transform:none!important;opacity:1!important;filter:none!important;
+  }
+
+  /* PERSON — depth instead of a static card */
+  .identity-panel{overflow:hidden;position:relative}
+  .portrait-mark{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+  .identity-main,.identity-side{transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s ease}
+  .identity-panel.mobile-focus .portrait-mark{transform:scale(1.035)}
+  .identity-panel.mobile-focus .identity-main{transform:translateY(-4px)}
+  .identity-panel.mobile-focus .identity-side{transform:translateY(-2px)}
+
+  /* STATEMENT — strong visual interruption */
+  .statement-block{position:relative;overflow:hidden}
+  .statement-block:after{
+    content:"";position:absolute;width:240px;height:240px;border-radius:50%;
+    right:-130px;bottom:-110px;border:1px solid rgba(17,17,17,.12);
+    box-shadow:inset 0 0 35px rgba(255,255,255,.22);
+    transform:translate3d(var(--statement-x,0),var(--statement-y,0),0);
+  }
+
+  /* CAPABILITIES — swipeable horizontal stage */
+  .cap-grid{
+    display:flex!important;overflow-x:auto!important;overflow-y:visible!important;
+    scroll-snap-type:x mandatory;scroll-padding-left:0;
+    gap:12px!important;padding:4px 14px 18px 0!important;
+    margin-right:-15px;scrollbar-width:none;
+    overscroll-behavior-x:contain;
+  }
+  .cap-grid::-webkit-scrollbar{display:none}
+  .cap-card{
+    flex:0 0 84vw!important;min-height:330px!important;
+    scroll-snap-align:start;
+    position:relative;overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+  }
+  .cap-card:after{
+    content:"SWIPE";position:absolute;right:18px;bottom:18px;
+    font:7px DM Mono;color:rgba(23,32,39,.42);letter-spacing:.14em;
+  }
+  .cap-card:nth-child(3){background:#c7ff38!important}
+  .cap-card.is-near{transform:scale(1.015)}
+  .cap-grid:after{
+    content:"";position:sticky;right:0;flex:0 0 8vw;
+  }
+
+  /* NUMBERS — horizontal cards */
+  .numbers{
+    display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+    gap:8px;padding:10px!important;
+  }
+  .numbers::-webkit-scrollbar{display:none}
+  .numbers div{flex:0 0 72vw;scroll-snap-align:center;border-radius:20px}
+  .numbers span{font-size:27vw!important}
+
+  /* EXPLORE — one card at a time */
+  .experience-cards{
+    display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+    gap:10px!important;margin-right:-15px;padding-right:15px;
+  }
+  .experience-cards::-webkit-scrollbar{display:none}
+  .experience-cards a{flex:0 0 84vw;scroll-snap-align:start}
+
+  /* FINAL CTA */
+  .final-poster{min-height:68svh!important;display:flex;flex-direction:column;justify-content:center}
+  .final-poster>a{align-self:flex-start}
+
+  /* GLOBAL TOUCH LANGUAGE */
+  a,button{touch-action:manipulation}
+  .cap-card,.experience-cards a,.numbers div,.mobile-dock a,.nav-cta,.menu-toggle{
+    -webkit-user-select:none;user-select:none;
+  }
+  .cap-card:active,.experience-cards a:active,.numbers div:active{transform:scale(.985)!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .identity-section,.statement-block,.capabilities,.numbers,.experience,.final-poster{transform:none!important;opacity:1!important;filter:none!important}
+}
