@@ -96,3 +96,12 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
  .hero-word img:hover{transform:none!important;}
 }
 @media(prefers-reduced-motion:reduce){.hero-word img{animation:none!important}}
+
+
+/* PRDXQ PRODUCTION — dark contrast field behind the hero logo */
+.hero-word{position:relative;isolation:isolate;}
+.hero-word:after{content:"";position:absolute;z-index:-1;width:min(72vw,560px);height:min(24vw,210px);min-height:150px;border-radius:32px;background:#354043;box-shadow:inset 10px 10px 24px rgba(255,255,255,.035),inset -12px -12px 28px rgba(0,0,0,.18),0 18px 45px rgba(45,55,60,.16);}
+.hero-word img{position:relative;z-index:1;}
+@media(max-width:800px){
+ .hero-word:after{width:min(88vw,390px);height:190px;min-height:0;border-radius:28px;background:#354043;box-shadow:inset 8px 8px 20px rgba(255,255,255,.035),inset -10px -10px 24px rgba(0,0,0,.18),0 16px 34px rgba(45,55,60,.14);}
+}
