@@ -44,3 +44,92 @@ const dropdownTrigger=document.querySelector('.skill-dropdown-trigger'),dropdown
 
 /* MOBILE LAB / INTERACTIVE SKILL ORBIT */
 (()=>{const root=document.querySelector('.mobile-skill-experience');if(!root)return;const nodes=[...root.querySelectorAll('.mobile-skill-node')];const code=root.querySelector('#mobileSkillCode'),title=root.querySelector('#mobileSkillTitle'),desc=root.querySelector('#mobileSkillDesc'),tags=root.querySelector('#mobileSkillTags'),count=root.querySelector('#mobileSkillCount');const keys=['build','apps','systems','design','media','it'];let active=0;const apply=(index,fromSwipe=false)=>{active=(index+keys.length)%keys.length;const key=keys[active],d=data[key];nodes.forEach((n,i)=>{n.classList.toggle('active',i===active);n.style.setProperty('--shift',(i-active)*1)});code.textContent=d.code+' / '+d.status;title.textContent=d.title;desc.textContent=d.desc;tags.innerHTML=d.tags.slice(0,3).map(x=>'<i>'+x+'</i>').join('');count.textContent=d.code+' / 06';root.classList.remove('pulse');void root.offsetWidth;root.classList.add('pulse');if(fromSwipe)navigator.vibrate?.(8)};nodes.forEach((n,i)=>n.addEventListener('click',()=>apply(i)));let sx=0,sy=0;root.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});root.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))apply(active+(dx<0?1:-1),true)},{passive:true});let timer=setInterval(()=>apply(active+1),4200);root.addEventListener('touchstart',()=>{clearInterval(timer)},{once:true,passive:true});apply(0)})();
+
+
+/* =========================================================
+   PRDXQ MOBILE EXPERIENCE ENGINE 2.0
+   ========================================================= */
+(()=>{
+  if(!matchMedia('(max-width:800px)').matches) return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+  /* One reveal system for all major sections */
+  const blocks=$$('.identity-section,.statement-block,.capabilities,.numbers,.experience,.final-poster');
+  if(reduce) blocks.forEach(x=>x.classList.add('mobile-visible'));
+  else{
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('mobile-visible');io.unobserve(e.target)}});
+    },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    blocks.forEach(x=>io.observe(x));
+  }
+
+  /* Hero follows the finger, but never hijacks scrolling */
+  const hero=$('.hero-poster');
+  if(hero&&!reduce){
+    let sx=0,sy=0,active=false;
+    hero.addEventListener('touchstart',e=>{
+      const t=e.touches[0];sx=t.clientX;sy=t.clientY;active=true;
+    },{passive:true});
+    hero.addEventListener('touchmove',e=>{
+      if(!active)return;
+      const t=e.touches[0],dx=(t.clientX-sx)*.045,dy=(t.clientY-sy)*.045;
+      hero.style.setProperty('--hero-x',dx.toFixed(2)+'px');
+      hero.style.setProperty('--hero-y',dy.toFixed(2)+'px');
+      hero.style.setProperty('--hero-x2',(dx*.55).toFixed(2)+'px');
+      hero.style.setProperty('--hero-y2',(dy*.55).toFixed(2)+'px');
+    },{passive:true});
+    hero.addEventListener('touchend',()=>{
+      active=false;
+      hero.style.setProperty('--hero-x','0px');hero.style.setProperty('--hero-y','0px');
+      hero.style.setProperty('--hero-x2','0px');hero.style.setProperty('--hero-y2','0px');
+    },{passive:true});
+  }
+
+  /* Person section gains focus while visible */
+  const person=$('.identity-panel');
+  if(person&&!reduce){
+    const io=new IntersectionObserver(es=>es.forEach(e=>person.classList.toggle('mobile-focus',e.isIntersecting)),{threshold:.55});
+    io.observe(person);
+  }
+
+  /* Statement orb responds to horizontal finger movement */
+  const statement=$('.statement-block');
+  if(statement&&!reduce){
+    statement.addEventListener('touchmove',e=>{
+      const r=statement.getBoundingClientRect(),t=e.touches[0];
+      statement.style.setProperty('--statement-x',((t.clientX-r.left)/r.width*24-12)+'px');
+      statement.style.setProperty('--statement-y',((t.clientY-r.top)/r.height*18-9)+'px');
+    },{passive:true});
+  }
+
+  /* Snap carousels: highlight the card nearest the viewport center */
+  const stages=$$('.cap-grid,.experience-cards');
+  const mark=stage=>{
+    const cards=[...stage.children].filter(x=>x.nodeType===1&&!x.matches(':after'));
+    const center=innerWidth/2;
+    cards.forEach(card=>{
+      const r=card.getBoundingClientRect();
+      card.classList.toggle('is-near',Math.abs((r.left+r.right)/2-center)<innerWidth*.18);
+    });
+  };
+  stages.forEach(stage=>{
+    stage.addEventListener('scroll',()=>requestAnimationFrame(()=>mark(stage)),{passive:true});
+    mark(stage);
+  });
+
+  /* Numbers: intentional horizontal paging, no fake counters */
+  const numbers=$('.numbers');
+  if(numbers&&!reduce){
+    let start=0,sy=0;
+    numbers.addEventListener('touchstart',e=>{start=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+    numbers.addEventListener('touchend',e=>{
+      const dx=e.changedTouches[0].clientX-start;
+      if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(e.changedTouches[0].clientY-sy)){
+        const card=numbers.querySelectorAll('div')[dx<0?1:0];
+        if(card) card.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+      }
+    },{passive:true});
+  }
+})();
