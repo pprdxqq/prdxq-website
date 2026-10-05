@@ -110,3 +110,20 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 /* RENDERED PRDXQ WORDMARK */
 .brand-word{display:inline-flex;align-items:flex-start;font:800 21px/1 Manrope,sans-serif;letter-spacing:-.09em;color:#111;position:relative;white-space:nowrap}.brand-word sup{font:500 7px/1 DM Mono,monospace;letter-spacing:0;position:relative;top:-1px;margin-left:2px}
 @media(max-width:800px){.brand-word{font-size:19px}.brand-word sup{font-size:6px;top:-1px}}
+
+
+/* FINAL HERO + WORDMARK POLISH */
+.hero-poster{background:#354043!important;border-color:rgba(255,255,255,.12)!important;}
+.hero-poster .hero-noise{opacity:.08;}
+.hero-poster .hero-top,.hero-poster .hero-bottom{color:rgba(255,255,255,.62);}
+.hero-poster .hero-bottom small{color:rgba(255,255,255,.48);}
+.hero-poster .hero-word:after{display:none!important;}
+.brand .brand-word{display:inline-flex!important;align-items:flex-start!important;font-family:Manrope,sans-serif!important;font-size:22px!important;font-weight:800!important;line-height:1!important;letter-spacing:-.095em!important;color:#111!important;position:relative!important;white-space:nowrap!important;margin:0!important;}
+.brand .brand-word sup{position:absolute!important;right:-7px!important;bottom:-2px!important;top:auto!important;margin:0!important;font:600 6px/1 DM Mono,monospace!important;letter-spacing:0!important;color:#111!important;}
+@media(max-width:800px){
+ .hero-poster{background:#354043!important;}
+ .hero-poster .hero-top,.hero-poster .hero-bottom{color:rgba(255,255,255,.62);}
+ .hero-poster .hero-bottom small{color:rgba(255,255,255,.48);}
+ .brand .brand-word{font-size:22px!important;font-weight:800!important;letter-spacing:-.1em!important;}
+ .brand .brand-word sup{right:-7px!important;bottom:-2px!important;font-size:6px!important;}
+}
