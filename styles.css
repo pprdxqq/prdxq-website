@@ -68,3 +68,22 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 @media(max-width:800px){.brand{min-width:86px;height:38px}.brand img{max-width:86px;max-height:24px}.nav .brand{padding:0}.hero-word{font-size:0}.hero-word:before{content:"";display:block;width:min(82vw,390px);height:115px;background:url('prdxq-logo-transparent.png') center/contain no-repeat;filter:brightness(0) saturate(100%);animation:logoFloat 5s ease-in-out infinite}.hero-poster .hero-word{display:flex;align-items:center;justify-content:center}.hero-poster .hero-word{letter-spacing:0}}
 @keyframes logoFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.015)}}
 @media(prefers-reduced-motion:reduce){.brand img,.hero-word:before{animation:none!important;transition:none!important}}
+
+/* MOBILE LAB / SKILL ORBIT */
+.mobile-skill-experience{display:none}
+@media(max-width:800px){
+ .skill-layout{display:none!important}
+ .skill-head>p{display:none}
+ .mobile-skill-experience{display:block;margin-top:22px;padding:18px 0 4px;overflow:hidden}
+ .mobile-skill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:0 3px;font:500 8px DM Mono;letter-spacing:.12em;color:#6f7a82}.mobile-skill-head b{color:#172027;font-weight:500}
+ .mobile-skill-orbit{position:relative;width:min(92vw,390px);aspect-ratio:1;margin:auto;border-radius:50%;display:grid;place-items:center;isolation:isolate;touch-action:pan-y}
+ .mobile-skill-orbit:before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 45% 35%,rgba(255,255,255,.9),rgba(222,228,232,.58) 58%,rgba(202,210,216,.34));box-shadow:inset 10px 10px 24px rgba(255,255,255,.85),inset -14px -14px 30px rgba(100,110,118,.14),12px 18px 35px rgba(80,90,98,.14);z-index:0}
+ .mobile-skill-ring{position:absolute;border:1px solid rgba(120,132,140,.24);border-radius:50%;pointer-events:none}.mobile-skill-ring.ring-one{inset:5%;animation:labRingSpin 18s linear infinite}.mobile-skill-ring.ring-two{inset:22%;border-color:rgba(199,255,56,.65);animation:labRingSpinReverse 11s linear infinite}
+ .mobile-skill-node{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px;border-radius:50%;border:1px solid rgba(255,255,255,.85);background:rgba(244,247,249,.7);box-shadow:7px 9px 18px rgba(92,103,111,.16),-6px -6px 16px rgba(255,255,255,.9);color:#59656d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:DM Mono;transform:rotate(var(--a)) translateY(-142px) rotate(calc(var(--a) * -1));transition:transform .5s cubic-bezier(.2,.8,.2,1),background .3s,box-shadow .3s,color .3s;z-index:3}
+ .mobile-skill-node span{font-size:7px;opacity:.65}.mobile-skill-node b{font-size:8px;line-height:1.05;font-weight:500}.mobile-skill-node.active{background:#c7ff38;color:#111;box-shadow:0 0 0 5px rgba(199,255,56,.14),8px 12px 22px rgba(95,105,90,.2);transform:rotate(var(--a)) translateY(-142px) rotate(calc(var(--a) * -1)) scale(1.08)}
+ .mobile-skill-core{position:relative;z-index:4;width:52%;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:rgba(47,55,61,.9);color:#fff;box-shadow:inset 8px 8px 18px rgba(255,255,255,.08),inset -10px -10px 20px rgba(0,0,0,.18),12px 16px 30px rgba(67,76,83,.22);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+ .mobile-skill-core small{font:7px DM Mono;letter-spacing:.12em;opacity:.6}.mobile-skill-core strong{font:800 clamp(18px,5.8vw,25px) Manrope;line-height:.95;margin:9px 0 7px}.mobile-skill-core p{font:11px Manrope;line-height:1.25;max-width:150px;margin:0;color:rgba(255,255,255,.66)}.mobile-skill-core div{display:flex;gap:4px;margin-top:12px;flex-wrap:wrap;justify-content:center}.mobile-skill-core i{font:6px DM Mono;font-style:normal;border:1px solid rgba(255,255,255,.16);padding:5px 6px;border-radius:99px;color:rgba(255,255,255,.7)}
+ .mobile-skill-meta{display:flex;justify-content:space-between;margin-top:15px;padding:0 4px;font:7px DM Mono;letter-spacing:.1em;color:#778189}.mobile-skill-meta span:last-child{opacity:.6}.mobile-skill-experience.pulse .mobile-skill-core{transform:scale(1.035)}
+}
+@keyframes labRingSpin{to{transform:rotate(360deg)}}@keyframes labRingSpinReverse{to{transform:rotate(-360deg)}}
+@media(prefers-reduced-motion:reduce){.mobile-skill-ring{animation:none!important}.mobile-skill-node,.mobile-skill-core{transition:none!important}}
