@@ -133,3 +133,38 @@ const dropdownTrigger=document.querySelector('.skill-dropdown-trigger'),dropdown
     },{passive:true});
   }
 })();
+
+
+/* PRDXQ SIGNATURE INTERACTIONS */
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const signature=[...document.querySelectorAll('.system-identity,.manifesto-section')];
+  if(signature.length){
+    if(reduce) signature.forEach(x=>x.classList.add('mobile-visible'));
+    else{
+      const io=new IntersectionObserver(es=>es.forEach(e=>{
+        if(e.isIntersecting){e.target.classList.add('mobile-visible');io.unobserve(e.target)}
+      }),{threshold:.12});
+      signature.forEach(x=>io.observe(x));
+    }
+  }
+
+  const manifesto=document.querySelector('.manifesto-stack');
+  if(manifesto&&!reduce){
+    const rows=[...manifesto.children];
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting)e.target.style.paddingLeft=innerWidth<801?'8px':'28px';
+      else e.target.style.paddingLeft='';
+    }),{threshold:.7});
+    rows.forEach(x=>io.observe(x));
+  }
+
+  const system=document.querySelector('.system-identity');
+  if(system&&!reduce&&matchMedia('(pointer:fine)').matches){
+    system.addEventListener('pointermove',e=>{
+      const r=system.getBoundingClientRect();
+      system.style.setProperty('--sys-x',((e.clientX-r.left)/r.width*18-9)+'px');
+      system.style.setProperty('--sys-y',((e.clientY-r.top)/r.height*18-9)+'px');
+    });
+  }
+})();
