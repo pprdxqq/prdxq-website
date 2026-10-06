@@ -48,7 +48,42 @@
 </section>
 </main>
 
-<style>
+<style id="project-wizard-motion">
+.project-wizard{--wizard-progress:10%}
+.wizard-progress{position:relative;height:3px!important;background:rgba(120,130,138,.12)!important;overflow:visible!important}
+.wizard-progress:before{content:"";position:absolute;left:0;top:0;width:var(--wizard-progress);height:100%;background:#354043;box-shadow:0 0 16px rgba(53,64,67,.22);transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.wizard-progress i{display:none!important}
+.wizard-progress:after{content:"";position:absolute;top:50%;left:var(--wizard-progress);width:7px;height:7px;border-radius:50%;background:#c7ff38;box-shadow:0 0 0 4px rgba(199,255,56,.16),0 0 18px rgba(199,255,56,.65);transform:translate(-50%,-50%);transition:left .55s cubic-bezier(.2,.8,.2,1)}
+.wizard-top{position:relative}
+.wizard-top:after{content:"";position:absolute;right:24px;bottom:8px;width:5px;height:5px;border-radius:50%;background:#c7ff38;opacity:.8;animation:wizardPulse 2.2s ease-in-out infinite}
+.wizard-panel{will-change:transform,opacity}
+.wizard-panel.step-enter{animation:wizardQuestionIn .5s cubic-bezier(.2,.8,.2,1)}
+.wizard-panel.step-leave{animation:wizardQuestionOut .22s ease forwards}
+.wizard-option{will-change:transform}
+.wizard-option.selected{animation:wizardSelect .28s cubic-bezier(.2,.8,.2,1)}
+.wizard-option .check{transition:opacity .2s,transform .25s}
+.wizard-option.selected .check{transform:scale(1.08)}
+.wizard-option:hover .option-info{transform:rotate(8deg) scale(1.04)}
+.option-info{transition:transform .2s ease}
+.wizard-info{transform-origin:top}
+.wizard-info[hidden]{display:none!important}
+.wizard-next button{transition:transform .2s,box-shadow .2s,opacity .2s}
+.wizard-next button:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(53,64,67,.14)}
+@keyframes wizardQuestionIn{from{opacity:0;transform:translate3d(32px,8px,0);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@keyframes wizardQuestionOut{to{opacity:0;transform:translate3d(-18px,0,0)}}
+@keyframes wizardSelect{0%{transform:scale(.985)}55%{transform:scale(1.012)}100%{transform:scale(1)}}
+@keyframes wizardPulse{0%,100%{transform:scale(.8);opacity:.45}50%{transform:scale(1.15);opacity:1}}
+@media(max-width:800px){
+ .wizard-progress:after{width:6px;height:6px}
+ .wizard-panel.step-enter{animation:wizardQuestionInMobile .42s cubic-bezier(.2,.8,.2,1)}
+ @keyframes wizardQuestionInMobile{from{opacity:0;transform:translate3d(22px,10px,0)}to{opacity:1;transform:none}}
+}
+@media(prefers-reduced-motion:reduce){
+ .wizard-progress:before,.wizard-progress:after{transition:none}
+ .wizard-panel.step-enter,.wizard-option.selected{animation:none}
+ .wizard-top:after{animation:none}
+}
+</style><style>
 .project-start{max-width:1180px;margin:0 auto;padding:clamp(100px,13vw,180px) 5vw 100px}
 .project-start-head{max-width:760px;margin-bottom:48px}
 .project-start-head h1{font-size:clamp(56px,8vw,112px);line-height:.88;letter-spacing:-.075em;margin:22px 0 28px}
@@ -164,7 +199,7 @@
  function render(){
    const s=questions[state.current], selected=new Set(state.answers[s.id]||[]);
    stepLabel.textContent=s.kicker; kicker.textContent=s.kicker; question.textContent=s.q; hint.textContent=s.hint;
-   progress.style.width=((state.current+1)/questions.length*100)+'%';
+   const progressPct=((state.current+1)/questions.length*100); root.style.setProperty('--wizard-progress',progressPct+'%'); progress.style.width=progressPct+'%';
    back.hidden=state.current===0;
    info.hidden=true;
    optionsEl.innerHTML=getOptions().map(o=>'<button type="button" class="wizard-option '+(selected.has(o.value)?'selected':'')+'" data-value="'+o.value+'"><div class="wizard-option-head"><div><strong>'+o.label+'</strong><small>'+o.short+'</small></div><span class="option-info" data-info="'+o.value+'" aria-label="Was ist das?">i</span></div><span class="check">✓</span></button>').join('');
@@ -185,7 +220,7 @@
    b.addEventListener('click',()=>{
      const values=state.answers[s.id]||[];if(!values.length)return;
      state.history.push(state.current);
-     if(state.current<questions.length-1){state.current++;render();panel.classList.remove('step-enter');void panel.offsetWidth;panel.classList.add('step-enter');}
+     if(state.current<questions.length-1){panel.classList.remove('step-enter');panel.classList.add('step-leave');setTimeout(()=>{state.current++;render();panel.classList.remove('step-leave');void panel.offsetWidth;panel.classList.add('step-enter');},150);}
      else showResult();
    });
  }
@@ -193,7 +228,7 @@
  back.addEventListener('click',()=>{if(!state.history.length)return;state.current=state.history.pop();render()});
  function labelFor(qid,val){const q=questions.find(x=>x.id===qid),o=q?.options.find(x=>x.value===val);return o?.label||val}
  function showResult(){
-   panel.hidden=true;result.hidden=false;back.hidden=true;stepLabel.textContent='06 / KONTAKT';progress.style.width='100%';
+   panel.hidden=true;result.hidden=false;back.hidden=true;stepLabel.textContent='06 / KONTAKT';root.style.setProperty('--wizard-progress','100%');progress.style.width='100%';result.classList.add('result-enter');
    const t=(state.answers.type||[]).map(v=>types.find(x=>x.value===v)?.label||v);
    const goals=(state.answers.goal||[]).map(v=>labelFor('goal',v));
    const features=(state.answers.features||[]).map(v=>labelFor('features',v));
