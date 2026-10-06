@@ -1,6 +1,10 @@
 <!doctype html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080808"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="prdxq-logo-transparent.png"><link rel="stylesheet" href="styles.css"><title>Lab — PRDXQ</title></head><body><header class="nav"><a class="brand" href="index.html" aria-label="PRDXQ Home"><span class="brand-word">PRDXQ<sup>®</sup></span></a><nav><a href="index.html">Home</a><a href="work.html">Work</a><a href="lab.html">Lab</a><a href="design.html">Design</a><a href="about.html">About</a></nav><div class="nav-right"><a class="nav-cta" href="contact.html">Projekt starten <b>↗</b></a><button class="menu-toggle" aria-label="Menü öffnen" aria-expanded="false"><i></i><i></i></button></div></header><div class="mobile-menu"><a href="index.html">Home <b>01</b></a><a href="work.html">Work <b>02</b></a><a href="lab.html">Lab <b>03</b></a><a href="design.html">Design <b>04</b></a><a href="about.html">About <b>05</b></a><a href="contact.html">Kontakt <b>06</b></a></div><main><section class="lab-hero-new"><div class="lab-copy"><p class="kicker">PRDXQ LAB / 01</p><h1>Gude.<br>Ich bin <em>Ilias.</em></h1><p>Hier kannst du sehen, wie ich digitale Produkte denke: technisch komplett, visuell sauber und auf das eigentliche Problem fokussiert.</p></div><div class="id-card"><span>PRDXQ / PROFILE</span><strong>IA</strong><div><b>Ilias Asdufan</b><small>Founder · Developer · Designer</small></div><dl><dt>BRAND</dt><dd>PRDXQ</dd><dt>FOCUS</dt><dd>Digital Products</dd><dt>APPROACH</dt><dd>Idea → Launch</dd></dl></div></section><section class="lab-intro-band lab-intro-play"><p class="kicker">02 — PRDXQ PLAYGROUND</p><h2>Kein<br><em>Showroom.</em></h2><p>Hier darfst du klicken, ziehen, drehen und ausprobieren. Das Lab zeigt nicht, was ich behaupte — es lässt dich selbst sehen, wie ich denke.</p><div class="play-instruction"><span class="acid-dot"></span><b>INTERAKTIV</b><small>PROBIER ALLES AUS</small></div></section>
 <section class="lab-console">
-  <div class="lab-console-head"><div><p class="kicker">03 — DIGITAL PLAYGROUND</p><h2>Zieh. Klick.<br><em>Verändere.</em></h2></div><div class="lab-console-status"><i></i><span>SYSTEM LIVE</span></div></div>
+  <div class="lab-console-head">
+    <div><p class="kicker">03 — DIGITAL PLAYGROUND</p><h2>Zieh. Klick.<br><em>Verändere.</em></h2></div>
+    <div class="lab-console-status"><i></i><span>SYSTEM LIVE</span></div>
+  </div>
+
   <div class="playground">
     <div class="playground-sidebar">
       <button class="lab-tool active" data-lab-tool="build"><span>01</span><strong>BUILD</strong><small>Baue einen Stack</small><b>↗</b></button>
@@ -9,9 +13,11 @@
       <button class="lab-tool" data-lab-tool="media"><span>04</span><strong>CREATE</strong><small>Bewege die Timeline</small><b>↗</b></button>
       <button class="lab-tool" data-lab-tool="it"><span>05</span><strong>DEPLOY</strong><small>Bring es online</small><b>↗</b></button>
     </div>
+
     <div class="playground-stage" data-lab-stage="build">
       <div class="stage-hud"><span id="labStageLabel">01 / BUILD</span><b id="labStageHint">DRAG THE NODES</b></div>
       <div class="play-grid"></div>
+
       <div class="build-sim">
         <button class="sim-node node-idea" data-node="idea">IDEA</button><span class="sim-arrow a1">→</span>
         <button class="sim-node node-ui" data-node="ui">UI</button><span class="sim-arrow a2">→</span>
@@ -20,13 +26,48 @@
         <button class="sim-node node-live" data-node="live">LIVE</button>
         <div class="sim-core"><small>PRDXQ</small><strong id="simCoreTitle">BUILD</strong><span id="simCoreText">Klick die Nodes.</span></div>
       </div>
+
       <div class="automation-sim"><div class="auto-pulse"></div><button data-auto="input">INPUT</button><i>↓</i><button data-auto="logic">LOGIC</button><i>↓</i><button data-auto="output">OUTPUT</button><div class="auto-particle"></div></div>
       <div class="design-sim"><div class="design-phone"><div class="design-notch"></div><small>PRDXQ / UI</small><h3 id="designText">MOVE ME.</h3><div class="design-slider"><span></span></div><button id="designButton">CHANGE</button></div><div class="design-orb"></div></div>
       <div class="media-sim"><div class="media-preview"><span>REC</span><strong>▶</strong></div><input id="mediaRange" type="range" min="0" max="100" value="45"><div class="media-time"><span>00:12</span><b id="mediaPercent">45%</b><span>00:27</span></div></div>
       <div class="deploy-sim"><div class="deploy-server"><i></i><i></i><i></i></div><div class="deploy-beam"></div><div class="deploy-world">ONLINE</div><button id="deployButton">DEPLOY ↗</button><small id="deployStatus">WAITING FOR DEPLOY</small></div>
+
       <div class="stage-footer"><span id="labStageResult">STATUS / READY</span><span>PRDXQ LAB / 2026</span></div>
     </div>
   </div>
+
+  <div class="lab-mobile-playground" aria-label="PRDXQ Mobile Playground">
+    <div class="lab-mobile-head"><span>03 / PLAYGROUND</span><b><i></i> LIVE</b></div>
+    <div class="lab-mobile-tabs">
+      <button class="active" data-mobile-tool="build">01 <strong>BUILD</strong></button>
+      <button data-mobile-tool="automation">02 <strong>AUTO</strong></button>
+      <button data-mobile-tool="design">03 <strong>DESIGN</strong></button>
+      <button data-mobile-tool="media">04 <strong>CREATE</strong></button>
+      <button data-mobile-tool="it">05 <strong>DEPLOY</strong></button>
+    </div>
+    <div class="lab-mobile-stage" data-mobile-mode="build">
+      <span class="lab-mobile-code" id="mobileLabCode">01 / BUILD</span>
+      <div class="lab-mobile-copy"><h3 id="mobileLabTitle">Build a stack.</h3><p id="mobileLabText">Tippe die Bausteine an und sieh, was aus einer Idee wird.</p></div>
+      <div class="mobile-lab-interaction" id="mobileLabInteraction"></div>
+      <div class="lab-mobile-feedback" id="mobileLabFeedback">READY / TAP TO START</div>
+    </div>
+  </div>
 </section>
-<section class="lab-challenge"><div><p class="kicker">04 — QUICK CHALLENGE</p><h2>Kannst du<br><em>es lösen?</em></h2></div><div class="challenge-card"><span>SCENARIO / 01</span><strong>Ein Kunde bekommt jeden Tag 30 Anfragen per Formular.</strong><p>Was würdest du automatisieren?</p><div class="challenge-options"><button data-answer="wrong">MANUELL SORTIEREN</button><button data-answer="right">FORMULAR → CRM → EMAIL</button><button data-answer="wrong">SCREENSHOT MACHEN</button></div><div id="challengeResult">WÄHLE EINE ANTWORT</div></div></section>
+<section class="lab-challenge">
+  <div class="quiz-intro">
+    <p class="kicker">04 — QUICK CHALLENGE</p>
+    <h2>Kannst du<br><em>es lösen?</em></h2>
+    <p>Eine Frage. Vier Antworten. Nur eine ist richtig. Nach jeder richtigen Antwort geht es direkt weiter.</p>
+    <div class="quiz-count"><span id="quizProgress">01</span><b>/ 120</b></div>
+  </div>
+  <div class="quiz-shell" id="labQuiz">
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-card-top"><span id="quizCategory">WEB</span><span id="quizNumber">QUESTION 01</span></div>
+      <h3 id="quizQuestion">Lädt…</h3>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-feedback" id="quizFeedback" aria-live="polite">WÄHLE EINE ANTWORT</div>
+    </div>
+    <div class="quiz-next-hint">RICHTIG → CARD SWIPES AWAY → NÄCHSTE FRAGE</div>
+  </div>
+</section>
 <section class="lab-end"><p class="kicker">05 — PRDXQ</p><h2>Eine Person.<br><em>Kompletter Stack.</em></h2><p class="lab-end-copy">Du hast gerade einen kleinen Teil davon ausprobiert. Der Rest ist das, was ich daraus für echte Projekte baue.</p><a class="text-link dark" href="contact.html">Mit mir starten <b>↗</b></a></section></main><footer><span>PRDXQ / ILIAS ASDUFAN</span><span>WEB · APP · SYSTEMS · DESIGN · MEDIA</span><span>© 2026</span></footer><script src="script.js"></script></body></html>
