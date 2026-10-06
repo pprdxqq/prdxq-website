@@ -203,6 +203,8 @@
    back.hidden=state.current===0;
    info.hidden=true;
    optionsEl.innerHTML=getOptions().map(o=>'<button type="button" class="wizard-option '+(selected.has(o.value)?'selected':'')+'" data-value="'+o.value+'"><div class="wizard-option-head"><div><strong>'+o.label+'</strong><small>'+o.short+'</small></div><span class="option-info" data-info="'+o.value+'" aria-label="Was ist das?">i</span></div><span class="check">✓</span></button>').join('');
+   // Re-rendering must replace the existing Weiter button instead of stacking a new one.
+   panel.querySelectorAll('.wizard-next').forEach(el=>el.remove());
    const next=document.createElement('div');next.className='wizard-next';
    const b=document.createElement('button');b.type='button';b.textContent=state.current===questions.length-1?'PROFIL ERSTELLEN →':'WEITER →';b.disabled=selected.size===0;b.id='wizardNext';next.appendChild(b);optionsEl.after(next);
    optionsEl.querySelectorAll('.wizard-option').forEach(btn=>btn.addEventListener('click',e=>{
