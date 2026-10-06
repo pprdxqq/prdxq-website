@@ -168,3 +168,20 @@ const dropdownTrigger=document.querySelector('.skill-dropdown-trigger'),dropdown
     });
   }
 })();
+
+/* WORK DETAIL EXPERIENCE */
+(()=>{const modal=document.querySelector('.work-modal');if(!modal)return;
+const details={
+build:{code:'01 / BUILD',status:'FULL-STACK',kicker:'DEVELOPMENT',title:'FULL-STACK',desc:'Du brauchst eine Website, einen Shop, ein Dashboard oder eine komplette Web-App? Ich kümmere mich um die Oberfläche und um das, was dahinter läuft.',outcome:'Ein fertiges digitales Produkt statt nur ein Design.',process:'IDEA → DESIGN → FRONTEND → BACKEND → DATABASE → LIVE',tags:['WEBSITE','WEB-APP','FRONTEND','BACKEND','API','DATABASE']},
+apps:{code:'02 / APPS',status:'SOFTWARE',kicker:'SOFTWARE',title:'APPS & SOFTWARE',desc:'Aus einer Idee wird ein echtes Tool: für Desktop, Mobile oder einen ganz bestimmten Arbeitsablauf.',outcome:'Eine Anwendung, die genau für deinen Anwendungsfall gebaut ist.',process:'PROBLEM → CONCEPT → UI → BUILD → TEST → RELEASE',tags:['DESKTOP','MOBILE','TOOLS','SOFTWARE','INTEGRATION']},
+systems:{code:'03 / SYSTEMS',status:'AUTOMATE',kicker:'AUTOMATION',title:'SYSTEME & AUTOMATION',desc:'Wenn Informationen ständig von A nach B kopiert werden müssen, kann man das meistens besser lösen. Ich verbinde Datenbanken, APIs und Automationen.',outcome:'Weniger manuelle Arbeit. Mehr Ablauf, der einfach funktioniert.',process:'INPUT → API → DATABASE → LOGIC → AUTOMATION → OUTPUT',tags:['DATABASE','API','WORKFLOW','AUTOMATION','INTEGRATION']},
+design:{code:'04 / DESIGN',status:'VISUAL',kicker:'UI / UX & GRAFIK',title:'DESIGN',desc:'Design bedeutet für mich nicht nur, etwas schön aussehen zu lassen. Es muss verständlich sein, funktionieren und zur Marke passen.',outcome:'Interfaces und Visuals, die sich wie ein echtes Produkt anfühlen.',process:'RESEARCH → WIREFRAME → UI → MOTION → POLISH',tags:['UI','UX','BRANDING','GRAPHIC','MOTION']},
+media:{code:'05 / CREATE',status:'CONTENT',kicker:'FOTO · VIDEO · SOCIAL',title:'FOTO · VIDEO · SOCIAL',desc:'Von der Aufnahme bis zum fertigen Post: Content wird produziert, geschnitten, bearbeitet und für die jeweilige Plattform vorbereitet.',outcome:'Fertiger Content, der direkt veröffentlicht werden kann.',process:'SHOT → SELECT → EDIT → COLOR → CUT → SOCIAL',tags:['PHOTO','VIDEO','EDITING','PHOTOSHOP','SOCIAL']},
+it:{code:'06 / SYSTEM',status:'ONLINE',kicker:'INFRASTRUCTURE',title:'IT & ADMIN',desc:'Hinter jeder Website steckt Infrastruktur. Ich kümmere mich um Domains, Hosting, Deployment und die technischen Verbindungen.',outcome:'Eine technische Basis, auf der dein digitales Produkt zuverlässig läuft.',process:'DOMAIN → HOSTING → DEPLOY → CONFIG → MONITOR → ONLINE',tags:['HOSTING','DOMAIN','GITHUB','DEPLOYMENT','ADMIN']}
+};
+const $=s=>modal.querySelector(s);
+const open=key=>{const d=details[key]||details.build;$('#workModalCode').textContent=d.code;$('#workModalStatus').textContent=d.status;$('#workModalKicker').textContent=d.kicker;$('#workModalTitle').textContent=d.title;$('#workModalDesc').textContent=d.desc;$('#workModalOutcome').textContent=d.outcome;$('#workModalProcess').textContent=d.process;$('#workModalTags').innerHTML=d.tags.map(x=>'<i>'+x+'</i>').join('');const v=$('#workModalVisual');v.dataset.type=key;v.innerHTML='<div class="modal-visual-label">'+d.code.split(' / ')[1]+'</div><div class="modal-visual-core">'+d.title+'</div>';modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
+const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''};
+document.querySelectorAll('.work-card').forEach(card=>card.addEventListener('click',()=>open(card.dataset.work)));
+modal.querySelector('.work-modal-close').addEventListener('click',close);modal.querySelector('.work-modal-backdrop').addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close()});
+})();
