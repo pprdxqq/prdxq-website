@@ -386,30 +386,44 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
  const hero=document.querySelector('.hero-poster');
  if(!hero) return;
  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
- if(reduceMotion.matches) return;
  const mobile=window.matchMedia('(max-width: 700px)');
  let frame=0;
  let lastProgress=-1;
+ let active=true;
  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+ if(reduceMotion.matches) return;
+ // Avoid scroll work when the hero is well outside the viewport.
+ const observer=typeof IntersectionObserver==='function'
+  ? new IntersectionObserver(entries=>{active=entries.some(entry=>entry.isIntersecting);if(active) requestRender()},{rootMargin:'120px 0px'})
+  : null;
+ if(observer) observer.observe(hero);
  const render=()=>{
   frame=0;
+  if(!active || document.hidden) return;
   const rect=hero.getBoundingClientRect();
   const viewport=Math.max(window.innerHeight,1);
   // Normalize progress to the hero's own visible scroll distance.
   const progress=clamp((viewport-rect.top)/(viewport+rect.height),0,1);
   if(Math.abs(progress-lastProgress)<0.002) return;
   lastProgress=progress;
-  const strength=mobile.matches?0.42:1;
-  hero.style.setProperty('--hero-orbit-y',((progress-.5)*-100*strength).toFixed(2)+'px');
-  hero.style.setProperty('--hero-grid-y',((progress-.5)*-34*strength).toFixed(2)+'px');
-  hero.style.setProperty('--hero-meta-y',((progress-.5)*-16*strength).toFixed(2)+'px');
-  hero.style.setProperty('--hero-word-y',((progress-.5)*-52*strength).toFixed(2)+'px');
-  hero.style.setProperty('--hero-bottom-y',((progress-.5)*-8*strength).toFixed(2)+'px');
+  const strength=mobile.matches?0.32:1;
+  const depth=progress-.5;
+  hero.style.setProperty('--hero-orbit-y',(-depth*112*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-grid-y',(-depth*38*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-meta-y',(-depth*18*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-word-y',(-depth*58*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-bottom-y',(-depth*10*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-orbit-scale',(1+Math.abs(depth)*0.045*strength).toFixed(4));
+  hero.style.setProperty('--hero-word-scale',(1+Math.abs(depth)*0.012*strength).toFixed(4));
  };
  const requestRender=()=>{if(!frame) frame=window.requestAnimationFrame(render)};
+ const handleMotionChange=()=>{if(reduceMotion.matches){if(frame) cancelAnimationFrame(frame);frame=0;hero.style.removeProperty('--hero-orbit-y');hero.style.removeProperty('--hero-grid-y');hero.style.removeProperty('--hero-meta-y');hero.style.removeProperty('--hero-word-y');hero.style.removeProperty('--hero-bottom-y');hero.style.removeProperty('--hero-orbit-scale');hero.style.removeProperty('--hero-word-scale');}else requestRender()};
  window.addEventListener('scroll',requestRender,{passive:true});
  window.addEventListener('resize',requestRender,{passive:true});
+ document.addEventListener('visibilitychange',requestRender);
  if(mobile.addEventListener) mobile.addEventListener('change',requestRender);
  else mobile.addListener(requestRender);
+ if(reduceMotion.addEventListener) reduceMotion.addEventListener('change',handleMotionChange);
+ else if(reduceMotion.addListener) reduceMotion.addListener(handleMotionChange);
  render();
 })();
