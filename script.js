@@ -380,3 +380,36 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
  };
  tabs.forEach(tab=>tab.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));tab.classList.add('active');mode=tab.dataset.mobileTool;autoStep=0;stage.classList.remove('play-complete');stage.dataset.mobileMode=mode;render();animate()}));render();
 })();
+
+/* PRDXQ / CINEMATIC PARALLAX — hero only, scroll-driven and performance-aware */
+(()=> {
+ const hero=document.querySelector('.hero-poster');
+ if(!hero) return;
+ const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+ if(reduceMotion.matches) return;
+ const mobile=window.matchMedia('(max-width: 700px)');
+ let frame=0;
+ let lastProgress=-1;
+ const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+ const render=()=>{
+  frame=0;
+  const rect=hero.getBoundingClientRect();
+  const viewport=Math.max(window.innerHeight,1);
+  // Normalize progress to the hero's own visible scroll distance.
+  const progress=clamp((viewport-rect.top)/(viewport+rect.height),0,1);
+  if(Math.abs(progress-lastProgress)<0.002) return;
+  lastProgress=progress;
+  const strength=mobile.matches?0.42:1;
+  hero.style.setProperty('--hero-orbit-y',((progress-.5)*-100*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-grid-y',((progress-.5)*-34*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-meta-y',((progress-.5)*-16*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-word-y',((progress-.5)*-52*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-bottom-y',((progress-.5)*-8*strength).toFixed(2)+'px');
+ };
+ const requestRender=()=>{if(!frame) frame=window.requestAnimationFrame(render)};
+ window.addEventListener('scroll',requestRender,{passive:true});
+ window.addEventListener('resize',requestRender,{passive:true});
+ if(mobile.addEventListener) mobile.addEventListener('change',requestRender);
+ else mobile.addListener(requestRender);
+ render();
+})();
