@@ -364,11 +364,11 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 
 
 /* PRDXQ / CINEMATIC HERO PARALLAX — scoped to the hero only */
-.hero-poster{isolation:isolate;--hero-parallax-progress:0;perspective:1000px}
-.hero-poster:after{transform:translate3d(0,var(--hero-orbit-y,0px),0);will-change:transform}
-.hero-poster .hero-noise{transform:translate3d(0,var(--hero-grid-y,0px),0);will-change:transform}
+.hero-poster{isolation:isolate;--hero-parallax-progress:0;perspective:1000px;transform-style:preserve-3d}
+.hero-poster:after{transform:translate3d(0,var(--hero-orbit-y,0px),0) scale(var(--hero-orbit-scale,1));will-change:transform}
+.hero-poster .hero-noise{transform:translate3d(0,var(--hero-grid-y,0px),0) scale(1.04);will-change:transform}
 .hero-poster .hero-top{transform:translate3d(0,var(--hero-meta-y,0px),0)}
-.hero-poster .hero-word{transform:translate3d(0,var(--hero-word-y,0px),0);transform-origin:center center}
+.hero-poster .hero-word{transform:translate3d(0,var(--hero-word-y,0px),0) scale(var(--hero-word-scale,1));transform-origin:center center;will-change:transform}
 .hero-poster .hero-bottom{transform:translate3d(0,var(--hero-bottom-y,0px),0)}
 .hero-poster .hero-word img{display:block;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(44,54,62,.12))}
 @media (min-width:900px){
