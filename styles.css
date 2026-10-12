@@ -402,3 +402,96 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 @media(prefers-reduced-motion:reduce){
  .hero-poster .hero-3d-canvas{display:none!important}
 }
+
+
+/* PRDXQ MOBILE REDESIGN — October 2026
+   A deliberate mobile composition, not a scaled desktop layout. */
+@media (max-width:700px){
+  :root{--mobile-gutter:16px}
+  html{scroll-padding-top:82px}
+  body{overflow-x:clip}
+  .nav{height:66px;padding:0 18px;gap:12px}
+  .brand-word{font-size:20px;letter-spacing:-.09em}
+  .nav nav{display:none}
+  .nav-right{margin-left:auto;gap:12px}
+  .nav-cta{font-size:9px;padding:11px 12px;border-radius:999px}
+  .menu-toggle{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18)}
+  .mobile-menu{padding:16px 18px 24px}
+  .mobile-menu a{padding:16px 0;font-size:clamp(24px,7vw,34px);letter-spacing:-.055em}
+  .mobile-menu a b{font:9px 'DM Mono',monospace;letter-spacing:.08em}
+  main{width:100%;overflow:clip}
+  .hero-poster{min-height:min(76svh,680px);min-height:76svh;margin:10px 10px 38px;padding:22px 20px 22px;border-radius:24px;display:flex;flex-direction:column;justify-content:space-between}
+  .hero-poster .hero-top{position:relative;top:auto;left:auto;right:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:9px;line-height:1.4;letter-spacing:.06em}
+  .hero-poster .hero-word{position:relative;inset:auto;margin:0 -5px;display:flex;align-items:center;flex:1;min-height:0}
+  .hero-poster .hero-word img{width:100%;max-height:34svh;object-fit:contain}
+  .hero-poster .hero-bottom{position:relative;left:auto;right:auto;bottom:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;font-size:9px}
+  .hero-poster .hero-bottom small{display:block;max-width:180px;font-size:8px;line-height:1.6}
+  .hero-poster .hero-bottom a{white-space:nowrap}
+  .hero-poster:after{width:72vw;height:72vw;right:-26vw;top:24%;opacity:.65}
+  .identity-section,.manifesto-section,.statement-block,.capabilities,.numbers,.work-preview,.contact-strip,.system-identity{margin:0 16px 64px}
+  .identity-title{margin-bottom:22px}
+  .identity-title>span,.manifesto-kicker,.section-head>span{font-size:9px;letter-spacing:.12em}
+  .identity-title h2,.section-head h2{font-size:clamp(48px,15vw,76px);line-height:.9;letter-spacing:-.085em}
+  .identity-panel{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:20px;border-radius:22px}
+  .portrait-mark{width:64px;height:64px;font-size:24px}
+  .identity-main{min-width:0}
+  .identity-name{font-size:9px;letter-spacing:.12em;overflow-wrap:anywhere}
+  .identity-main h3{font-size:clamp(26px,8vw,38px);line-height:.98;letter-spacing:-.07em}
+  .identity-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .identity-tags span{font-size:8px;padding:7px 9px}
+  .identity-side{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:14px;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:2px}
+  .identity-side>div{display:grid;gap:7px}
+  .identity-side small{font-size:8px}
+  .identity-side b{font-size:10px}
+  .identity-side>a{grid-column:1/-1;margin-top:6px;font-size:9px}
+  .system-identity{padding:20px 18px;border-radius:22px}
+  .system-id{display:grid;grid-template-columns:1fr;gap:24px;padding:34px 0}
+  .system-id-main h2{font-size:clamp(30px,9vw,44px);line-height:.98;letter-spacing:-.07em}
+  .system-readout{display:grid;grid-template-columns:1fr auto;gap:10px 16px}
+  .system-readout span,.system-readout b{font-size:9px}
+  .system-marquee{font-size:10px}
+  .manifesto-section{padding:0}
+  .manifesto-kicker{display:flex;justify-content:space-between;gap:10px}
+  .manifesto-stack{margin-top:26px}
+  .manifesto-stack>div{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:17px 0}
+  .manifesto-stack>div strong{font-size:clamp(22px,7vw,34px);line-height:1;letter-spacing:-.065em;overflow-wrap:anywhere}
+  .manifesto-stack>div small{font-size:8px}
+  .manifesto-section>p{font-size:15px;line-height:1.5;max-width:29ch;margin-top:22px}
+  .statement-block{padding:26px 22px;border-radius:24px;min-height:unset}
+  .statement-block h2{font-size:clamp(42px,13vw,64px);line-height:.93;letter-spacing:-.08em;margin:34px 0 26px}
+  .statement-pills{display:flex;flex-wrap:wrap;gap:7px}
+  .statement-pills span{font-size:8px;padding:9px 10px}
+  .capabilities .section-head{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;margin-bottom:22px}
+  .capabilities .section-head>span{grid-column:1/-1}
+  .capabilities .section-head h2{margin:0}
+  .capabilities .section-head>a{font-size:8px;white-space:nowrap}
+  .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cap-card,.cap-card.cap-big{min-height:190px;min-width:0;padding:16px;border-radius:18px;display:flex;flex-direction:column;justify-content:space-between}
+  .cap-card>span{font-size:8px}
+  .cap-card>div b{font-size:8px;letter-spacing:.1em}
+  .cap-card>div strong{font-size:clamp(18px,5.8vw,25px);line-height:1.03;letter-spacing:-.055em;overflow-wrap:anywhere}
+  .cap-card>i{align-self:flex-end;font-size:18px}
+  .numbers{display:grid;grid-template-columns:1fr 1fr;gap:24px 14px;padding:24px 0;border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)}
+  .numbers>div{display:grid;gap:6px}
+  .numbers>div span{font-size:clamp(40px,12vw,58px);line-height:.9;letter-spacing:-.08em}
+  .numbers>div small{font-size:8px;letter-spacing:.1em}
+  .section-head{gap:14px}
+  .section-head>a{font-size:8px}
+  .work-grid,.project-grid,.design-grid{grid-template-columns:1fr!important;gap:14px}
+  .work-card,.project-card,.design-card{min-width:0;border-radius:20px}
+  .work-card img,.project-card img,.design-card img{width:100%;height:auto;object-fit:cover}
+  .site-footer{padding:28px 18px 24px;gap:22px}
+  .footer-top{display:grid;grid-template-columns:1fr;gap:18px}
+  .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:8px}
+  button,a,input,textarea,select{ -webkit-tap-highlight-color:transparent}
+  :is(a,button,[role=button],input,textarea,select){scroll-margin-top:80px}
+}
+@media (max-width:380px){
+  .nav{padding-inline:13px}
+  .nav-cta{font-size:8px;padding:10px}
+  .hero-poster{padding-inline:16px}
+  .identity-panel{padding:16px;grid-template-columns:54px minmax(0,1fr);gap:12px}
+  .portrait-mark{width:54px;height:54px}
+  .cap-grid{grid-template-columns:1fr}
+  .cap-card,.cap-card.cap-big{min-height:155px}
+}
