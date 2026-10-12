@@ -443,8 +443,8 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
   if(started||stopped||reduce.matches||document.hidden) return;
   started=true;
   try{
-   const core=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
-   const loaderMod=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
+   const core=await import('https://esm.sh/three@0.160.0');
+   const loaderMod=await import('https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
    if(stopped||reduce.matches) return;
    THREE=core;
    renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!mobile.matches,powerPreference:'low-power',premultipliedAlpha:true});
