@@ -427,3 +427,80 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
  else if(reduceMotion.addListener) reduceMotion.addListener(handleMotionChange);
  render();
 })();
+
+
+/* PRDXQ HERO 3D LAYERS — lazy-loaded, low-cost, hero only */
+(()=> {
+ const hero=document.querySelector('.hero-poster');
+ const canvas=hero?.querySelector('.hero-3d-canvas');
+ if(!hero||!canvas) return;
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ if(reduce.matches||!('WebGLRenderingContext' in window)) return;
+ let renderer,scene,camera,model,raf=0,visible=false,started=false,stopped=false;
+ let THREE,observer;
+ const mobile=window.matchMedia('(max-width: 700px)');
+ const start=async()=>{
+  if(started||stopped||reduce.matches||document.hidden) return;
+  started=true;
+  try{
+   const core=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+   const loaderMod=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
+   if(stopped||reduce.matches) return;
+   THREE=core;
+   renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!mobile.matches,powerPreference:'low-power',premultipliedAlpha:true});
+   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,mobile.matches?1.15:1.5));
+   renderer.setSize(Math.max(1,hero.clientWidth),Math.max(1,hero.clientHeight),false);
+   renderer.outputColorSpace=THREE.SRGBColorSpace;
+   renderer.toneMapping=THREE.ACESFilmicToneMapping;
+   renderer.toneMappingExposure=1.15;
+   scene=new THREE.Scene();
+   camera=new THREE.PerspectiveCamera(32,Math.max(1,hero.clientWidth)/Math.max(1,hero.clientHeight),.1,100);
+   camera.position.set(0,0,8.2);
+   scene.add(new THREE.HemisphereLight(0xeaf5ff,0x34404c,2.0));
+   const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-3,4,5);scene.add(key);
+   const rim=new THREE.PointLight(0xc9e7ff,28,18);rim.position.set(3,1,3);scene.add(rim);
+   const fill=new THREE.PointLight(0xffffff,15,16);fill.position.set(-3,-2,1);scene.add(fill);
+   const loaded=await new loaderMod.GLTFLoader().loadAsync('assets/prdxq-hero-layers.gltf');
+   if(stopped||!visible) {model=loaded.scene;scene.add(model)} else {model=loaded.scene;scene.add(model)}
+   model.position.set(mobile.matches?0.45:1.1,0.0,0);
+   model.scale.setScalar(mobile.matches?1.25:1.55);
+   model.rotation.set(.18,-.38,.08);
+   hero.classList.add('hero-3d-ready');
+   const render=()=>{
+    raf=0;
+    if(!visible||document.hidden||stopped||!renderer) return;
+    const t=performance.now()*.00018;
+    if(model){model.rotation.y=-.38+Math.sin(t)*.22;model.rotation.x=.18+Math.cos(t*.8)*.09;model.position.y=Math.sin(t*1.1)*.12;}
+    renderer.render(scene,camera);
+    raf=requestAnimationFrame(render);
+   };
+   const draw=()=>{if(!raf&&visible&&!document.hidden)raf=requestAnimationFrame(render)};
+   const resize=()=>{
+    if(!renderer||!camera)return;
+    const w=Math.max(1,hero.clientWidth),h=Math.max(1,hero.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,mobile.matches?1.15:1.5));
+    renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();draw();
+   };
+   window.addEventListener('resize',resize,{passive:true});
+   document.addEventListener('visibilitychange',draw);
+   observer=new IntersectionObserver(entries=>{
+    visible=entries.some(e=>e.isIntersecting);
+    if(visible)draw();else if(raf){cancelAnimationFrame(raf);raf=0}
+   },{rootMargin:'100px'});
+   observer.observe(hero);
+   if('ResizeObserver' in window)new ResizeObserver(resize).observe(hero);
+   if(visible)draw();
+  }catch(error){
+   started=false;
+   canvas.hidden=true;
+   console.warn('PRDXQ hero 3D unavailable; CSS hero remains active.',error);
+  }
+ };
+ const initObserver=new IntersectionObserver(entries=>{
+  if(entries.some(e=>e.isIntersecting)){initObserver.disconnect();start()}
+ },{rootMargin:'160px'});
+ initObserver.observe(hero);
+ const stopForReducedMotion=()=>{if(reduce.matches){stopped=true;if(raf)cancelAnimationFrame(raf);if(observer)observer.disconnect();if(renderer)renderer.dispose();hero.classList.remove('hero-3d-ready')}};
+ if(reduce.addEventListener)reduce.addEventListener('change',stopForReducedMotion);
+ else reduce.addListener(stopForReducedMotion);
+})();
