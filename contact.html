@@ -8,7 +8,7 @@
     <div class="project-route" aria-label="Ablauf: Idee, Konzept, Build, Launch">
       <span class="project-route-label">DEIN WEG ZUM ERGEBNIS</span>
       <div class="project-route-steps">
-        <span><i>01</i> Idee</span><b>↗</b><span><i>02</i> Konzept</span><b>↗</b><span><i>03</i> Build</span><b>↗</b><span><i>04</i> Launch</span>
+        <span><i>01</i> Idee</span><span class="project-route-connector" aria-hidden="true"></span><span><i>02</i> Konzept</span><span class="project-route-connector" aria-hidden="true"></span><span><i>03</i> Build</span><span class="project-route-connector" aria-hidden="true"></span><span><i>04</i> Launch</span>
       </div>
     </div>
   </div>
@@ -153,14 +153,14 @@
 .project-start-head h1 em{color:#758087}
 .project-lead{max-width:560px;font-size:clamp(15px,1.6vw,18px);color:#58646c}
 .project-system-line{margin-top:24px}
-.project-route{max-width:650px;margin-top:34px;padding:16px 18px 17px;border:1px solid rgba(120,130,138,.18);border-radius:18px;background:rgba(255,255,255,.35);box-shadow:inset 0 1px rgba(255,255,255,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.project-route{max-width:650px;margin-top:34px;padding:16px 18px 17px;border:1px solid rgba(120,130,138,.18);border-radius:18px;background:rgba(255,255,255,.16);box-shadow:inset 0 1px rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%)}
 .project-route-label{display:block;margin-bottom:13px;color:#849097;font:8px DM Mono;letter-spacing:.13em}
 .project-route-steps{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .project-route-steps span{display:flex;align-items:center;gap:7px;color:#354043;font:600 11px Manrope}
 .project-route-steps span i{display:grid;place-items:center;width:24px;height:24px;border:1px solid rgba(120,130,138,.25);border-radius:50%;color:#6f7b82;font:8px DM Mono;font-style:normal}
 .project-route-steps span:first-child i{background:#c7ff38;border-color:#c7ff38;color:#20272b}
-.project-route-steps>b{color:#a1aaaf;font:12px Manrope;font-weight:400}
-.project-wizard{border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(135deg,rgba(49,59,63,.98),rgba(25,32,36,.99));box-shadow:0 35px 90px rgba(27,35,39,.2),inset 0 1px rgba(255,255,255,.08);color:#f4f6f6}
+.project-route-connector{position:relative;display:block!important;flex:1 1 18px;min-width:10px;height:1px;background:rgba(90,102,108,.3)}\n.project-route-connector:after{content:"";position:absolute;right:0;top:50%;width:5px;height:5px;border-top:1px solid #8a969c;border-right:1px solid #8a969c;transform:translateY(-50%) rotate(45deg)}
+.project-wizard{border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(135deg,rgba(49,59,63,.78),rgba(25,32,36,.72));backdrop-filter:blur(28px) saturate(135%);-webkit-backdrop-filter:blur(28px) saturate(135%);box-shadow:0 35px 90px rgba(27,35,39,.16),inset 0 1px rgba(255,255,255,.12);color:#f4f6f6}
 .wizard-top{color:#a8b3b8}
 .wizard-back{color:#b8c1c5}
 .wizard-back:hover{color:#c7ff38}
@@ -183,7 +183,7 @@
 .wizard-info p{color:#c1c9cd}
 .wizard-next button{background:#c7ff38;color:#20272b}
 .wizard-next button:not(:disabled):hover{box-shadow:0 10px 30px rgba(199,255,56,.18)}
-.wizard-result{background:linear-gradient(145deg,#242d31,#171e22)}
+.wizard-result{background:linear-gradient(145deg,rgba(36,45,49,.88),rgba(23,30,34,.84));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .result-chip{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.13)}
 .result-chip strong{color:#f5f7f7}
 .contact-details input{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.16)}
@@ -214,7 +214,7 @@
 }
 @media(max-width:360px){
  .project-route-steps span{flex-direction:column;align-items:flex-start;gap:5px}
- .project-route-steps>b{align-self:center}
+ .project-route-connector{min-width:5px;flex:1 1 5px}
  .project-start-head h1{font-size:48px}
 }
 @media(prefers-reduced-motion:reduce){
