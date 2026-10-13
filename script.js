@@ -504,3 +504,109 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
  if(reduce.addEventListener)reduce.addEventListener('change',stopForReducedMotion);
  else reduce.addListener(stopForReducedMotion);
 })();
+
+
+/* HOMEPAGE PARALLAX — progressive enhancement, no scroll hijacking */
+(()=> {
+  const home = document.querySelector('.hero-poster');
+  if (!home || document.body.dataset.parallaxReady) return;
+  document.body.dataset.parallaxReady = 'true';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobile = window.matchMedia('(max-width: 800px)');
+  if (reduce.matches) return;
+
+  const heroArt = home.querySelector('.hero-word');
+  const heroTop = home.querySelector('.hero-top');
+  const heroBottom = home.querySelector('.hero-bottom');
+  const identity = document.querySelector('.identity-section');
+  const identityPanel = document.querySelector('.identity-panel');
+  const statement = document.querySelector('.statement-block');
+  const capabilities = document.querySelector('.capabilities');
+  const cards = [...document.querySelectorAll('.cap-grid .cap-card')];
+  const experienceCards = [...document.querySelectorAll('.experience-cards a')];
+  let queued = false;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const update = () => {
+    queued = false;
+    if (document.hidden) return;
+    const vh = window.innerHeight || 1;
+    const scrollY = window.scrollY || 0;
+
+    /* The hero artwork drifts at a different rate from the page. */
+    if (heroArt) {
+      const rect = home.getBoundingClientRect();
+      const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
+      const amount = mobile.matches ? 22 : 52;
+      heroArt.style.setProperty('--hero-scroll-y', ((progress - .15) * -amount) + 'px');
+      heroArt.style.setProperty('--hero-scroll-scale', String(1 + progress * (mobile.matches ? .018 : .035)));
+    }
+    if (heroTop) {
+      const progress = clamp(-home.getBoundingClientRect().top / Math.max(1, home.offsetHeight), 0, 1);
+      heroTop.style.setProperty('--hero-label-y', (progress * (mobile.matches ? -8 : -18)) + 'px');
+    }
+    if (heroBottom) {
+      const progress = clamp(-home.getBoundingClientRect().top / Math.max(1, home.offsetHeight), 0, 1);
+      heroBottom.style.setProperty('--hero-bottom-y', (progress * (mobile.matches ? -12 : -26)) + 'px');
+    }
+
+    /* Give the identity panel a small, scroll-linked lift, not a layout shift. */
+    if (identity && identityPanel) {
+      const rect = identity.getBoundingClientRect();
+      const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
+      identityPanel.style.setProperty('--identity-parallax-y', ((.5 - progress) * (mobile.matches ? 12 : 24)) + 'px');
+    }
+
+    /* Stagger the service cards as they enter the viewport. */
+    if (capabilities) {
+      const rect = capabilities.getBoundingClientRect();
+      const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
+      cards.forEach((card, i) => {
+        const stagger = mobile.matches ? 0 : (i % 3) * 5;
+        card.style.setProperty('--card-parallax-y', (Math.sin(progress * Math.PI) * (mobile.matches ? 7 : 16) + stagger) + 'px');
+      });
+    }
+
+    experienceCards.forEach((card, i) => {
+      const rect = card.getBoundingClientRect();
+      const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
+      card.style.setProperty('--experience-parallax-y', ((.5 - progress) * (mobile.matches ? 8 : (i ? 22 : 34))) + 'px');
+    });
+
+    /* Keep the page's motion subtle and consistent with native scrolling. */
+    if (statement) {
+      const rect = statement.getBoundingClientRect();
+      const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
+      statement.style.setProperty('--statement-parallax-y', ((.5 - progress) * (mobile.matches ? 6 : 16)) + 'px');
+    }
+  };
+
+  const requestUpdate = () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate, {passive:true});
+  document.addEventListener('visibilitychange', requestUpdate);
+  reduce.addEventListener?.('change', event => {
+    if (event.matches) {
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+      [heroArt, heroTop, heroBottom, identityPanel, ...cards, ...experienceCards, statement].filter(Boolean).forEach(el => {
+        el.style.removeProperty('--hero-scroll-y');
+        el.style.removeProperty('--hero-scroll-scale');
+        el.style.removeProperty('--hero-label-y');
+        el.style.removeProperty('--hero-bottom-y');
+        el.style.removeProperty('--identity-parallax-y');
+        el.style.removeProperty('--card-parallax-y');
+        el.style.removeProperty('--experience-parallax-y');
+        el.style.removeProperty('--statement-parallax-y');
+      });
+    }
+  });
+  requestUpdate();
+})();
