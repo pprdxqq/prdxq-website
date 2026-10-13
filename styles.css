@@ -817,3 +817,17 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
     will-change: auto !important;
   }
 }
+
+
+/* Make scroll-linked motion visibly perceptible on touch screens. */
+@media (max-width: 800px) {
+  .hero-word {
+    transition: none !important;
+  }
+  .identity-panel,
+  .cap-grid .cap-card,
+  .experience-cards a,
+  .statement-block {
+    transition: none;
+  }
+}
