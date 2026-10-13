@@ -5,6 +5,12 @@
     <h1>Erzähl mir,<br><em>was du bauen willst.</em></h1>
     <p class="project-lead">Keine Fachbegriffe nötig. Ich führe dich Schritt für Schritt durch ein paar Fragen und zeige dir direkt, was die einzelnen Möglichkeiten bedeuten.</p>
     <div class="project-system-line"><span></span> PROJECT ADVISOR <b>ONLINE</b></div>
+    <div class="project-route" aria-label="Ablauf: Idee, Konzept, Build, Launch">
+      <span class="project-route-label">DEIN WEG ZUM ERGEBNIS</span>
+      <div class="project-route-steps">
+        <span><i>01</i> Idee</span><b>↗</b><span><i>02</i> Konzept</span><b>↗</b><span><i>03</i> Build</span><b>↗</b><span><i>04</i> Launch</span>
+      </div>
+    </div>
   </div>
 
   <div class="project-wizard" id="projectWizard" aria-live="polite">
@@ -134,6 +140,85 @@
  .project-start{padding:105px 12px 90px}.project-start-head{padding:0 8px;margin-bottom:30px}.project-start-head h1{font-size:58px}.project-lead{font-size:14px}.project-wizard{border-radius:27px}.wizard-top{padding:17px 18px 11px}.wizard-progress{margin:0 18px}.wizard-panel{padding:28px 18px 22px}.wizard-question h2{font-size:42px}.wizard-options{grid-template-columns:1fr;margin-top:28px;gap:8px}.wizard-option{padding:17px;border-radius:18px}.wizard-option strong{font-size:12px}.wizard-option small{font-size:7px}.wizard-info{grid-template-columns:27px 1fr auto}.wizard-info p{font-size:11px}.wizard-result{padding:30px 18px}.wizard-result h2{font-size:43px}.result-grid{grid-template-columns:1fr 1fr;margin:26px 0}.result-chip{padding:14px}.contact-details,.result-actions{grid-template-columns:1fr}.contact-details{gap:9px}.result-action{padding:15px}.project-system-line{font-size:7px}
 }
 @media(prefers-reduced-motion:reduce){.wizard-panel.step-enter,.wizard-info{animation:none}
+}
+
+/* CONTACT PAGE ART DIRECTION — dark glass project console, restrained lime accents. */
+.project-start{position:relative;isolation:isolate}
+.project-start:before{content:"";position:absolute;z-index:-1;top:90px;left:-10vw;width:min(55vw,620px);height:480px;pointer-events:none;background:radial-gradient(ellipse,rgba(199,255,56,.13),rgba(199,255,56,0) 68%);filter:blur(10px)}
+.project-start:after{content:"";position:absolute;z-index:-1;top:270px;right:-12vw;width:min(54vw,600px);height:560px;pointer-events:none;background:radial-gradient(ellipse,rgba(130,154,170,.14),transparent 70%)}
+.project-start-head{position:relative}
+.project-start-head .kicker{display:inline-flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid rgba(120,130,138,.22);border-radius:999px;background:rgba(255,255,255,.46);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.project-start-head .kicker:before{content:"";width:6px;height:6px;border-radius:50%;background:#c7ff38;box-shadow:0 0 12px rgba(199,255,56,.65)}
+.project-start-head h1{max-width:900px;font-size:clamp(60px,9vw,124px);line-height:.86;letter-spacing:-.085em}
+.project-start-head h1 em{color:#758087}
+.project-lead{max-width:560px;font-size:clamp(15px,1.6vw,18px);color:#58646c}
+.project-system-line{margin-top:24px}
+.project-route{max-width:650px;margin-top:34px;padding:16px 18px 17px;border:1px solid rgba(120,130,138,.18);border-radius:18px;background:rgba(255,255,255,.35);box-shadow:inset 0 1px rgba(255,255,255,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.project-route-label{display:block;margin-bottom:13px;color:#849097;font:8px DM Mono;letter-spacing:.13em}
+.project-route-steps{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.project-route-steps span{display:flex;align-items:center;gap:7px;color:#354043;font:600 11px Manrope}
+.project-route-steps span i{display:grid;place-items:center;width:24px;height:24px;border:1px solid rgba(120,130,138,.25);border-radius:50%;color:#6f7b82;font:8px DM Mono;font-style:normal}
+.project-route-steps span:first-child i{background:#c7ff38;border-color:#c7ff38;color:#20272b}
+.project-route-steps>b{color:#a1aaaf;font:12px Manrope;font-weight:400}
+.project-wizard{border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(135deg,rgba(49,59,63,.98),rgba(25,32,36,.99));box-shadow:0 35px 90px rgba(27,35,39,.2),inset 0 1px rgba(255,255,255,.08);color:#f4f6f6}
+.wizard-top{color:#a8b3b8}
+.wizard-back{color:#b8c1c5}
+.wizard-back:hover{color:#c7ff38}
+.wizard-progress{background:rgba(255,255,255,.1)!important}
+.wizard-progress:before{background:#c7ff38;box-shadow:0 0 18px rgba(199,255,56,.3)}
+.wizard-progress:after{box-shadow:0 0 0 4px rgba(199,255,56,.12),0 0 18px rgba(199,255,56,.5)}
+.wizard-kicker{color:#9ca8ae}
+.wizard-question h2,.wizard-result h2{color:#f4f6f6}
+.wizard-question>p:not(.wizard-kicker),.wizard-result-copy{color:#b1bcc1}
+.wizard-option{border-color:rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.025));color:#f3f5f5;box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.wizard-option:hover{background:rgba(255,255,255,.11);border-color:rgba(199,255,56,.38);box-shadow:0 12px 28px rgba(0,0,0,.14)}
+.wizard-option strong{color:inherit}
+.wizard-option small{color:#aab5ba}
+.wizard-option.selected{background:rgba(199,255,56,.11);border-color:#c7ff38;color:#fff;box-shadow:inset 0 0 0 1px rgba(199,255,56,.08),0 12px 30px rgba(0,0,0,.16)}
+.wizard-option.selected small{color:#c3cccf}
+.wizard-option .option-info{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);color:#c1c9cd}
+.wizard-option.selected .option-info{background:#c7ff38;color:#1b2225}
+.wizard-option .check{color:#c7ff38}
+.wizard-info{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+.wizard-info p{color:#c1c9cd}
+.wizard-next button{background:#c7ff38;color:#20272b}
+.wizard-next button:not(:disabled):hover{box-shadow:0 10px 30px rgba(199,255,56,.18)}
+.wizard-result{background:linear-gradient(145deg,#242d31,#171e22)}
+.result-chip{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.13)}
+.result-chip strong{color:#f5f7f7}
+.contact-details input{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.16)}
+.result-action{border-color:rgba(255,255,255,.24)}
+.result-note{color:#9ba6ab}
+@media(max-width:800px){
+ .project-start{padding:100px 14px 72px}
+ .project-start-head{padding:0 5px;margin-bottom:26px}
+ .project-start-head h1{font-size:clamp(50px,12.5vw,68px);line-height:.9;letter-spacing:-.08em;margin-top:24px}
+ .project-lead{font-size:15px;line-height:1.6}
+ .project-route{margin-top:25px;padding:14px 12px;border-radius:16px}
+ .project-route-label{font-size:7px;margin-bottom:12px}
+ .project-route-steps{gap:5px}
+ .project-route-steps span{gap:5px;font-size:9px}
+ .project-route-steps span i{width:21px;height:21px;font-size:7px}
+ .project-route-steps>b{font-size:10px}
+ .project-wizard{border-radius:24px}
+ .wizard-panel{padding:29px 17px 22px}
+ .wizard-question h2{font-size:clamp(34px,9vw,43px);line-height:.95}
+ .wizard-options{margin-top:25px}
+ .wizard-option{min-height:80px;padding:16px 15px}
+ .wizard-option small{font-size:8px;line-height:1.45;max-width:90%}
+ .wizard-info{padding:14px 12px;gap:9px}
+ .wizard-result{padding:28px 17px}
+ .wizard-result h2{font-size:clamp(37px,10vw,45px)}
+ .result-chip{min-width:0;overflow-wrap:anywhere}
+ .result-chip strong{overflow-wrap:anywhere}
+}
+@media(max-width:360px){
+ .project-route-steps span{flex-direction:column;align-items:flex-start;gap:5px}
+ .project-route-steps>b{align-self:center}
+ .project-start-head h1{font-size:48px}
+}
+@media(prefers-reduced-motion:reduce){
+ .project-start:before,.project-start:after{filter:none}
 }
 </style><footer><span>PRDXQ / ILIAS ASDUFAN</span><span>ILIAS.ASDUFAN@ICLOUD.DE</span><span>© 2026</span></footer><script src="script.js"></script><script>
 (()=> {
