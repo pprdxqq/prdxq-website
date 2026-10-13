@@ -83,8 +83,12 @@
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const value = translations.en[key];
-      if (next === 'en' && value) el.textContent = value;
-      else if (el.dataset.de) el.textContent = el.dataset.de;
+      const nextText = next === 'en' && value ? value : el.dataset.de;
+      if (!nextText) return;
+      // Preserve decorative child elements such as mobile index numbers and CTA arrows.
+      const textNode = Array.from(el.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+      if (textNode) textNode.textContent = nextText + (textNode.textContent.trim().endsWith('↗') ? ' ' : '');
+      else if (el.children.length === 0) el.textContent = nextText;
     });
     if (langButton) { langButton.textContent = next === 'de' ? 'EN' : 'DE'; langButton.setAttribute('aria-label', next === 'de' ? 'Switch language to English' : 'Sprache auf Deutsch umstellen'); }
   }
