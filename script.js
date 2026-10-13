@@ -538,24 +538,24 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
     if (heroArt) {
       const rect = home.getBoundingClientRect();
       const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-      const amount = mobile.matches ? 22 : 52;
+      const amount = mobile.matches ? 78 : 90;
       heroArt.style.setProperty('--hero-scroll-y', ((progress - .15) * -amount) + 'px');
-      heroArt.style.setProperty('--hero-scroll-scale', String(1 + progress * (mobile.matches ? .018 : .035)));
+      heroArt.style.setProperty('--hero-scroll-scale', String(1 + progress * (mobile.matches ? .065 : .055)));
     }
     if (heroTop) {
       const progress = clamp(-home.getBoundingClientRect().top / Math.max(1, home.offsetHeight), 0, 1);
-      heroTop.style.setProperty('--hero-label-y', (progress * (mobile.matches ? -8 : -18)) + 'px');
+      heroTop.style.setProperty('--hero-label-y', (progress * (mobile.matches ? -22 : -28)) + 'px');
     }
     if (heroBottom) {
       const progress = clamp(-home.getBoundingClientRect().top / Math.max(1, home.offsetHeight), 0, 1);
-      heroBottom.style.setProperty('--hero-bottom-y', (progress * (mobile.matches ? -12 : -26)) + 'px');
+      heroBottom.style.setProperty('--hero-bottom-y', (progress * (mobile.matches ? -32 : -42)) + 'px');
     }
 
     /* Give the identity panel a small, scroll-linked lift, not a layout shift. */
     if (identity && identityPanel) {
       const rect = identity.getBoundingClientRect();
       const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-      identityPanel.style.setProperty('--identity-parallax-y', ((.5 - progress) * (mobile.matches ? 12 : 24)) + 'px');
+      identityPanel.style.setProperty('--identity-parallax-y', ((.5 - progress) * (mobile.matches ? 34 : 42)) + 'px');
     }
 
     /* Stagger the service cards as they enter the viewport. */
@@ -564,21 +564,21 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
       const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
       cards.forEach((card, i) => {
         const stagger = mobile.matches ? 0 : (i % 3) * 5;
-        card.style.setProperty('--card-parallax-y', (Math.sin(progress * Math.PI) * (mobile.matches ? 7 : 16) + stagger) + 'px');
+        card.style.setProperty('--card-parallax-y', (Math.sin(progress * Math.PI) * (mobile.matches ? 20 : 28) + stagger) + 'px');
       });
     }
 
     experienceCards.forEach((card, i) => {
       const rect = card.getBoundingClientRect();
       const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-      card.style.setProperty('--experience-parallax-y', ((.5 - progress) * (mobile.matches ? 8 : (i ? 22 : 34))) + 'px');
+      card.style.setProperty('--experience-parallax-y', ((.5 - progress) * (mobile.matches ? 26 : (i ? 30 : 42))) + 'px');
     });
 
     /* Keep the page's motion subtle and consistent with native scrolling. */
     if (statement) {
       const rect = statement.getBoundingClientRect();
       const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-      statement.style.setProperty('--statement-parallax-y', ((.5 - progress) * (mobile.matches ? 6 : 16)) + 'px');
+      statement.style.setProperty('--statement-parallax-y', ((.5 - progress) * (mobile.matches ? 18 : 24)) + 'px');
     }
   };
 
