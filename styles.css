@@ -955,3 +955,30 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
   .cap-visual { height: 190px; }
   .cap-intro { font-size: 15px; }
 }
+
+
+/* Plain-language introduction and a clear next step. */
+.identity-intro {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: #66727a;
+  font-size: clamp(16px, 1.8vw, 21px);
+  line-height: 1.55;
+}
+.identity-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 13px 18px;
+  border: 1px solid rgba(120,130,138,.3);
+  border-radius: 999px;
+  background: rgba(255,255,255,.35);
+  box-shadow: var(--soft);
+  font: 9px DM Mono;
+  letter-spacing: .06em;
+}
+@media (max-width: 800px) {
+  .identity-intro { font-size: 16px; margin-top: 16px; }
+  .identity-cta { margin-top: 16px; font-size: 8px; }
+}
