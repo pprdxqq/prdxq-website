@@ -1066,3 +1066,10 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 .legal-links a{color:inherit;text-decoration:none;opacity:.78;transition:opacity .2s}
 .legal-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:800px){.legal-links{gap:14px;flex-wrap:wrap}}
+
+
+/* Legal page footer links */
+.legal-links{display:inline-flex;align-items:center;gap:16px}
+.legal-links a{color:inherit;text-decoration:none;opacity:.78;transition:opacity .2s}
+.legal-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:800px){.legal-links{gap:14px;flex-wrap:wrap}}
