@@ -982,3 +982,80 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
   .identity-intro { font-size: 16px; margin-top: 16px; }
   .identity-cta { margin-top: 16px; font-size: 8px; }
 }
+
+
+/* FIX: prevent the mobile manifesto text from being clipped at the edges. */
+.manifesto-section,
+.manifesto-section * {
+  box-sizing: border-box;
+}
+.manifesto-section {
+  width: auto;
+  max-width: 100%;
+  overflow: hidden;
+}
+.manifesto-kicker {
+  min-width: 0;
+  width: 100%;
+  gap: 12px;
+}
+.manifesto-kicker span {
+  min-width: 0;
+  max-width: 50%;
+  overflow-wrap: anywhere;
+}
+.manifesto-stack {
+  width: 100%;
+  min-width: 0;
+}
+.manifesto-stack > div {
+  min-width: 0;
+}
+.manifesto-stack > div strong {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.manifesto-section > p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 800px) {
+  .manifesto-section {
+    margin: 10px;
+    padding: 30px 18px 28px;
+  }
+  .manifesto-kicker {
+    align-items: flex-start;
+    font-size: 7px;
+    letter-spacing: .06em;
+  }
+  .manifesto-kicker span:last-child {
+    text-align: right;
+  }
+  .manifesto-stack {
+    margin-top: 30px;
+  }
+  .manifesto-stack > div {
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 10px;
+    padding: 20px 0;
+  }
+  .manifesto-stack > div strong {
+    font-size: clamp(25px, 7.5vw, 42px);
+    line-height: 1.05;
+    letter-spacing: -.055em;
+  }
+  .manifesto-section > p {
+    font-size: clamp(15px, 4.2vw, 18px);
+    line-height: 1.45;
+    margin-top: 28px;
+    max-width: 34ch;
+  }
+}
+@media (max-width: 360px) {
+  .manifesto-section { padding-inline: 14px; }
+  .manifesto-kicker { font-size: 6px; }
+  .manifesto-stack > div strong { font-size: 24px; }
+}
