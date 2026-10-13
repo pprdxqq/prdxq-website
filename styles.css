@@ -551,3 +551,75 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
     font-size: clamp(24px, 7.6vw, 30px);
   }
 }
+
+
+/* MOBILE REGRESSION FIX — work cards must not shrink into narrow columns.
+   Keep the Work page as a one-card-at-a-time horizontal snap carousel. */
+@media (max-width: 800px) {
+  .work-explorer {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: stretch;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 2px 20px;
+    margin: 10px 12px 24px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .work-explorer > .work-card {
+    box-sizing: border-box;
+    flex: 0 0 86vw !important;
+    width: 86vw;
+    min-width: 86vw !important;
+    max-width: 86vw;
+    min-height: 600px;
+    height: auto;
+    padding: 20px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow: hidden;
+  }
+
+  .work-explorer > .work-card .work-visual {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    height: clamp(220px, 68vw, 300px);
+    margin: 20px 0 28px;
+  }
+
+  .work-explorer > .work-card h2 {
+    font-size: clamp(36px, 10vw, 48px);
+    line-height: .9;
+    overflow-wrap: anywhere;
+  }
+
+  .work-explorer > .work-card p:not(.kicker) {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .work-explorer > .work-card > div:last-child {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .work-explorer {
+    margin-inline: 8px;
+    gap: 10px;
+  }
+
+  .work-explorer > .work-card {
+    flex-basis: 88vw !important;
+    width: 88vw;
+    min-width: 88vw !important;
+    max-width: 88vw;
+    padding: 17px;
+  }
+}
