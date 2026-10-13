@@ -51,6 +51,32 @@
   };
   let language = 'de';
   const langButton = document.querySelector('.language-toggle');
+  // Apply shared navigation translations on every page, including the mobile menu.
+  const navLabels = {
+    'index.html':['nav.home','Home','Home'], 'projects.html':['nav.projects','Projekte','Projects'],
+    'services.html':['nav.services','Leistungen','Services'], 'lab.html':['nav.lab','Lab','Lab'],
+    'design.html':['nav.design','Design','Design'], 'about.html':['nav.about','Über mich','About'],
+    'contact.html':['nav.contact','Projekt starten','Start a project']
+  };
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = (link.getAttribute('href') || '').split('#')[0].split('?')[0];
+    const key = navLabels[href];
+    if (key && !link.hasAttribute('data-i18n')) {
+      const label = link.querySelector('small') ? link.childNodes[0].textContent.trim() : link.textContent.trim().replace(/↗/g,'').trim();
+      link.dataset.i18n = key[0];
+      link.dataset.de = label || key[1];
+    }
+  });
+  const pageLeadKeys = {
+    'projects.html':'page.projects.copy','services.html':'page.services.copy','lab.html':'page.lab.copy',
+    'design.html':'page.design.copy','about.html':'page.about.copy','contact.html':'page.contact.copy'
+  };
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  const pageLead = document.querySelector('.page-hero .lead');
+  if (pageLead && pageLeadKeys[currentPage] && !pageLead.hasAttribute('data-i18n')) {
+    pageLead.dataset.i18n = pageLeadKeys[currentPage];
+    pageLead.dataset.de = pageLead.textContent.trim();
+  }
   function setLanguage(next) {
     language = next;
     document.documentElement.lang = next;
