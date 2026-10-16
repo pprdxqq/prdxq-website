@@ -470,7 +470,22 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
     raf=0;
     if(!visible||document.hidden||stopped||!renderer) return;
     const t=performance.now()*.00018;
-    if(model){model.rotation.y=-.38+Math.sin(t)*.22;model.rotation.x=.18+Math.cos(t*.8)*.09;model.position.y=Math.sin(t*1.1)*.12;}
+    const rect=hero.getBoundingClientRect();
+    const vh=Math.max(window.innerHeight,1);
+    const progress=Math.max(0,Math.min(1,(vh-rect.top)/(vh+rect.height)));
+    const depth=progress-.5;
+    if(model){
+     // Scroll controls the layered object; idle motion stays subtle between scrolls.
+     model.rotation.y=-.38+depth*1.35+Math.sin(t)*.045;
+     model.rotation.x=.18-depth*.48+Math.cos(t*.8)*.025;
+     model.rotation.z=.08+depth*.16;
+     model.position.x=(mobile.matches?.45:1.1)+depth*(mobile.matches?.12:.58);
+     model.position.y=depth*-.32+Math.sin(t*1.1)*.045;
+     model.scale.setScalar((mobile.matches?1.25:1.55)*(1+Math.abs(depth)*.075));
+    }
+    camera.position.x=depth*(mobile.matches?.12:.38);
+    camera.position.y=depth*-.16;
+    camera.lookAt(0,0,0);
     renderer.render(scene,camera);
     raf=requestAnimationFrame(render);
    };
