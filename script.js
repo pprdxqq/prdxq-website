@@ -487,11 +487,11 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
      model.rotation.y=-.38+depth*1.35+Math.sin(t)*.045;
      model.rotation.x=.18-depth*.48+Math.cos(t*.8)*.025;
      model.rotation.z=.08+depth*.16;
-     model.position.x=(mobile.matches?.45:1.1)+depth*(mobile.matches?.12:.58);
+     model.position.x=(mobile.matches ? .45 : 1.1)+depth*(mobile.matches ? .12 : .58);
      model.position.y=depth*-.32+Math.sin(t*1.1)*.045;
-     model.scale.setScalar((mobile.matches?1.25:1.55)*(1+Math.abs(depth)*.075));
+     model.scale.setScalar((mobile.matches ? 1.25 : 1.55)*(1+Math.abs(depth)*.075));
     }
-    camera.position.x=depth*(mobile.matches?.12:.38);
+    camera.position.x=depth*(mobile.matches ? .12 : .38);
     camera.position.y=depth*-.16;
     camera.lookAt(0,0,0);
     renderer.render(scene,camera);
