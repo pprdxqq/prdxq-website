@@ -1237,3 +1237,57 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
   .stage-hud, .stage-footer { left: 34px; right: 34px; }
   .lab-mobile-playground { display: none !important; }
 }
+
+
+/* PRDXQ DESKTOP SCROLL EXPERIENCE — layered glass orbits */
+@media (min-width: 801px) {
+  .hero-poster {
+    --hero-orbit-x: 0px;
+    --hero-orbit-rotate: 0deg;
+    --hero-orbit-back-x: 0px;
+    --hero-orbit-back-y: 0px;
+    --hero-orbit-back-rotate: 0deg;
+    --hero-parallax-depth: 0;
+  }
+  .hero-poster::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    width: clamp(360px, 42vw, 760px);
+    aspect-ratio: 1;
+    left: 43%;
+    top: 4%;
+    border-radius: 50%;
+    border: 1px solid rgba(242, 249, 252, .24);
+    background:
+      radial-gradient(circle at 30% 24%, rgba(255,255,255,.22), transparent 20%),
+      radial-gradient(circle at 68% 72%, rgba(6,12,16,.5), transparent 42%),
+      radial-gradient(circle at 48% 45%, rgba(178,196,205,.12), rgba(24,34,39,.1) 62%, rgba(255,255,255,.12));
+    box-shadow:
+      inset 22px 20px 44px rgba(255,255,255,.12),
+      inset -28px -24px 48px rgba(0,0,0,.28),
+      0 24px 70px rgba(0,0,0,.12);
+    pointer-events: none;
+    transform: translate3d(var(--hero-orbit-back-x), var(--hero-orbit-back-y), 0) rotate(var(--hero-orbit-back-rotate)) scale(calc(1 + var(--hero-parallax-depth) * .035));
+    will-change: transform;
+  }
+  .hero-poster::after {
+    right: -8vw;
+    top: 2%;
+    width: 46vw;
+    height: 46vw;
+    transform: translate3d(var(--hero-orbit-x), var(--hero-orbit-y, 0px), 0) rotate(var(--hero-orbit-rotate)) scale(var(--hero-orbit-scale, 1));
+    transition: border-color .2s ease;
+  }
+  .hero-poster .hero-3d-canvas {
+    transform: translate3d(var(--hero-orbit-x), var(--hero-orbit-y, 0px), 0);
+    will-change: transform;
+  }
+  .hero-poster .hero-word {
+    transform: translate3d(0, var(--hero-word-y, 0px), 0) scale(var(--hero-word-scale, 1));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-poster::before { transform: none !important; }
+  .hero-poster .hero-3d-canvas { transform: none !important; }
+}
