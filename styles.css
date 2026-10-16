@@ -1171,3 +1171,69 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
     50% { text-shadow: 0 0 26px rgba(199,255,56,.16); }
   }
 }
+
+
+/* DESKTOP PLAYGROUND FIX — isolate each mode and give the stage a real canvas */
+@media (min-width: 801px) {
+  .playground {
+    display: grid !important;
+    grid-template-columns: minmax(250px, 28%) minmax(0, 1fr);
+    align-items: stretch;
+    height: clamp(620px, 74vh, 820px);
+    min-height: 620px;
+  }
+  .playground-sidebar {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px;
+  }
+  .lab-tool {
+    flex: 1 1 0;
+    min-height: 82px;
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+  .playground-stage {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    isolation: isolate;
+  }
+  .build-sim,
+  .automation-sim,
+  .design-sim,
+  .media-sim,
+  .deploy-sim {
+    display: none !important;
+    min-width: 0;
+    min-height: 0;
+    inset: 76px 34px 62px;
+  }
+  .playground-stage[data-lab-stage="build"] .build-sim { display: block !important; }
+  .playground-stage[data-lab-stage="automation"] .automation-sim { display: flex !important; }
+  .playground-stage[data-lab-stage="design"] .design-sim { display: flex !important; }
+  .playground-stage[data-lab-stage="media"] .media-sim { display: flex !important; }
+  .playground-stage[data-lab-stage="it"] .deploy-sim { display: flex !important; }
+  .sim-node { touch-action: none; user-select: none; -webkit-user-select: none; }
+  .sim-node.is-dragging {
+    z-index: 10;
+    cursor: grabbing;
+    transition: none;
+    transform: scale(1.08);
+    box-shadow: 0 0 0 2px rgba(199,255,56,.4), 0 14px 34px rgba(0,0,0,.28);
+  }
+  .automation-sim { flex-direction: column; }
+  .design-sim { flex-direction: row; gap: clamp(28px, 7vw, 100px); }
+  .design-phone { position: relative; z-index: 1; flex: 0 0 220px; }
+  .design-orb { position: relative; right: auto; flex: 0 0 180px; }
+  .media-sim { gap: 24px; }
+  .media-preview { width: min(78%, 540px); height: clamp(220px, 32vh, 300px); }
+  .media-sim input, .media-time { width: min(78%, 540px); }
+  .deploy-sim { gap: 14px; }
+  .deploy-beam { height: 55px; }
+  .deploy-world { font-size: clamp(38px, 4vw, 54px); }
+  .stage-hud, .stage-footer { left: 34px; right: 34px; }
+  .lab-mobile-playground { display: none !important; }
+}
