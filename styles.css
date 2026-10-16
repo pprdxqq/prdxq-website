@@ -1268,7 +1268,7 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
       inset -28px -24px 48px rgba(0,0,0,.28),
       0 24px 70px rgba(0,0,0,.12);
     pointer-events: none;
-    transform: translate3d(var(--hero-orbit-back-x), var(--hero-orbit-back-y), 0) rotate(var(--hero-orbit-back-rotate)) scale(calc(1 + var(--hero-parallax-depth) * .035));
+    transform: translate3d(var(--hero-orbit-back-x), var(--hero-orbit-back-y), 0) rotate(var(--hero-orbit-back-rotate)) scale(var(--hero-orbit-back-scale, 1));
     will-change: transform;
   }
   .hero-poster::after {
