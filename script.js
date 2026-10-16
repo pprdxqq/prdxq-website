@@ -408,7 +408,15 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
   lastProgress=progress;
   const strength=mobile.matches?0.32:1;
   const depth=progress-.5;
-  hero.style.setProperty('--hero-orbit-y',(-depth*112*strength).toFixed(2)+'px');
+  // Separate orbit layers move at different speeds to create visible depth.
+  hero.style.setProperty('--hero-parallax-depth',depth.toFixed(4));
+  hero.style.setProperty('--hero-orbit-x',(Math.sin(progress*Math.PI*1.35)*92*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-orbit-y',(-depth*190*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-orbit-rotate',(depth*17*strength).toFixed(2)+'deg');
+  hero.style.setProperty('--hero-orbit-back-x',(-Math.sin(progress*Math.PI*1.1)*72*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-orbit-back-y',(depth*125*strength).toFixed(2)+'px');
+  hero.style.setProperty('--hero-orbit-back-rotate',(-depth*12*strength).toFixed(2)+'deg');
+  hero.style.setProperty('--hero-orbit-back-scale',(1+Math.abs(depth)*0.07*strength).toFixed(4));
   hero.style.setProperty('--hero-grid-y',(-depth*38*strength).toFixed(2)+'px');
   hero.style.setProperty('--hero-meta-y',(-depth*18*strength).toFixed(2)+'px');
   hero.style.setProperty('--hero-word-y',(-depth*58*strength).toFixed(2)+'px');
