@@ -610,3 +610,103 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
   });
   requestUpdate();
 })();
+
+
+/* DESKTOP PLAYGROUND UX FIX — draggable build nodes + ordered automation */
+(()=> {
+  const stage = document.querySelector('.playground-stage');
+  if (!stage) return;
+
+  const nodes = [...stage.querySelectorAll('.sim-node')];
+  nodes.forEach(node => {
+    let pointerId = null;
+    let startX = 0, startY = 0, originX = 0, originY = 0;
+    let moved = false;
+    const parent = node.offsetParent;
+    if (!parent) return;
+
+    node.addEventListener('pointerdown', event => {
+      if (event.button !== 0) return;
+      pointerId = event.pointerId;
+      moved = false;
+      startX = event.clientX;
+      startY = event.clientY;
+      const nodeRect = node.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect();
+      originX = nodeRect.left - parentRect.left;
+      originY = nodeRect.top - parentRect.top;
+      node.setPointerCapture(pointerId);
+      node.classList.add('is-dragging');
+      node.style.left = originX + 'px';
+      node.style.top = originY + 'px';
+      node.style.right = 'auto';
+    });
+
+    node.addEventListener('pointermove', event => {
+      if (pointerId !== event.pointerId) return;
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      if (Math.abs(dx) + Math.abs(dy) > 5) moved = true;
+      if (!moved) return;
+      const maxX = Math.max(0, parent.clientWidth - node.offsetWidth);
+      const maxY = Math.max(0, parent.clientHeight - node.offsetHeight);
+      node.style.left = Math.max(0, Math.min(maxX, originX + dx)) + 'px';
+      node.style.top = Math.max(0, Math.min(maxY, originY + dy)) + 'px';
+    });
+
+    const finish = event => {
+      if (pointerId !== event.pointerId) return;
+      node.classList.remove('is-dragging');
+      if (moved) {
+        event.preventDefault();
+        const result = document.querySelector('#labStageResult');
+        if (result) result.textContent = 'NODE / ' + node.dataset.node.toUpperCase() + ' REPOSITIONED';
+        node.dataset.justDragged = 'true';
+        setTimeout(() => { delete node.dataset.justDragged; }, 0);
+      }
+      pointerId = null;
+    };
+    node.addEventListener('pointerup', finish);
+    node.addEventListener('pointercancel', finish);
+  });
+
+  const flowButtons = [...stage.querySelectorAll('[data-auto]')];
+  const result = document.querySelector('#labStageResult');
+  let nextStep = 0;
+  const expected = ['input', 'logic', 'output'];
+  flowButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const key = button.dataset.auto;
+      const index = expected.indexOf(key);
+      if (index < 0) return;
+      if (index !== nextStep) {
+        if (result) result.textContent = 'FLOW / START WITH ' + expected[nextStep].toUpperCase();
+        button.classList.add('flow-miss');
+        setTimeout(() => button.classList.remove('flow-miss'), 300);
+        return;
+      }
+      nextStep += 1;
+      if (result) result.textContent = nextStep === expected.length
+        ? 'FLOW / COMPLETE — INPUT → LOGIC → OUTPUT'
+        : 'FLOW / ' + key.toUpperCase() + ' CONNECTED — NEXT ' + expected[nextStep].toUpperCase();
+      if (nextStep === expected.length) {
+        flowButtons.forEach(item => item.classList.add('active'));
+      }
+    });
+  });
+
+  document.querySelectorAll('.lab-tool').forEach(button => {
+    button.addEventListener('click', () => {
+      nextStep = 0;
+      flowButtons.forEach(item => {
+        item.classList.remove('active', 'flow-miss');
+      });
+      nodes.forEach(node => {
+        node.classList.remove('is-dragging');
+        node.style.removeProperty('left');
+        node.style.removeProperty('top');
+        node.style.removeProperty('right');
+      });
+    });
+  });
+})();
