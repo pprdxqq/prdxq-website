@@ -9,9 +9,9 @@ create table if not exists private.prdxq_admins (
   constraint prdxq_admins_email_lowercase check (email = pg_catalog.lower(email))
 );
 
-insert into private.prdxq_admins (email)
-values ('ilias.asdufan@icloud.de')
-on conflict (email) do nothing;
+-- Keep administrator identities out of this public repository.
+-- Insert the authorized administrator email directly in the Supabase SQL Editor:
+-- insert into private.prdxq_admins (email) values (lower('YOUR_ADMIN_EMAIL')) on conflict do nothing;
 
 revoke all on table private.prdxq_admins from public, anon, authenticated;
 grant usage on schema private to anon, authenticated;
