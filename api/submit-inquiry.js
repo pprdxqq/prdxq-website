@@ -118,11 +118,12 @@ function allowedOrigin(origin, env = process.env) {
 }
 
 function missingConfiguration(env, noJs) {
-  const required = ['SUPABASE_URL', 'RATE_LIMIT_HASH_SECRET', 'RESEND_API_KEY', 'RESEND_FROM_EMAIL', 'INQUIRY_NOTIFICATION_EMAIL'];
-  if (env.RATE_LIMIT_HASH_SECRET && Buffer.byteLength(env.RATE_LIMIT_HASH_SECRET, 'utf8') < 32) required.push('RATE_LIMIT_HASH_SECRET');
-  if (!env.SUPABASE_SECRET_KEY && !env.SUPABASE_SERVICE_ROLE_KEY) required.push('SUPABASE_SECRET_KEY');
-  if (!noJs) required.push('TURNSTILE_SECRET_KEY');
-  return required.filter((key) => !env[key]);
+  const missing = [];
+  if (!env.SUPABASE_URL) missing.push('SUPABASE_URL');
+  if (!env.RATE_LIMIT_HASH_SECRET || Buffer.byteLength(env.RATE_LIMIT_HASH_SECRET, 'utf8') < 32) missing.push('RATE_LIMIT_HASH_SECRET');
+  if (!env.SUPABASE_SECRET_KEY && !env.SUPABASE_SERVICE_ROLE_KEY) missing.push('SUPABASE_SECRET_KEY');
+  if (!noJs && !env.TURNSTILE_SECRET_KEY) missing.push('TURNSTILE_SECRET_KEY');
+  return missing;
 }
 
 function requestIp(req) {
@@ -307,45 +308,50 @@ async function handler(req, res) {
       'Ilias Asdufan',
       'PRDXQ'
     ].join('\n');
-    const [notification, receipt] = await Promise.all([
-      sendEmail({
-        to: process.env.INQUIRY_NOTIFICATION_EMAIL,
-        from: process.env.RESEND_FROM_EMAIL,
-        replyTo: inquiry.email,
-        subject: 'Neue Projektanfrage — ' + inquiry.name,
-        message: notificationText
-      }, process.env.RESEND_API_KEY),
-      sendEmail({
-        to: inquiry.email,
-        from: process.env.RESEND_FROM_EMAIL,
-        replyTo: process.env.INQUIRY_NOTIFICATION_EMAIL,
-        subject: 'Deine Anfrage bei PRDXQ ist angekommen',
-        message: receiptText
-      }, process.env.RESEND_API_KEY)
-    ]);
-    const statusUpdate = {
-      notification_status: notification.sent ? 'sent' : 'failed',
-      receipt_status: receipt.sent ? 'sent' : 'failed',
-      notification_sent_at: notification.sent ? new Date().toISOString() : null,
-      receipt_sent_at: receipt.sent ? new Date().toISOString() : null,
-      notification_error_code: notification.sent ? null : notification.errorCode,
-      receipt_error_code: receipt.sent ? null : receipt.errorCode
-    };
-    try {
-      await supabaseRequest('inquiries?id=eq.' + encodeURIComponent(row.id), {
-        method: 'PATCH',
-        headers: { Prefer: 'return=minimal' },
-        body: JSON.stringify(statusUpdate)
-      }, process.env);
-    } catch {
-      // The inquiry is already stored. Its pending mail states remain visible in the dashboard.
-      console.error('Inquiry mail status could not be updated.');
+    const mailReady = Boolean(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL && process.env.INQUIRY_NOTIFICATION_EMAIL);
+    let receiptStatus = 'pending';
+    if (mailReady) {
+      const [notification, receipt] = await Promise.all([
+        sendEmail({
+          to: process.env.INQUIRY_NOTIFICATION_EMAIL,
+          from: process.env.RESEND_FROM_EMAIL,
+          replyTo: inquiry.email,
+          subject: 'Neue Projektanfrage — ' + inquiry.name,
+          message: notificationText
+        }, process.env.RESEND_API_KEY),
+        sendEmail({
+          to: inquiry.email,
+          from: process.env.RESEND_FROM_EMAIL,
+          replyTo: process.env.INQUIRY_NOTIFICATION_EMAIL,
+          subject: 'Deine Anfrage bei PRDXQ ist angekommen',
+          message: receiptText
+        }, process.env.RESEND_API_KEY)
+      ]);
+      receiptStatus = receipt.sent ? 'sent' : 'failed';
+      const statusUpdate = {
+        notification_status: notification.sent ? 'sent' : 'failed',
+        receipt_status: receipt.sent ? 'sent' : 'failed',
+        notification_sent_at: notification.sent ? new Date().toISOString() : null,
+        receipt_sent_at: receipt.sent ? new Date().toISOString() : null,
+        notification_error_code: notification.sent ? null : notification.errorCode,
+        receipt_error_code: receipt.sent ? null : receipt.errorCode
+      };
+      try {
+        await supabaseRequest('inquiries?id=eq.' + encodeURIComponent(row.id), {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify(statusUpdate)
+        }, process.env);
+      } catch {
+        // The inquiry is already stored. Its pending mail states remain visible in the dashboard.
+        console.error('Inquiry mail status could not be updated.');
+      }
+      if (!notification.sent) console.error('Inquiry notification email failed.');
+      if (!receipt.sent) console.error('Inquiry receipt email failed.');
     }
-    if (!notification.sent) console.error('Inquiry notification email failed.');
-    if (!receipt.sent) console.error('Inquiry receipt email failed.');
 
     return wantsJson
-      ? jsonResponse(res, 201, { ok: true, receiptStatus: receipt.sent ? 'sent' : 'failed' })
+      ? jsonResponse(res, 201, { ok: true, receiptStatus })
       : htmlResponse(res, 201, 'Danke für deine Anfrage', 'Deine Nachricht ist angekommen. Du erhältst eine persönliche Rückmeldung.');
   } catch (error) {
     if (error instanceof RequestError) {

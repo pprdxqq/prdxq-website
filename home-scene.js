@@ -1,7 +1,7 @@
 (() => {
   const story = document.querySelector('.home-story');
   const canvas = document.querySelector('#prdxqScene');
-  if (!story || !canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!story || !canvas || matchMedia('(max-width:800px)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const gl = canvas.getContext('webgl2', { alpha: true, antialias: true, powerPreference: 'low-power' });
   if (!gl) return;
   const vertexSource = '#version 300 es\nin vec2 position;\nvoid main(){gl_Position=vec4(position,0.0,1.0);}';

@@ -19,3 +19,21 @@
     });
   }
 })();
+
+(() => {
+  const addStylesheet = (href) => {
+    if (document.querySelector('link[href="' + href + '"]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.append(link);
+  };
+  addStylesheet('site-navigation.css');
+  addStylesheet('site-mobile.css');
+  if (!document.querySelector('script[src="site-navigation.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'site-navigation.js';
+    script.async = true;
+    document.body.append(script);
+  }
+})();

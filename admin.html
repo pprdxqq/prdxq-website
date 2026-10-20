@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101512">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Admin — PRDXQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+  <header class="admin-topbar">
+    <a class="admin-brand" href="index.html" aria-label="Zur PRDXQ Website">PRDXQ<span> / ADMIN</span></a>
+    <div class="admin-top-actions">
+      <label class="language-label" id="language-label" for="siteLanguage">Sprache</label>
+      <select class="language-select" id="siteLanguage" aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option></select>
+      <a class="admin-back-link" id="websiteLink" href="index.html">Zur Website <span aria-hidden="true">↗</span></a>
+      <button class="admin-logout" id="logoutButton" type="button" hidden>Abmelden</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-login glass-panel" id="loginPanel" aria-labelledby="loginTitle">
+      <p class="admin-eyebrow"><span class="status-dot"></span><span id="adminEyebrow"> PRDXQ / GESCHÜTZTER BEREICH</span></p>
+      <h1 id="loginTitle">Anfragen. Im Blick.</h1>
+      <p class="admin-lead" id="adminLead">Melde dich mit deinem freigeschalteten Admin-Konto an. Nur autorisierte Konten können Kundenanfragen öffnen.</p>
+      <form id="loginForm" class="admin-login-form">
+        <label id="emailLabel" for="adminEmail">E-Mail</label>
+        <input id="adminEmail" name="email" type="email" autocomplete="username" inputmode="email" required maxlength="254">
+        <label id="passwordLabel" for="adminPassword">Passwort</label>
+        <input id="adminPassword" name="password" type="password" autocomplete="current-password" required>
+        <button class="admin-primary-button" type="submit"><span id="passwordLoginLabel">Mit Passwort anmelden</span><span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="admin-divider"><span id="orLabel">ODER</span></div>
+      <button class="admin-passkey-button" id="passkeyButton" type="button"><span aria-hidden="true">◉</span> Mit Passkey anmelden</button>
+      <p class="admin-form-status" id="loginStatus" role="status" aria-live="polite"></p>
+      <p class="admin-login-note" id="noAccount">Noch kein Konto? Ein Admin-Konto muss zuerst im Supabase-Dashboard angelegt und bestätigt werden.</p>
+    </section>
+
+    <section class="admin-login admin-password-setup glass-panel" id="passwordSetupPanel" hidden aria-labelledby="passwordSetupTitle">
+      <p class="admin-eyebrow"><span class="status-dot"></span><span id="passwordSetupEyebrow">PRDXQ / ADMIN-KONTO</span></p>
+      <h1 id="passwordSetupTitle">Lege dein Admin-Passwort fest.</h1>
+      <p class="admin-lead" id="passwordSetupLead">Dein Konto ist bestätigt. Lege jetzt ein Passwort fest, um den Adminbereich zu öffnen.</p>
+      <form id="passwordSetupForm" class="admin-login-form">
+        <label id="newPasswordLabel" for="newPassword">Neues Passwort</label>
+        <input id="newPassword" type="password" autocomplete="new-password" minlength="12" required>
+        <label id="confirmPasswordLabel" for="confirmPassword">Passwort wiederholen</label>
+        <input id="confirmPassword" type="password" autocomplete="new-password" minlength="12" required>
+        <button class="admin-primary-button" id="passwordSaveButton" type="submit"><span id="passwordSaveLabel">Passwort speichern</span><span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="admin-form-status" id="passwordSetupStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-dashboard" id="dashboardPanel" hidden aria-labelledby="dashboardTitle">
+      <div class="admin-dashboard-heading">
+        <div>
+          <p class="admin-eyebrow"><span class="status-dot"></span><span id="dashboardEyebrow"> PRDXQ / ANFRAGEN</span></p>
+          <h1 id="dashboardTitle">Kundenanfragen</h1>
+          <p class="admin-lead" id="dashboardLead">Neue Projekte, sicher gespeichert und an einem Ort verwaltet.</p>
+        </div>
+        <button class="admin-secondary-button" id="registerPasskeyButton" type="button">Face ID / Passkey einrichten</button>
+      </div>
+      <div class="admin-stats" aria-label="Anfragestatus">
+        <article class="admin-stat"><span id="statNewLabel">NEU</span><strong id="statNew">0</strong></article>
+        <article class="admin-stat"><span id="statInProgressLabel">IN BEARBEITUNG</span><strong id="statInProgress">0</strong></article>
+        <article class="admin-stat"><span id="statClosedLabel">GESCHLOSSEN</span><strong id="statClosed">0</strong></article>
+      </div>
+      <div class="admin-toolbar">
+        <label class="admin-search-label" id="searchLabel" for="inquirySearch">Suchen</label>
+        <input id="inquirySearch" type="search" placeholder="Name, E-Mail oder Text">
+        <label class="admin-filter-label" id="statusLabel" for="statusFilter">Status</label>
+        <select id="statusFilter"><option id="statusAll" value="all">Alle</option><option id="statusNew" value="new">Neu</option><option id="statusInProgress" value="in_progress">In Bearbeitung</option><option id="statusReplied" value="replied">Beantwortet</option><option id="statusClosed" value="closed">Geschlossen</option></select>
+        <button class="admin-refresh-button" id="refreshButton" type="button" aria-label="Anfragen aktualisieren">↻</button>
+      </div>
+      <p class="admin-form-status" id="dashboardStatus" role="status" aria-live="polite"></p>
+      <div class="inquiry-list" id="inquiryList" aria-live="polite"></div>
+      <p class="admin-footnote" id="adminFootnote">Es werden die letzten 100 Anfragen angezeigt. Kundendaten sind ausschließlich für das freigeschaltete Admin-Konto verfügbar.</p>
+    </section>
+  </main>
+  <script src="site-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" defer></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>
