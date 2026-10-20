@@ -40,15 +40,19 @@
       <p class="wizard-result-copy">Ich habe aus deinen Antworten eine kurze Projekt-Zusammenfassung erstellt. Du entscheidest jetzt nur noch, wie du mich erreichen möchtest.</p>
       <div class="result-grid" id="resultGrid"></div>
       <div class="contact-details">
-        <label><span>DEIN NAME</span><input id="leadName" autocomplete="name" placeholder="Vor- und Nachname"></label>
-        <label><span>EMAIL ODER TELEFON</span><input id="leadContact" autocomplete="email" placeholder="Wie erreiche ich dich?"></label>
+        <label><span>DEIN NAME *</span><input id="leadName" autocomplete="name" placeholder="Vor- und Nachname" maxlength="120" required></label>
+        <label><span>DEINE E-MAIL *</span><input id="leadEmail" type="email" autocomplete="email" placeholder="name@beispiel.de" maxlength="254" required></label>
+        <label><span>TELEFON (OPTIONAL)</span><input id="leadPhone" type="tel" autocomplete="tel" placeholder="+49 …" maxlength="40"></label>
+        <label class="lead-honeypot" aria-hidden="true"><span>Website</span><input id="leadWebsite" name="website" tabindex="-1" autocomplete="off"></label>
+        <label class="lead-message-label"><span>WAS SOLL ICH NOCH WISSEN? (OPTIONAL)</span><textarea id="leadMessage" rows="3" maxlength="3000" placeholder="Ein paar zusätzliche Details zu deinem Vorhaben …"></textarea></label>
       </div>
       <div class="result-actions">
-        <button type="button" id="sendMail" class="result-action primary">E-MAIL ERSTELLEN <b>↗</b></button>
-        <button type="button" id="sendWhatsApp" class="result-action">WHATSAPP ÖFFNEN <b>↗</b></button>
+        <button type="button" id="sendMail" class="result-action primary">ANFRAGE SENDEN <b>↗</b></button>
+        <button type="button" id="sendWhatsApp" class="result-action">SPEICHERN & WHATSAPP <b>↗</b></button>
       </div>
+      <p id="inquiryStatus" class="inquiry-status" role="status" aria-live="polite"></p>
       <button type="button" id="restartWizard" class="wizard-restart">Antworten neu starten</button>
-      <p class="result-note">Deine Antworten werden nicht automatisch gespeichert. Erst wenn du E-Mail oder WhatsApp auswählst, werden sie in die vorbereitete Nachricht übernommen.</p>
+      <p class="result-note">Beim Absenden werden deine Angaben und Projekt-Antworten in der geschützten PRDXQ-Anfragedatenbank gespeichert. Details stehen in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
     </div>
   </div>
 </section>
@@ -220,6 +224,15 @@
 @media(prefers-reduced-motion:reduce){
  .project-start:before,.project-start:after{filter:none}
 }
+
+.lead-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.lead-message-label{grid-column:1/-1}
+.contact-details textarea{width:100%;box-sizing:border-box;resize:vertical;min-height:90px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:15px;padding:15px 16px;outline:none;font:500 12px/1.5 Manrope}
+.contact-details textarea:focus{border-color:#c7ff38}.contact-details textarea::placeholder{color:#7f8b91}
+.inquiry-status{min-height:1.5em;margin:16px 0 0;text-align:center;color:#c7ff38;font:10px/1.5 DM Mono}
+.result-note a{color:#c7ff38;text-decoration:underline}
+.result-action:disabled{opacity:.55;cursor:wait}
+@media(max-width:800px){.lead-message-label{grid-column:auto}}
 </style><footer><span>PRDXQ / ILIAS ASDUFAN</span><span>PRDXQ / DIRECT CONTACT</span><span class="legal-links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></span><span>© 2026</span></footer><script src="script.js"></script><script>
 (()=> {
  const root=document.getElementById('projectWizard');
@@ -230,7 +243,7 @@
  const kicker=document.getElementById('wizardKicker'), question=document.getElementById('wizardQuestion'), hint=document.getElementById('wizardHint');
  const info=document.getElementById('wizardInfo'), infoTitle=document.getElementById('wizardInfoTitle'), infoText=document.getElementById('wizardInfoText');
  const infoClose=document.getElementById('wizardInfoClose'), resultGrid=document.getElementById('resultGrid');
- const nameInput=document.getElementById('leadName'), contactInput=document.getElementById('leadContact');
+ const nameInput=document.getElementById('leadName'),emailInput=document.getElementById('leadEmail'),phoneInput=document.getElementById('leadPhone'),messageInput=document.getElementById('leadMessage'),websiteInput=document.getElementById('leadWebsite'),sendButton=document.getElementById('sendMail'),whatsappButton=document.getElementById('sendWhatsApp'),statusEl=document.getElementById('inquiryStatus');
  const state={answers:{},history:[],current:0};
 
  const types=[
@@ -332,17 +345,59 @@
    root.scrollIntoView({behavior:'smooth',block:'start'});
  }
  function buildMessage(){
-   const name=nameInput.value.trim(),contact=contactInput.value.trim();
+   const name=nameInput.value.trim(),email=emailInput.value.trim(),phone=phoneInput.value.trim(),extra=messageInput.value.trim();
    const typesText=(state.answers.type||[]).map(v=>types.find(x=>x.value===v)?.label||v).join(', ');
    const goals=(state.answers.goal||[]).map(v=>labelFor('goal',v)).join(', ');
    const features=(state.answers.features||[]).map(v=>labelFor('features',v)).join(', ');
    const stage=labelFor('stage',(state.answers.stage||[])[0]);
    const style=(state.answers.style||[]).map(v=>labelFor('style',v)).join(', ');
-   return 'Hallo Ilias,\n\nich möchte mit PRDXQ ein Projekt starten.\n\nName: '+name+'\nKontakt: '+contact+'\n\nProjekt: '+typesText+'\nZiel: '+goals+'\nFunktionen: '+features+'\nStatus: '+stage+'\nLook & Feel: '+style+'\n\nIch freue mich auf deine Rückmeldung.';
+   return 'Projektanfrage über PRDXQ\\nName: '+name+'\\nE-Mail: '+email+'\\nTelefon: '+(phone||'Nicht angegeben')+'\\n\\nProjekt: '+typesText+'\\nZiel: '+goals+'\\nFunktionen: '+features+'\\nStatus: '+stage+'\\nLook & Feel: '+style+'\\n\\nZusätzliche Angaben: '+(extra||'Keine');
  }
- function validate(){if(!nameInput.value.trim()||!contactInput.value.trim()){[nameInput,contactInput].forEach(x=>x.reportValidity?.());nameInput.focus();return false}return true}
- document.getElementById('sendMail').addEventListener('click',()=>{if(!validate())return;const body=encodeURIComponent(buildMessage()),subject=encodeURIComponent('PRDXQ Projektanfrage – '+nameInput.value.trim());location.href='mailto:ilias.asdufan@icloud.de?subject='+subject+'&body='+body});
- document.getElementById('sendWhatsApp').addEventListener('click',()=>{if(!validate())return;location.href='https://wa.me/491777963990?text='+encodeURIComponent(buildMessage())});
+ function validate(){
+   if(!nameInput.value.trim()||!emailInput.value.trim()||!emailInput.checkValidity()){
+     if(!nameInput.value.trim()){nameInput.reportValidity();nameInput.focus();return false}
+     emailInput.reportValidity();emailInput.focus();return false;
+   }
+   return true;
+ }
+ let savedInquiryId=null;
+ async function submitInquiry(){
+   if(!validate())return false;
+   if(savedInquiryId)return true;
+   sendButton.disabled=true;whatsappButton.disabled=true;statusEl.textContent='Anfrage wird sicher gespeichert …';
+   try{
+     const response=await fetch('https://nolygqnmpmegkotejuli.supabase.co/functions/v1/submit-prdxq-inquiry',{
+       method:'POST',
+       headers:{
+         'Content-Type':'application/json',
+         'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vbHlncW5tcG1lZ2tvdGVqdWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0OTc1MjEsImV4cCI6MjEwODA3MzUyMX0.OjlBkrJoDyT0vvoFwlPdBQKbIgPtm2a_w4VBwb3FdNQ',
+         'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vbHlncW5tcG1lZ2tvdGVqdWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0OTc1MjEsImV4cCI6MjEwODA3MzUyMX0.OjlBkrJoDyT0vvoFwlPdBQKbIgPtm2a_w4VBwb3FdNQ'
+       },
+       body:JSON.stringify({
+         name:nameInput.value.trim(),email:emailInput.value.trim(),phone:phoneInput.value.trim(),
+         message:buildMessage(),project_answers:state.answers,website:websiteInput.value
+       })
+     });
+     const data=await response.json().catch(()=>({}));
+     if(!response.ok)throw new Error(data.error||'submission_failed');
+     savedInquiryId=data.id||'saved';
+     statusEl.textContent='Danke! Deine Anfrage wurde gespeichert. Du kannst jetzt zusätzlich WhatsApp öffnen.';
+     return true;
+   }catch(error){
+     statusEl.textContent=error.message==='rate_limited'
+       ?'Du hast in kurzer Zeit zu viele Anfragen gesendet. Bitte versuche es später erneut.'
+       :'Die Anfrage konnte gerade nicht gespeichert werden. Bitte versuche es gleich noch einmal.';
+     return false;
+   }finally{
+     sendButton.disabled=false;whatsappButton.disabled=false;
+   }
+ }
+ sendButton.addEventListener('click',async()=>{await submitInquiry()});
+ whatsappButton.addEventListener('click',async()=>{
+   if(!await submitInquiry())return;
+   const text=encodeURIComponent(buildMessage());
+   window.open('https://wa.me/491777963990?text='+text,'_blank','noopener,noreferrer');
+ });
  document.getElementById('restartWizard').addEventListener('click',()=>{state.answers={};state.history=[];state.current=0;result.hidden=true;panel.hidden=false;render();root.scrollIntoView({behavior:'smooth',block:'start'})});
  render();
 })();
