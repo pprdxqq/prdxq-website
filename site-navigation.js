@@ -140,10 +140,11 @@
     const original = originalText.get(node);
     if (language === 'de') { node.nodeValue = original; return; }
     const key = original.trim();
-    if (!(key in copy)) return;
+    const translated = copy[key] ?? copy[original];
+    if (translated === undefined) return;
     const leading = original.match(/^\s*/)?.[0] || '';
     const trailing = original.match(/\s*$/)?.[0] || '';
-    node.nodeValue = leading + copy[key] + trailing;
+    node.nodeValue = leading + translated.trim() + trailing;
   }
 
   function translateAttributes(element) {
@@ -165,8 +166,8 @@
     if (root.nodeType === Node.ELEMENT_NODE) translateAttributes(root);
     root.querySelectorAll?.('*').forEach(translateAttributes);
     const labels = {
-      de: { 'index.html': ['⌂','START'], 'work.html': ['◫','LEISTUNGEN'], 'lab.html': ['◉','PLAYGROUND'], 'contact.html': ['↗','START'] },
-      en: { 'index.html': ['⌂','HOME'], 'work.html': ['◫','WORK'], 'lab.html': ['◉','LAB'], 'contact.html': ['↗','START'] }
+      de: { 'index.html': ['⌂','START'], 'work.html': ['◫','LEISTUNGEN'], 'lab.html': ['◉','PLAYGROUND'], 'contact.html': ['↗','KONTAKT'] },
+      en: { 'index.html': ['⌂','HOME'], 'work.html': ['◫','WORK'], 'lab.html': ['◉','LAB'], 'contact.html': ['↗','CONTACT'] }
     }[language];
     document.querySelectorAll('.mobile-dock a').forEach((link) => {
       const path = (link.getAttribute('href') || '').split('/').pop();
