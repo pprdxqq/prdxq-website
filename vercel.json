@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/**/*.js": {
+      "regions": ["fra1"]
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cleanup-inquiries",
+      "schedule": "15 3 * * *"
+    }
+  ]
+}

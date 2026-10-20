@@ -1,10 +1,10 @@
-<!doctype html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="prdxq-logo-transparent.png"><link rel="stylesheet" href="styles.css"><title>Kontakt — PRDXQ</title></head><body><header class="nav"><a class="brand" href="index.html" aria-label="PRDXQ Home"><span class="brand-word">PRDXQ<sup>®</sup></span></a><nav><a href="index.html">Home</a><a href="work.html">Work</a><a href="lab.html">Lab</a><a href="design.html">Design</a><a href="about.html">About</a></nav><div class="nav-right"><a class="nav-cta" href="contact.html">Projekt starten <b>↗</b></a><button class="menu-toggle" aria-label="Menü öffnen" aria-expanded="false"><i></i><i></i></button></div></header><div class="mobile-menu"><a href="index.html">Home <b>01</b></a><a href="work.html">Work <b>02</b></a><a href="lab.html">Lab <b>03</b></a><a href="design.html">Design <b>04</b></a><a href="about.html">About <b>05</b></a><a href="contact.html">Kontakt <b>06</b></a></div><main>
+<!doctype html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="prdxq-logo-transparent.png"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site-refresh.css"><title>Kontakt — PRDXQ</title></head><body class="refresh-page"><header class="nav"><a class="brand" href="index.html" aria-label="PRDXQ Home"><span class="brand-word">PRDXQ<sup>®</sup></span></a><nav aria-label="Hauptnavigation"><a href="index.html">Start</a><a href="work.html">Leistungen</a><a href="lab.html">Playground</a><a href="design.html">Design</a><a href="about.html">Über mich</a></nav><div class="nav-right"><a class="nav-cta" href="contact.html">Projekt starten <b>↗</b></a><button class="menu-toggle" aria-label="Menü öffnen" aria-expanded="false"><i></i><i></i></button></div></header><nav class="mobile-menu" aria-label="Mobile Navigation"><a href="index.html">Start <b>01</b></a><a href="work.html">Leistungen <b>02</b></a><a href="lab.html">Playground <b>03</b></a><a href="design.html">Design <b>04</b></a><a href="about.html">Über mich <b>05</b></a><a class="active" href="contact.html">Projekt anfragen <b>↗</b></a></nav><main>
 <section class="project-start">
   <div class="project-start-head">
-    <p class="kicker">PRDXQ / START YOUR PROJECT</p>
+    <p class="kicker">PRDXQ / PROJEKTANFRAGE</p>
     <h1>Erzähl mir,<br><em>was du bauen willst.</em></h1>
     <p class="project-lead">Keine Fachbegriffe nötig. Ich führe dich Schritt für Schritt durch ein paar Fragen und zeige dir direkt, was die einzelnen Möglichkeiten bedeuten.</p>
-    <div class="project-system-line"><span></span> PROJECT ADVISOR <b>ONLINE</b></div>
+    <div class="project-system-line">PROJEKTANFRAGE <b>UNVERBINDLICH</b></div>
   </div>
 
   <div class="project-wizard" id="projectWizard" aria-live="polite">
@@ -28,24 +28,45 @@
       </div>
     </div>
 
-    <div class="wizard-result" id="wizardResult" hidden>
+    <form class="wizard-result" id="wizardResult" hidden>
       <p class="wizard-kicker">DEIN PROJEKT-PROFIL</p>
       <h2>Das klingt nach<br><em>einem echten Projekt.</em></h2>
-      <p class="wizard-result-copy">Ich habe aus deinen Antworten eine kurze Projekt-Zusammenfassung erstellt. Du entscheidest jetzt nur noch, wie du mich erreichen möchtest.</p>
+      <p class="wizard-result-copy">Deine Auswahl wird zusammen mit der Anfrage übermittelt. Ergänze deine Kontaktdaten und schreib kurz, was dir wichtig ist.</p>
       <div class="result-grid" id="resultGrid"></div>
+      <input type="hidden" id="projectAnswers" name="projectAnswers">
+      <label class="honeypot" aria-hidden="true">Bitte leer lassen<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       <div class="contact-details">
-        <label><span>DEIN NAME</span><input id="leadName" autocomplete="name" placeholder="Vor- und Nachname"></label>
-        <label><span>EMAIL ODER TELEFON</span><input id="leadContact" autocomplete="email" placeholder="Wie erreiche ich dich?"></label>
+        <label><span>DEIN NAME</span><input id="leadName" name="name" autocomplete="name" maxlength="120" required placeholder="Vor- und Nachname"></label>
+        <label><span>DEINE E-MAIL</span><input id="leadContact" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="name@unternehmen.de"></label>
+        <label><span>TELEFON (OPTIONAL)</span><input id="leadPhone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+49 …"></label>
+        <label><span>WAS SOLL ICH NOCH WISSEN? (OPTIONAL)</span><textarea id="leadMessage" name="message" maxlength="3000" placeholder="Ein paar Stichpunkte reichen. Bitte keine sensiblen Daten senden."></textarea></label>
       </div>
-      <div class="result-actions">
-        <button type="button" id="sendMail" class="result-action primary">E-MAIL ERSTELLEN <b>↗</b></button>
-        <button type="button" id="sendWhatsApp" class="result-action">WHATSAPP ÖFFNEN <b>↗</b></button>
+      <div class="privacy-note">Deine Angaben werden an PRDXQ übermittelt, um deine Anfrage zu beantworten. Mehr dazu in den <a href="datenschutz.html">Datenschutzhinweisen</a>.</div>
+      <div class="turnstile-wrap">
+        <div id="turnstileWidget"></div>
+        <span class="turnstile-status" id="turnstileStatus" role="status" aria-live="polite">Sicherheitsprüfung wird geladen.</span>
       </div>
+      <div class="result-actions"><button type="submit" id="sendInquiry" class="result-action primary">ANFRAGE SENDEN <b>↗</b></button></div>
+      <p class="submit-status" id="submitStatus" role="status" aria-live="polite"></p>
       <button type="button" id="restartWizard" class="wizard-restart">Antworten neu starten</button>
-      <p class="result-note">Deine Antworten werden nicht automatisch gespeichert. Erst wenn du E-Mail oder WhatsApp auswählst, werden sie in die vorbereitete Nachricht übernommen.</p>
-    </div>
+    </form>
   </div>
 </section>
+  <section class="no-js-contact">
+    <h2>Schreib mir kurz von deinem Vorhaben.</h2>
+    <p>Falls der Projektberater oder die Sicherheitsprüfung nicht geladen wird, kannst du deine Anfrage hier absenden. Für den Missbrauchsschutz löse bitte die kurze Rechenaufgabe.</p>
+    <form action="/api/submit-inquiry" method="post">
+      <label>Name<input name="name" required maxlength="120" autocomplete="name"></label>
+      <label>E-Mail<input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+      <label>Telefon (optional)<input name="phone" type="tel" maxlength="40" autocomplete="tel"></label>
+      <label>Nachricht<textarea name="message" maxlength="3000"></textarea></label>
+      <label>Was ist 2 + 5? (Zahl eingeben)<input name="challenge" inputmode="numeric" required></label>
+      <label class="honeypot" aria-hidden="true">Bitte leer lassen<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="nojs" value="1">
+      <p>Mit dem Absenden werden deine Angaben zur Bearbeitung der Anfrage übermittelt. Details stehen in den <a href="datenschutz.html">Datenschutzhinweisen</a>.</p>
+      <button class="button button-primary" type="submit">Anfrage senden</button>
+    </form>
+  </section>
 </main>
 
 <style id="project-wizard-motion">
@@ -135,7 +156,7 @@
 }
 @media(prefers-reduced-motion:reduce){.wizard-panel.step-enter,.wizard-info{animation:none}
 }
-</style><footer><span>PRDXQ / ILIAS ASDUFAN</span><span>ILIAS.ASDUFAN@ICLOUD.DE</span><span>© 2026</span></footer><script src="script.js"></script><script>
+</style><aside class="contact-card" aria-label="Digitale Visitenkarte"><div class="contact-card-panel" id="contactCardPanel" hidden><span>PRDXQ / KONTAKT</span><h2>Ilias Asdufan</h2><p>Digitale Produkte · Design · Entwicklung</p><a href="mailto:ilias.asdufan@icloud.de">ilias.asdufan@icloud.de</a><a href="tel:+491777963990">+49 177 7963990</a><small>KELSTERBACH · DEUTSCHLAND</small></div><button class="contact-card-toggle" id="contactCardToggle" type="button" aria-label="Kontaktkarte öffnen" aria-expanded="false" aria-controls="contactCardPanel"><span class="contact-card-monogram">IA</span><span>Kontaktkarte</span><span class="contact-card-chevron" aria-hidden="true">↗</span></button></aside><footer class="site-footer"><a class="footer-brand" href="index.html">PRDXQ<sup>®</sup></a><span>Digitale Produkte · Design · Entwicklung</span><nav aria-label="Rechtliche Links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav><span>© 2026 Ilias Asdufan</span></footer><script src="script.js"></script><script src="site-refresh.js"></script><script src="site-config.js"></script><script src="contact-submit.js"></script><script>
 (()=> {
  const root=document.getElementById('projectWizard');
  if(!root)return;
@@ -145,7 +166,7 @@
  const kicker=document.getElementById('wizardKicker'), question=document.getElementById('wizardQuestion'), hint=document.getElementById('wizardHint');
  const info=document.getElementById('wizardInfo'), infoTitle=document.getElementById('wizardInfoTitle'), infoText=document.getElementById('wizardInfoText');
  const infoClose=document.getElementById('wizardInfoClose'), resultGrid=document.getElementById('resultGrid');
- const nameInput=document.getElementById('leadName'), contactInput=document.getElementById('leadContact');
+ const nameInput=document.getElementById('leadName'), contactInput=document.getElementById('leadContact'), projectAnswersInput=document.getElementById('projectAnswers');
  const state={answers:{},history:[],current:0};
 
  const types=[
@@ -230,7 +251,7 @@
  back.addEventListener('click',()=>{if(!state.history.length)return;state.current=state.history.pop();render()});
  function labelFor(qid,val){const q=questions.find(x=>x.id===qid),o=q?.options.find(x=>x.value===val);return o?.label||val}
  function showResult(){
-   panel.hidden=true;result.hidden=false;back.hidden=true;stepLabel.textContent='06 / KONTAKT';root.style.setProperty('--wizard-progress','100%');progress.style.width='100%';result.classList.add('result-enter');
+   panel.hidden=true;result.hidden=false;back.hidden=true;stepLabel.textContent='06 / KONTAKT';root.style.setProperty('--wizard-progress','100%');progress.style.width='100%';result.classList.add('result-enter');projectAnswersInput.value=JSON.stringify(state.answers);
    const t=(state.answers.type||[]).map(v=>types.find(x=>x.value===v)?.label||v);
    const goals=(state.answers.goal||[]).map(v=>labelFor('goal',v));
    const features=(state.answers.features||[]).map(v=>labelFor('features',v));
@@ -246,19 +267,8 @@
    resultGrid.innerHTML=rows.map(r=>'<div class="result-chip"><small>'+r[0]+'</small><strong>'+r[1]+'</strong><p>'+r[2]+'</p></div>').join('');
    root.scrollIntoView({behavior:'smooth',block:'start'});
  }
- function buildMessage(){
-   const name=nameInput.value.trim(),contact=contactInput.value.trim();
-   const typesText=(state.answers.type||[]).map(v=>types.find(x=>x.value===v)?.label||v).join(', ');
-   const goals=(state.answers.goal||[]).map(v=>labelFor('goal',v)).join(', ');
-   const features=(state.answers.features||[]).map(v=>labelFor('features',v)).join(', ');
-   const stage=labelFor('stage',(state.answers.stage||[])[0]);
-   const style=(state.answers.style||[]).map(v=>labelFor('style',v)).join(', ');
-   return 'Hallo Ilias,\n\nich möchte mit PRDXQ ein Projekt starten.\n\nName: '+name+'\nKontakt: '+contact+'\n\nProjekt: '+typesText+'\nZiel: '+goals+'\nFunktionen: '+features+'\nStatus: '+stage+'\nLook & Feel: '+style+'\n\nIch freue mich auf deine Rückmeldung.';
- }
- function validate(){if(!nameInput.value.trim()||!contactInput.value.trim()){[nameInput,contactInput].forEach(x=>x.reportValidity?.());nameInput.focus();return false}return true}
- document.getElementById('sendMail').addEventListener('click',()=>{if(!validate())return;const body=encodeURIComponent(buildMessage()),subject=encodeURIComponent('PRDXQ Projektanfrage – '+nameInput.value.trim());location.href='mailto:ilias.asdufan@icloud.de?subject='+subject+'&body='+body});
- document.getElementById('sendWhatsApp').addEventListener('click',()=>{if(!validate())return;location.href='https://wa.me/491777963990?text='+encodeURIComponent(buildMessage())});
  document.getElementById('restartWizard').addEventListener('click',()=>{state.answers={};state.history=[];state.current=0;result.hidden=true;panel.hidden=false;render();root.scrollIntoView({behavior:'smooth',block:'start'})});
  render();
+ if(window.prdxqContactReady)document.body.classList.add('has-enhanced-contact');
 })();
 </script></body></html>
