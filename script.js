@@ -8,7 +8,7 @@ const data={
  systems:{code:'03',title:'SYSTEME & AUTOMATION',desc:'Daten, APIs und Prozesse miteinander verbinden.',status:'AUTOMATE',tags:['DATABASE','WORKFLOW','API','INTEGRATION']},
  design:{code:'04',title:'UI / UX & GRAFIK',desc:'Interfaces und Visuals mit Funktion und Charakter.',status:'DESIGN',tags:['UI','UX','BRANDING','VISUALS']},
  media:{code:'05',title:'FOTO · VIDEO · SOCIAL',desc:'Aufnehmen, bearbeiten und Content produzieren.',status:'CREATE',tags:['PHOTO','VIDEO','EDITING','SOCIAL']},
- it:{code:'06',title:'IT & ADMIN',desc:'Hosting, Infrastruktur und technische Setups.',status:'SYSTEM',tags:['HOSTING','DEPLOYMENT','ADMIN','SETUP']}
+ shopify:{code:'07',title:'SHOPIFY-EXPERTE',desc:'Shopify-Shops gestalten und passend zum Vorhaben einrichten.',status:'COMMERCE',tags:['SHOPIFY','E-COMMERCE','STORE','PRODUCTS']},\n it:{code:'06',title:'IT & ADMIN',desc:'Hosting, Infrastruktur und technische Setups.',status:'SYSTEM',tags:['HOSTING','DEPLOYMENT','ADMIN','SETUP']}
 };
 const stage=document.querySelector('.skill-stage');
 if(stage){
@@ -177,7 +177,7 @@ apps:{code:'02 / APPS',status:'SOFTWARE',kicker:'SOFTWARE',title:'APPS & SOFTWAR
 systems:{code:'03 / SYSTEMS',status:'AUTOMATE',kicker:'AUTOMATION',title:'SYSTEME & AUTOMATION',desc:'Wenn Informationen ständig von A nach B kopiert werden müssen, kann man das meistens besser lösen. Ich verbinde Datenbanken, APIs und Automationen.',outcome:'Weniger manuelle Arbeit. Mehr Ablauf, der einfach funktioniert.',process:'INPUT → API → DATABASE → LOGIC → AUTOMATION → OUTPUT',tags:['DATABASE','API','WORKFLOW','AUTOMATION','INTEGRATION']},
 design:{code:'04 / DESIGN',status:'VISUAL',kicker:'UI / UX & GRAFIK',title:'DESIGN',desc:'Design bedeutet für mich nicht nur, etwas schön aussehen zu lassen. Es muss verständlich sein, funktionieren und zur Marke passen.',outcome:'Interfaces und Visuals, die sich wie ein echtes Produkt anfühlen.',process:'RESEARCH → WIREFRAME → UI → MOTION → POLISH',tags:['UI','UX','BRANDING','GRAPHIC','MOTION']},
 media:{code:'05 / CREATE',status:'CONTENT',kicker:'FOTO · VIDEO · SOCIAL',title:'FOTO · VIDEO · SOCIAL',desc:'Von der Aufnahme bis zum fertigen Post: Content wird produziert, geschnitten, bearbeitet und für die jeweilige Plattform vorbereitet.',outcome:'Fertiger Content, der direkt veröffentlicht werden kann.',process:'SHOT → SELECT → EDIT → COLOR → CUT → SOCIAL',tags:['PHOTO','VIDEO','EDITING','PHOTOSHOP','SOCIAL']},
-it:{code:'06 / SYSTEM',status:'ONLINE',kicker:'INFRASTRUCTURE',title:'IT & ADMIN',desc:'Hinter jeder Website steckt Infrastruktur. Ich kümmere mich um Domains, Hosting, Deployment und die technischen Verbindungen.',outcome:'Eine technische Basis, auf der dein digitales Produkt zuverlässig läuft.',process:'DOMAIN → HOSTING → DEPLOY → CONFIG → MONITOR → ONLINE',tags:['HOSTING','DOMAIN','GITHUB','DEPLOYMENT','ADMIN']}
+shopify:{code:'07 / COMMERCE',status:'SHOPIFY',kicker:'E-COMMERCE',title:'SHOPIFY-EXPERTE',desc:'Shopify-Shops gestalten und passend zum Vorhaben einrichten. Umfang und Funktionen richten sich nach deinen Produkten und Zielen.',outcome:'Ein Shop-Auftritt, der zu deinem Angebot passt und sich weiterentwickeln lässt.',process:'PRODUCTS → STRUCTURE → DESIGN → SETUP → TEST → LAUNCH',tags:['SHOPIFY','E-COMMERCE','STORE','PRODUCTS']},\nit:{code:'06 / SYSTEM',status:'ONLINE',kicker:'INFRASTRUCTURE',title:'IT & ADMIN',desc:'Hinter jeder Website steckt Infrastruktur. Ich kümmere mich um Domains, Hosting, Deployment und die technischen Verbindungen.',outcome:'Eine technische Basis, auf der dein digitales Produkt zuverlässig läuft.',process:'DOMAIN → HOSTING → DEPLOY → CONFIG → MONITOR → ONLINE',tags:['HOSTING','DOMAIN','GITHUB','DEPLOYMENT','ADMIN']}
 };
 const $=s=>modal.querySelector(s);
 const open=key=>{const d=details[key]||details.build;$('#workModalCode').textContent=d.code;$('#workModalStatus').textContent=d.status;$('#workModalKicker').textContent=d.kicker;$('#workModalTitle').textContent=d.title;$('#workModalDesc').textContent=d.desc;$('#workModalOutcome').textContent=d.outcome;$('#workModalProcess').textContent=d.process;$('#workModalTags').innerHTML=d.tags.map(x=>'<i>'+x+'</i>').join('');const v=$('#workModalVisual');v.dataset.type=key;v.innerHTML='<div class="modal-visual-label">'+d.code.split(' / ')[1]+'</div><div class="modal-visual-core">'+d.title+'</div>';modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
@@ -732,4 +732,21 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
       });
     });
   });
+})();
+
+/* PRDXQ SHARED GLASS CONTACT CARD — injected once on every public page */
+(()=>{
+ if(document.getElementById('prdxq-contact-widget'))return;
+ const widget=document.createElement('aside');widget.id='prdxq-contact-widget';widget.className='prdxq-contact-widget';widget.setAttribute('aria-label','Direct contact card');
+ widget.innerHTML=`<button class="prdxq-contact-trigger" type="button" aria-expanded="false" aria-controls="prdxq-contact-panel"><span class="prdxq-trigger-dot" aria-hidden="true"></span><span data-i18n="trigger">Kontakt</span><span class="prdxq-trigger-arrow" aria-hidden="true">↗</span></button><section class="prdxq-contact-panel" id="prdxq-contact-panel" aria-hidden="true" inert><button class="prdxq-contact-close" type="button" aria-label="Close contact card">×</button><div class="prdxq-contact-top"><img src="assets/ilias-asdufan.jpg" alt="Ilias Asdufan" width="72" height="72" loading="lazy"><div><small>PRDXQ / DIRECT</small><h2>Ilias Asdufan</h2><span class="prdxq-contact-status"><i></i><span data-i18n="available">Direkter Kontakt</span></span></div></div><p class="prdxq-contact-line" data-i18n="line">Falls du mich doch direkt kontaktieren willst:</p><a class="prdxq-contact-phone" href="tel:+491777963990"><span data-i18n="call">Anrufen</span><strong>+49 177 7963990</strong><b aria-hidden="true">↗</b></a><div class="prdxq-contact-bottom"><span>PRDXQ®</span><div class="prdxq-locale" role="group" aria-label="Language"><button type="button" data-locale="de" aria-pressed="true">DE</button><button type="button" data-locale="en" aria-pressed="false">EN</button></div></div></section>`;
+ document.body.appendChild(widget);
+ const trigger=widget.querySelector('.prdxq-contact-trigger'),panel=widget.querySelector('.prdxq-contact-panel'),close=widget.querySelector('.prdxq-contact-close');
+ const copy={de:{trigger:'Kontakt',available:'Direkter Kontakt',line:'Falls du mich doch direkt kontaktieren willst:',call:'Anrufen',close:'Kontaktkarte schließen'},en:{trigger:'Contact',available:'Direct contact',line:'If you’d prefer to contact me directly:',call:'Call me',close:'Close contact card'}};
+ const setLocale=lang=>{const d=copy[lang]||copy.de;widget.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=d[el.dataset.i18n]);close.setAttribute('aria-label',d.close);widget.querySelectorAll('[data-locale]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.locale===lang)));widget.dataset.locale=lang};
+ const setOpen=open=>{trigger.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));panel.inert=!open;widget.classList.toggle('is-open',open);if(open)close.focus();else trigger.focus()};
+ trigger.addEventListener('click',()=>setOpen(trigger.getAttribute('aria-expanded')!=='true'));
+ close.addEventListener('click',()=>setOpen(false));
+ widget.querySelectorAll('[data-locale]').forEach(b=>b.addEventListener('click',()=>setLocale(b.dataset.locale)));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&trigger.getAttribute('aria-expanded')==='true')setOpen(false)});
+ setLocale((navigator.language||'de').toLowerCase().startsWith('en')?'en':'de');
 })();
