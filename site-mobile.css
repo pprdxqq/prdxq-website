@@ -38,7 +38,7 @@
   .mobile-home-intro{margin:-30px 6px 0;padding:25px 19px 20px}
   .mobile-kicker{display:flex;align-items:center;gap:8px;margin:0;color:#66736b;font:7px DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase}
   .mobile-kicker .acid-dot{width:6px;height:6px;flex:0 0 6px}
-  .mobile-home-intro h1{margin:19px 0 14px;font-size:clamp(37px,10.2vw,59px);line-height:.92;letter-spacing:-.08em}
+  .mobile-home-intro h1{margin:19px 0 14px;font-size:clamp(33px,8.5vw,49px);line-height:.95;letter-spacing:-.08em}
   .mobile-home-intro h1 em{color:#708078;font-style:normal}
   .mobile-home-lead{margin:0;color:#27332c;font-size:14px;line-height:1.58;font-weight:600}
   .mobile-home-support{margin:11px 0 0;color:#68756d;font-size:11px;line-height:1.65}
