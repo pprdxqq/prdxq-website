@@ -37,7 +37,7 @@ jobs:
           script = Path("script.js").read_text(encoding="utf-8")
           assert "prdxq-contact-widget" in script, "shared contact card missing"
           assert "const keys=['build','apps','systems','design','media','it','shopify']" in script, "mobile explorer must expose seven services"
-          assert "count.textContent=d.code+' / 07'" in script, "mobile service count must be seven"
+          assert "count.textContent=String(active+1).padStart(2,'0')+' / 07'" in script, "mobile service count must be seven"
           index = Path("index.html").read_text(encoding="utf-8")
           assert index.count("<details>") == 6, "homepage FAQ should contain six expandable questions"
           work = Path("work.html").read_text(encoding="utf-8")
