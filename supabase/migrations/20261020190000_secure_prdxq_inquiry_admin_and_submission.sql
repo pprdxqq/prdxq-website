@@ -90,8 +90,8 @@ begin
   return v_id;
 end;
 $function$;
-revoke all on function public.submit_public_inquiry(text,text,text,text,jsonb,text,text,text) from public;
-grant execute on function public.submit_public_inquiry(text,text,text,text,jsonb,text,text,text) to anon;
+revoke all on function public.submit_public_inquiry(text,text,text,text,jsonb,text,text,text) from public, anon, authenticated;
+grant execute on function public.submit_public_inquiry(text,text,text,text,jsonb,text,text,text) to service_role;
 
 create or replace function public.is_prdxq_admin()
 returns boolean language sql stable security invoker set search_path = ''
