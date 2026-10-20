@@ -23,6 +23,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: node --check script.js
+      - name: Validate required shared UI and service count
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          pages = ["index.html", "work.html", "lab.html", "design.html", "about.html", "contact.html", "impressum.html", "datenschutz.html"]
+          for page in pages:
+              text = Path(page).read_text(encoding="utf-8")
+              assert 'script.js' in text, f"{page}: shared script missing"
+              assert 'styles.css' in text, f"{page}: stylesheet missing"
+          script = Path("script.js").read_text(encoding="utf-8")
+          assert "prdxq-contact-widget" in script, "shared contact card missing"
+          assert "const keys=['build','apps','systems','design','media','it','shopify']" in script, "mobile explorer must expose seven services"
+          assert "count.textContent=d.code+' / 07'" in script, "mobile service count must be seven"
+          index = Path("index.html").read_text(encoding="utf-8")
+          assert index.count("<details>") == 6, "homepage FAQ should contain six expandable questions"
+          work = Path("work.html").read_text(encoding="utf-8")
+          assert 'id="shopify"' in work, "Shopify service detail missing"
+          print("Static site checks passed.")
+          PY
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
