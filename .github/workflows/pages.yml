@@ -32,7 +32,7 @@ jobs:
           pages = ["index.html", "work.html", "lab.html", "design.html", "about.html", "contact.html", "impressum.html", "datenschutz.html", "admin.html"]
           for page in pages:
               text = Path(page).read_text(encoding="utf-8")
-              assert 'script.js' in text, f"{page}: shared script missing"
+              assert ('script.js' in text) or page == "admin.html", f"{page}: shared script missing"
               assert 'styles.css' in text, f"{page}: stylesheet missing"
           script = Path("script.js").read_text(encoding="utf-8")
           assert "prdxq-contact-widget" in script, "shared contact card missing"
@@ -47,6 +47,7 @@ jobs:
           assert "submit-prdxq-inquiry" in contact, "Supabase submission endpoint missing"
           admin = Path("admin.html").read_text(encoding="utf-8")
           assert 'id="loginForm"' in admin and 'is_prdxq_admin' in admin, "admin login/access check missing"
+          assert 'script.js' in admin, "admin must load shared navigation and contact widget"
           print("Static site checks passed.")
           PY
       - name: Setup Pages
