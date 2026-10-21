@@ -48,11 +48,14 @@ html[data-theme="dark"] .thanks-actions a.secondary{background:#252a32;border-co
 <p class="thanks-kicker">PRDXQ / ANFRAGE ERHALTEN</p>
 <div class="thanks-mark" aria-hidden="true">✓</div>
 <h1 id="thanks-title">Danke, dass Sie sich für <em>PRDXQ</em> entschieden haben.</h1>
-<p class="thanks-copy">Ihre Anfrage wurde erfolgreich übermittelt. Danke, dass Sie sich die Zeit genommen haben, Ihr Vorhaben mit mir zu teilen.</p>
-<div class="thanks-next"><strong>Wie geht es weiter?</strong><br>Ich sehe mir Ihre Angaben an und melde mich bei Ihnen, sobald ich Ihre Anfrage geprüft habe.</div>
-<div class="thanks-actions"><a href="index.html">ZUR STARTSEITE <span>↗</span></a><a class="secondary" href="work.html">ARBEITEN ENTDECKEN <span>↗</span></a></div>
+<p class="thanks-copy" id="thanksCopy">Deine Anfrage wurde erfolgreich übermittelt. Danke, dass du dir die Zeit genommen hast, dein Vorhaben mit PRDXQ zu teilen.</p>
+<div class="thanks-next"><strong>Wie geht es weiter?</strong><br>Ich prüfe deine Angaben und melde mich, sobald ich deine Anfrage ausgewertet habe. <span id="emailNotice">Eine Bestätigungsmail wurde angefordert.</span></div>
+<div class="thanks-actions"><a href="lab.html">TRY THE LAB <span>↗</span></a><a class="secondary" href="index.html">ZUR STARTSEITE <span>↗</span></a></div>
 </section>
 </main>
+<script>
+(()=>{const emailState=new URLSearchParams(location.search).get('email');const notice=document.getElementById('emailNotice');if(emailState==='sent'){notice.textContent=' Eine Bestätigungsmail wurde an deine E-Mail-Adresse versendet.';}else{notice.textContent=' Die Anfrage ist gespeichert. Die Bestätigungsmail konnte nicht bestätigt werden; prüfe bitte auch deinen Spam-Ordner.';}const title=document.getElementById('thanks-title');title.innerHTML='Danke, dass du dich für <em>PRDXQ</em> entschieden hast.';})();
+</script>
 <script src="script.js"></script>
 <script src="admin-link.js?v=20261021-4"></script>
 <script src="theme-switch.js?v=20261021-4"></script>
