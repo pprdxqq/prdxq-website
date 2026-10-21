@@ -23,21 +23,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Inject admin navigation link on public pages
+      - name: Inject shared navigation and theme assets into pages
         run: |
           python3 - <<'PY'
           from pathlib import Path
           for page in Path('.').glob('*.html'):
-              if page.name == 'admin.html':
-                  continue
               text = page.read_text(encoding='utf-8')
-              tag = '<script src="admin-link.js"></script>'
-              if tag not in text:
-                  text = text.replace('</body>', tag + '</body>')
-                  page.write_text(text, encoding='utf-8')
+              css = '<link rel="stylesheet" href="theme.css">'
+              if css not in text:
+                  text = text.replace('</head>', css + '</head>')
+              for tag in ('<script src="admin-link.js"></script>', '<script src="theme-switch.js"></script>'):
+                  if tag not in text:
+                      text = text.replace('</body>', tag + '</body>')
+              page.write_text(text, encoding='utf-8')
           PY
       - name: Validate JavaScript syntax
-        run: node --check script.js && node --check admin-link.js
+        run: node --check script.js && node --check admin-link.js && node --check theme-switch.js
       - name: Validate required shared UI and service count
         run: |
           python3 - <<'PY'
