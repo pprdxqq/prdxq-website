@@ -23,8 +23,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Inject admin navigation link on public pages
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for page in Path('.').glob('*.html'):
+              if page.name == 'admin.html':
+                  continue
+              text = page.read_text(encoding='utf-8')
+              tag = '<script src="admin-link.js"></script>'
+              if tag not in text:
+                  text = text.replace('</body>', tag + '</body>')
+                  page.write_text(text, encoding='utf-8')
+          PY
       - name: Validate JavaScript syntax
-        run: node --check script.js
+        run: node --check script.js && node --check admin-link.js
       - name: Validate required shared UI and service count
         run: |
           python3 - <<'PY'
