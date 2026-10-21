@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#edf1f2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="prdxq-logo-transparent.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="theme.css?v=20261021-4">
+<title>Danke für deine Anfrage — PRDXQ</title>
+<style>
+.thanks-shell{min-height:calc(100svh - 100px);display:grid;place-items:center;padding:120px 20px 80px;box-sizing:border-box}
+.thanks-card{position:relative;width:min(760px,100%);box-sizing:border-box;padding:clamp(28px,7vw,76px);border:1px solid rgba(255,255,255,.8);border-radius:36px;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(226,233,236,.68));box-shadow:var(--shadow);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);overflow:hidden}
+.thanks-card:after{content:"";position:absolute;width:260px;height:260px;right:-100px;top:-115px;border:1px solid rgba(110,125,133,.24);border-radius:50%;box-shadow:0 0 0 25px rgba(255,255,255,.12),0 0 0 55px rgba(255,255,255,.08);pointer-events:none}
+.thanks-kicker{font:9px 'DM Mono',monospace;letter-spacing:.14em;color:#59666e}
+.thanks-mark{display:grid;place-items:center;width:52px;height:52px;margin:28px 0;border-radius:50%;background:#c7ff38;color:#172027;font-size:24px}
+.thanks-card h1{max-width:650px;margin:0 0 24px;font-size:clamp(48px,8vw,94px);line-height:.9;letter-spacing:-.085em;color:#172027}
+.thanks-card h1 em{font-style:normal;color:#6b777e}
+.thanks-copy{max-width:520px;color:#3e4b52;font-size:clamp(15px,2vw,18px);line-height:1.7}
+.thanks-next{margin-top:32px;padding-top:22px;border-top:1px solid rgba(77,91,99,.22);color:#35434a;font-size:13px;line-height:1.65}
+.thanks-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.thanks-actions a{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:48px;box-sizing:border-box;padding:14px 18px;border:1px solid #35434a;border-radius:999px;background:#35434a;color:#fff;text-decoration:none;font:9px 'DM Mono',monospace;letter-spacing:.06em}
+.thanks-actions a.secondary{background:rgba(255,255,255,.5);color:#243139;border-color:rgba(77,91,99,.25)}
+html[data-theme="dark"] .thanks-card{background:linear-gradient(145deg,rgba(37,41,49,.97),rgba(18,20,25,.97));border-color:#59616b}
+html[data-theme="dark"] .thanks-kicker{color:#c5ccd5}
+html[data-theme="dark"] .thanks-card h1{color:#f4f6f8}
+html[data-theme="dark"] .thanks-card h1 em{color:#c5ccd5}
+html[data-theme="dark"] .thanks-copy,html[data-theme="dark"] .thanks-next{color:#e0e5ea}
+html[data-theme="dark"] .thanks-next{border-color:#59616b}
+html[data-theme="dark"] .thanks-actions a{background:#c7ff38;border-color:#c7ff38;color:#111}
+html[data-theme="dark"] .thanks-actions a.secondary{background:#252a32;border-color:#59616b;color:#f0f3f7}
+@media(max-width:700px){.thanks-shell{padding:105px 12px 80px}.thanks-card{border-radius:27px;padding:30px 22px}.thanks-card h1{font-size:clamp(48px,14vw,72px)}.thanks-mark{margin:24px 0}}
+</style>
+</head>
+<body>
+<header class="nav">
+<a class="brand" href="index.html" aria-label="PRDXQ Home"><span class="brand-word">PRDXQ<sup>®</sup></span></a>
+<nav><a href="index.html">Home</a><a href="work.html">Work</a><a href="lab.html">Lab</a><a href="design.html">Design</a><a href="about.html">About</a></nav>
+<div class="nav-right"><a class="nav-cta" href="contact.html">Projekt starten <b>↗</b></a><button class="menu-toggle" aria-label="Menü öffnen" aria-expanded="false"><i></i><i></i></button></div>
+</header>
+<div class="mobile-menu"><a href="index.html">Home <b>01</b></a><a href="work.html">Work <b>02</b></a><a href="lab.html">Lab <b>03</b></a><a href="design.html">Design <b>04</b></a><a href="about.html">About <b>05</b></a><a href="contact.html">Kontakt <b>06</b></a></div>
+<main class="thanks-shell">
+<section class="thanks-card" aria-labelledby="thanks-title">
+<p class="thanks-kicker">PRDXQ / ANFRAGE ERHALTEN</p>
+<div class="thanks-mark" aria-hidden="true">✓</div>
+<h1 id="thanks-title">Danke, dass Sie sich für <em>PRDXQ</em> entschieden haben.</h1>
+<p class="thanks-copy">Ihre Anfrage wurde erfolgreich übermittelt. Danke, dass Sie sich die Zeit genommen haben, Ihr Vorhaben mit mir zu teilen.</p>
+<div class="thanks-next"><strong>Wie geht es weiter?</strong><br>Ich sehe mir Ihre Angaben an und melde mich bei Ihnen, sobald ich Ihre Anfrage geprüft habe.</div>
+<div class="thanks-actions"><a href="index.html">ZUR STARTSEITE <span>↗</span></a><a class="secondary" href="work.html">ARBEITEN ENTDECKEN <span>↗</span></a></div>
+</section>
+</main>
+<script src="script.js"></script>
+<script src="admin-link.js?v=20261021-4"></script>
+<script src="theme-switch.js?v=20261021-4"></script>
+</body>
+</html>
