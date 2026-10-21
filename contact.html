@@ -380,8 +380,9 @@
      });
      const data=await response.json().catch(()=>({}));
      if(!response.ok)throw new Error(data.error||'submission_failed');
-     savedInquiryId=data.id||'saved';
-     statusEl.textContent='Danke! Deine Anfrage wurde gespeichert. Du kannst jetzt zusätzlich WhatsApp öffnen.';
+     if(!data.id) throw new Error('submission_failed');
+     savedInquiryId=data.id;
+     statusEl.textContent='Danke! Deine Anfrage wurde gespeichert.';
      return true;
    }catch(error){
      statusEl.textContent=error.message==='rate_limited'
@@ -392,11 +393,14 @@
      sendButton.disabled=false;whatsappButton.disabled=false;
    }
  }
- sendButton.addEventListener('click',async()=>{await submitInquiry()});
+ sendButton.addEventListener('click',async()=>{
+   if(await submitInquiry()) window.location.assign('thank-you.html');
+ });
  whatsappButton.addEventListener('click',async()=>{
    if(!await submitInquiry())return;
    const text=encodeURIComponent(buildMessage());
    window.open('https://wa.me/491777963990?text='+text,'_blank','noopener,noreferrer');
+   window.location.assign('thank-you.html');
  });
  document.getElementById('restartWizard').addEventListener('click',()=>{state.answers={};state.history=[];state.current=0;result.hidden=true;panel.hidden=false;render();root.scrollIntoView({behavior:'smooth',block:'start'})});
  render();
