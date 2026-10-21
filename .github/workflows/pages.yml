@@ -30,11 +30,11 @@ jobs:
           for page in Path('.').glob('*.html'):
               text = page.read_text(encoding='utf-8')
               css = '<link rel="stylesheet" href="theme.css">'
-              if css not in text:
+              if 'href="theme.css' not in text:
                   text = text.replace('</head>', css + '</head>')
-              for tag in ('<script src="admin-link.js"></script>', '<script src="theme-switch.js"></script>'):
-                  if tag not in text:
-                      text = text.replace('</body>', tag + '</body>')
+              for filename in ('admin-link.js', 'theme-switch.js'):
+                  if f'src="{filename}' not in text:
+                      text = text.replace('</body>', f'<script src="{filename}"></script>' + '</body>')
               page.write_text(text, encoding='utf-8')
           PY
       - name: Validate JavaScript syntax
