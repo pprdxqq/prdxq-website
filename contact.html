@@ -333,6 +333,21 @@
      else showResult();
    });
  }
+ document.getElementById('editAnswers').addEventListener('click',()=>{
+   result.hidden=true;
+   panel.hidden=false;
+   state.current=questions.length-1;
+   back.hidden=state.current===0;
+   render();
+   root.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+ document.getElementById('restartWizard').addEventListener('click',()=>{
+   if(!confirm('Möchtest du wirklich alle Projekt-Antworten zurücksetzen? Deine Kontaktdaten bleiben erhalten.'))return;
+   state.answers={};state.history=[];state.current=0;
+   result.hidden=true;panel.hidden=false;back.hidden=true;
+   render();
+   root.scrollIntoView({behavior:'smooth',block:'start'});
+ });
  infoClose.addEventListener('click',()=>info.hidden=true);
  back.addEventListener('click',()=>{if(!state.history.length)return;state.current=state.history.pop();render()});
  function labelFor(qid,val){const q=questions.find(x=>x.id===qid),o=q?.options.find(x=>x.value===val);return o?.label||val}
