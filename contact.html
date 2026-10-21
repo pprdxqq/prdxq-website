@@ -23,7 +23,7 @@
     <div class="wizard-panel" id="wizardPanel">
       <div class="wizard-question">
         <p class="wizard-kicker" id="wizardKicker">WAS SOLL ENTSTEHEN?</p>
-        <h2 id="wizardQuestion">Was möchtest du mit PRDXQ bauen?</h2>
+        <h2 id="wizardQuestion">Was brauchst du gerade?</h2>
         <p id="wizardHint">Wähle alles, was interessant klingt. Du musst die Begriffe nicht kennen.</p>
       </div>
       <div class="wizard-options" id="wizardOptions"></div>
@@ -51,7 +51,7 @@
         <button type="button" id="sendWhatsApp" class="result-action">SPEICHERN & WHATSAPP <b>↗</b></button>
       </div>
       <p id="inquiryStatus" class="inquiry-status" role="status" aria-live="polite"></p>
-      <div class="result-edit-actions"><button type="button" id="editAnswers" class="wizard-restart">← Antworten bearbeiten</button><button type="button" id="restartWizard" class="wizard-restart">Alles neu starten</button></div>
+      <div class="result-edit-actions"><button type="button" id="editAnswers" class="wizard-restart">← Zurückgehen & Antworten ändern</button><button type="button" id="restartWizard" class="wizard-restart">Alles neu starten</button></div>
       <p class="result-note">Beim Absenden werden deine Angaben und Projekt-Antworten in der geschützten PRDXQ-Anfragedatenbank gespeichert. Details stehen in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
     </div>
   </div>
@@ -251,7 +251,7 @@
   {id:'webapp',label:'Web-App',short:'Eine richtige Anwendung, die im Browser läuft.',detail:'Eine Web-App funktioniert eher wie ein Programm: z. B. Kundenportale, Dashboards, Buchungssysteme oder interne Tools – ohne App-Store.',example:'Dashboard · Kundenportal · Buchungssystem',tag:'WEB APP'},
   {id:'mobileapp',label:'Mobile App',short:'Eine App für Smartphone oder Tablet.',detail:'Eine Mobile App ist für iPhone oder Android gebaut und kann Funktionen des Geräts nutzen. Sie eignet sich für Produkte, Tools und Services.',example:'iOS · Android · Mobile Tool',tag:'APP'},
   {id:'software',label:'Software / Tool',short:'Ein individuelles Programm für eine konkrete Aufgabe.',detail:'Individuelle Software wird genau für deinen Ablauf gebaut – zum Beispiel ein Desktop-Tool, internes System oder eine spezielle Anwendung.',example:'Internes Tool · Desktop-App · Spezialsoftware',tag:'SOFTWARE'},
-  {id:'automation',label:'Automatisierung',short:'Wiederkehrende Arbeit automatisch erledigen lassen.',detail:'Automatisierung verbindet Formulare, Datenbanken, APIs und andere Dienste, damit Informationen und Prozesse automatisch weiterlaufen.',example:'Formular → Datenbank → E-Mail → CRM',tag:'AUTOMATION'},
+  {id:'automation',label:'Wiederkehrende Aufgaben sparen Zeit',short:'Wiederkehrende Arbeit automatisch erledigen lassen.',detail:'Automatisierung verbindet Formulare, Datenbanken, APIs und andere Dienste, damit Informationen und Prozesse automatisch weiterlaufen.',example:'Formular → Datenbank → E-Mail → CRM',tag:'AUTOMATION'},
   {id:'design',label:'Branding / Design',short:'Eine visuelle Identität und ein starkes Interface.',detail:'Hier geht es um Look & Feel: Branding, UI/UX, Grafiken und visuelle Systeme, damit deine Marke professionell und wiedererkennbar wirkt.',example:'Branding · UI/UX · Grafik',tag:'DESIGN'},
   {id:'social',label:'Social Media / Content',short:'Content produzieren und für Plattformen vorbereiten.',detail:'Foto, Video, Schnitt und Social Content – von der Idee bis zum fertigen Beitrag für die jeweilige Plattform.',example:'Foto · Video · Reels · Social',tag:'MEDIA'},
   {id:'it',label:'IT / Administration',short:'Technik, Hosting und Infrastruktur dahinter.',detail:'Domains, Hosting, Deployment, technische Setups und Verbindungen – damit dein digitales Projekt nicht nur gut aussieht, sondern läuft.',example:'Domain · Hosting · Deployment',tag:'IT'},
@@ -259,37 +259,37 @@
  ];
 
  const questions=[
-  {id:'type',kicker:'01 / PROJEKT',q:'Was möchtest du mit PRDXQ bauen?',hint:'Wähle alles, was interessant klingt. Mit dem „i“ kannst du dir jede Option erklären lassen.',multi:true,options:types.map(x=>({...x,value:x.id}))},
-  {id:'goal',kicker:'02 / ZIEL',q:'Was soll das Projekt für dich erreichen?',hint:'Damit ich nicht nur etwas Schönes, sondern etwas Sinnvolles plane.',multi:true,options:[
-   {value:'presence',label:'Online professionell auftreten',short:'Eine starke digitale Präsenz.',detail:'Du möchtest, dass Menschen dein Unternehmen oder deine Marke online sofort verstehen und ernst nehmen.'},
+  {id:'type',kicker:'01 / PROJEKT',q:'Was möchtest du mit PRDXQ bauen?',hint:'Wähle die Richtung, die deinem Vorhaben am nächsten kommt. Du kannst mehrere auswählen oder „Ich weiß noch nicht“ nehmen.',multi:true,options:types.map(x=>({...x,value:x.id}))},
+  {id:'goal',kicker:'02 / ZIEL',q:'Was möchtest du damit verbessern?',hint:'Denk an das Ergebnis, das dir am meisten helfen würde.',multi:true,options:[
+   {value:'presence',label:'Professionell online auftreten',short:'Eine starke digitale Präsenz.',detail:'Du möchtest, dass Menschen dein Unternehmen oder deine Marke online sofort verstehen und ernst nehmen.'},
    {value:'customers',label:'Mehr Kunden gewinnen',short:'Mehr Anfragen, Leads oder Verkäufe.',detail:'Die Website oder Anwendung soll nicht nur informieren, sondern Besucher gezielt zu Kunden machen.'},
    {value:'sell',label:'Produkte / Leistungen verkaufen',short:'Shop, Buchung oder digitale Verkäufe.',detail:'Menschen sollen online etwas kaufen, buchen oder direkt eine Leistung anfragen können.'},
    {value:'automate',label:'Zeit sparen',short:'Weniger wiederkehrende Handarbeit.',detail:'Manuelle Schritte sollen durch Systeme, Integrationen oder Automationen ersetzt werden.'},
-   {value:'internal',label:'Intern besser arbeiten',short:'Ein Tool für dein Team oder deinen Ablauf.',detail:'Ein internes System soll Prozesse übersichtlicher, schneller oder zuverlässiger machen.'},
+   {value:'internal',label:'Abläufe einfacher machen',short:'Ein Tool für dein Team oder deinen Ablauf.',detail:'Ein internes System soll Prozesse übersichtlicher, schneller oder zuverlässiger machen.'},
    {value:'brand',label:'Marke stärker machen',short:'Look, Identität und Wiedererkennung.',detail:'Du willst professioneller auftreten und eine visuelle Sprache entwickeln, die zu dir passt.'}
   ]},
-  {id:'features',kicker:'03 / FUNKTION',q:'Was soll unbedingt möglich sein?',hint:'Nur auswählen, was wirklich relevant ist. Die Auswahl beeinflusst dein Projekt-Profil.',multi:true,options:[
+  {id:'features',kicker:'03 / FUNKTION',q:'Was sollen Menschen damit tun können?',hint:'Wähle nur, was du brauchst. Wenn du es noch nicht weißt, ist das völlig okay.',multi:true,options:[
    {value:'forms',label:'Kontakt / Anfragen',short:'Interessenten sollen dich direkt erreichen.',detail:'Kontaktformulare, Anfrageflows oder direkte Kontaktwege.'},
-   {value:'accounts',label:'Login / Kundenbereich',short:'Nutzer bekommen einen eigenen Bereich.',detail:'Accounts, Profile, geschützte Inhalte oder Kundenportale.'},
+   {value:'accounts',label:'Eigener Login-Bereich',short:'Nutzer bekommen einen eigenen Bereich.',detail:'Accounts, Profile, geschützte Inhalte oder Kundenportale.'},
    {value:'booking',label:'Buchung / Termine',short:'Termine oder Leistungen online buchen.',detail:'Buchungsabläufe, Kalender und automatische Bestätigungen.'},
    {value:'payments',label:'Zahlungen',short:'Online bezahlen oder verkaufen.',detail:'Zum Beispiel Shop, Checkout, Abos oder digitale Produkte.'},
-   {value:'database',label:'Daten / Dashboard',short:'Informationen zentral verwalten.',detail:'Datenbanken, Übersichten, Statistiken oder Admin-Bereiche.'},
+   {value:'database',label:'Übersicht & Daten verwalten',short:'Informationen zentral verwalten.',detail:'Datenbanken, Übersichten, Statistiken oder Admin-Bereiche.'},
    {value:'ai',label:'KI / AI',short:'Künstliche Intelligenz integrieren.',detail:'Zum Beispiel AI-Assistenten, Textverarbeitung, Automationen oder intelligente Funktionen.'},
-   {value:'social',label:'Social Integration',short:'Social Media mit dem Projekt verbinden.',detail:'Feeds, Sharing, Content-Flows oder Social-Media-Prozesse.'},
+   {value:'social',label:'Social Media verbinden',short:'Social Media mit dem Projekt verbinden.',detail:'Feeds, Sharing, Content-Flows oder Social-Media-Prozesse.'},
    {value:'none',label:'Noch keine Ahnung',short:'Ich weiß noch nicht, was ich brauche.',detail:'Völlig okay. Das klären wir anhand deines Ziels.'}
   ]},
-  {id:'stage',kicker:'04 / STATUS',q:'Wo stehst du gerade?',hint:'Das hilft, den Umfang realistisch einzuschätzen.',multi:false,options:[
+  {id:'stage',kicker:'04 / STATUS',q:'Wie weit bist du mit deiner Idee?',hint:'Damit wir wissen, ob wir neu starten, etwas verbessern oder etwas reparieren.',multi:false,options:[
    {value:'idea',label:'Nur eine Idee',short:'Noch nichts gebaut.',detail:'Du hast die Idee und möchtest daraus einen konkreten Plan machen.'},
    {value:'concept',label:'Schon konkrete Vorstellungen',short:'Design oder Ablauf sind teilweise klar.',detail:'Du weißt bereits ziemlich genau, wie das Projekt aussehen oder funktionieren soll.'},
    {value:'existing',label:'Es gibt schon etwas',short:'Bestehende Website, App oder Software.',detail:'Wir verbessern, erweitern oder ersetzen ein bestehendes System.'},
    {value:'restart',label:'Etwas funktioniert nicht',short:'Bestehendes Projekt braucht einen Fix.',detail:'Du hast ein technisches oder konzeptionelles Problem, das gelöst werden soll.'}
   ]},
-  {id:'style',kicker:'05 / LOOK & FEEL',q:'Wie soll es sich anfühlen?',hint:'Das ist keine Designprüfung. Such einfach aus, was zu deiner Vorstellung passt.',multi:true,options:[
+  {id:'style',kicker:'05 / LOOK & FEEL',q:'Welcher Stil gefällt dir?',hint:'Du brauchst keine Designbegriffe zu kennen – wähle einfach, was sich richtig anfühlt.',multi:true,options:[
    {value:'premium',label:'Premium / Clean',short:'Ruhig, hochwertig, präzise.',detail:'Viel Raum, starke Typografie und eine hochwertige Produktwirkung.'},
    {value:'bold',label:'Bold / Experimental',short:'Mutig, auffällig, anders.',detail:'Starke Animationen, ungewöhnliche Layouts und ein eigener Charakter.'},
    {value:'minimal',label:'Minimal / Simple',short:'Weniger ist mehr.',detail:'Klarer Aufbau, wenig Ablenkung und eine sehr einfache Bedienung.'},
    {value:'playful',label:'Interactive / Fun',short:'Bewegung und Interaktion.',detail:'Die Oberfläche darf sich wie ein digitales Produkt anfühlen und zum Entdecken einladen.'},
-   {value:'existing',label:'An bestehend orientieren',short:'Marke oder vorhandenes Design behalten.',detail:'Das neue Projekt soll sich in eine bestehende Identität einfügen.'}
+   {value:'existing',label:'Vorhandenen Stil beibehalten',short:'Marke oder vorhandenes Design behalten.',detail:'Das neue Projekt soll sich in eine bestehende Identität einfügen.'}
   ]}
  ];
 
