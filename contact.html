@@ -320,7 +320,16 @@
    b.addEventListener('click',()=>{
      const values=state.answers[s.id]||[];if(!values.length)return;
      state.history.push(state.current);
-     if(state.current<questions.length-1){panel.classList.remove('step-enter');panel.classList.add('step-leave');setTimeout(()=>{state.current++;render();panel.classList.remove('step-leave');void panel.offsetWidth;panel.classList.add('step-enter');},150);}
+     if(state.current<questions.length-1){
+       panel.classList.remove('step-enter');panel.classList.add('step-leave');
+       setTimeout(()=>{
+         state.current++;
+         render();
+         panel.classList.remove('step-leave');void panel.offsetWidth;panel.classList.add('step-enter');
+         // Keep the next question in view after every step, including on mobile.
+         requestAnimationFrame(()=>{root.scrollIntoView({behavior:'smooth',block:'start'});});
+       },150);
+     }
      else showResult();
    });
  }
