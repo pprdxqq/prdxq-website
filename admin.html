@@ -134,7 +134,7 @@
     const top = node("div", "inquiry-top");
     const identity = node("div");
     identity.append(node("h3", "inquiry-name", item.name || "Ohne Namen"));
-    identity.append(node("p", "inquiry-meta", new Date(item.created_at).toLocaleString("de-DE") + " · " + item.id));
+    identity.append(node("p", "inquiry-meta", "Eingegangen am " + new Date(item.created_at).toLocaleString("de-DE")));
     const select = node("select", "inquiry-status-select");
     select.setAttribute("aria-label", "Status der Anfrage von " + (item.name || ""));
     for (const [value, label] of statuses) {
@@ -161,13 +161,28 @@
       contacts.appendChild(phone);
     }
     card.appendChild(contacts);
-    if (item.message) card.appendChild(node("p", "inquiry-message", item.message));
+    if (item.message) card.appendChild(node("p", "inquiry-message", item.message.replace(/\\\\n/g, "\\n")));
     const answers = node("details");
     answers.style.marginTop = "14px";
-    const summary = node("summary", "", "Projektberater-Antworten anzeigen");
+    const summary = node("summary", "", "Projektangaben verständlich anzeigen");
     summary.style.cursor = "pointer";
     answers.appendChild(summary);
-    answers.appendChild(node("pre", "inquiry-answers", JSON.stringify(item.project_answers || {}, null, 2)));
+    const readable = item.project_answers || {};
+    const answerNames = {type:"Was soll entstehen",goal:"Projektziel",features:"Gewünschte Funktionen",stage:"Aktueller Stand",style:"Designrichtung"};
+    const answerLabels = {
+      type:{build:"Website / Web-App",apps:"App / Software",systems:"Automatisierung / Datenbank",design:"UI/UX / Grafikdesign",media:"Foto / Video / Social Media",shopify:"Online-Shop",it:"IT / Administration"},
+      goal:{presence:"Professioneller Online-Auftritt",customers:"Mehr Kunden gewinnen",sell:"Produkte / Leistungen verkaufen",automate:"Zeit sparen",internal:"Interne Abläufe verbessern",brand:"Marke stärken"},
+      features:{forms:"Kontakt / Anfragen",accounts:"Login / Kundenbereich",booking:"Buchungen / Termine",payments:"Zahlungen",database:"Daten / Dashboard",ai:"KI-Funktionen",social:"Social Media",none:"Noch unklar"},
+      stage:{idea:"Nur eine Idee",concept:"Konkrete Vorstellungen",existing:"Bestehendes Projekt",restart:"Etwas funktioniert nicht"},
+      style:{premium:"Premium / Clean",bold:"Bold / Experimental",minimal:"Minimal / Simple",playful:"Interaktiv / verspielt",existing:"An bestehendem Design orientieren"}
+    };
+    const readableLines = Object.entries(answerNames).map(([key,label]) => {
+      const raw = readable[key];
+      const values = Array.isArray(raw) ? raw : raw ? [raw] : [];
+      const translated = values.map(value => answerLabels[key]?.[value] || value);
+      return label + ": " + (translated.join(", ") || "Nicht angegeben");
+    });
+    answers.appendChild(node("pre", "inquiry-answers", readableLines.join("\\n")));
     card.appendChild(answers);
     return card;
   }
