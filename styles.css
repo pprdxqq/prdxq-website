@@ -1412,6 +1412,10 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 .prdxq-contact-status i{width:5px;height:5px}
 .prdxq-contact-line{margin:22px 0 14px;font-size:13px;line-height:1.45;max-width:260px}
 .prdxq-contact-phone{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center;padding:15px;border:1px solid rgba(255,255,255,.8);border-radius:17px;background:rgba(255,255,255,.46);box-shadow:inset 1px 1px 0 rgba(255,255,255,.75);color:#172027;text-decoration:none}
+.prdxq-contact-email{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center;padding:13px 15px;margin-top:8px;border:1px solid rgba(255,255,255,.8);border-radius:17px;background:rgba(255,255,255,.3);color:#172027;text-decoration:none;min-width:0;overflow-wrap:anywhere}
+.prdxq-contact-email span{font:8px DM Mono;color:#758089;text-transform:uppercase;letter-spacing:.08em}
+.prdxq-contact-email strong{font-size:clamp(11px,2.8vw,14px);letter-spacing:-.02em;overflow-wrap:anywhere}
+.prdxq-contact-email b{grid-column:2;grid-row:1/3;font-size:17px;color:#788b28}
 .prdxq-contact-phone span{font:8px DM Mono;color:#758089;text-transform:uppercase;letter-spacing:.08em}
 .prdxq-contact-phone strong{font-size:15px;letter-spacing:-.03em}
 .prdxq-contact-phone b{grid-column:2;grid-row:1/3;font-size:17px;color:#788b28}
@@ -1419,7 +1423,7 @@ html{scroll-behavior:smooth}.hero-poster{--mx:0px;--my:0px;transform:translate3d
 .prdxq-locale{display:flex;gap:4px;padding:3px;border:1px solid rgba(110,120,125,.2);border-radius:99px;background:rgba(255,255,255,.3)}
 .prdxq-locale button{border:0;background:transparent;color:#69757c;padding:6px 8px;border-radius:99px;font:8px DM Mono;cursor:pointer}
 .prdxq-locale button[aria-pressed=true]{background:#c7ff38;color:#172027}
-.prdxq-contact-widget button:focus-visible,.prdxq-contact-phone:focus-visible{outline:3px solid #c7ff38;outline-offset:3px}
+.prdxq-contact-widget button:focus-visible,.prdxq-contact-phone:focus-visible,.prdxq-contact-email:focus-visible{outline:3px solid #c7ff38;outline-offset:3px}
 @media(max-width:800px){
  .faq-section{margin:10px;padding:60px 18px 34px;border-radius:28px;display:block}
  .faq-heading h2{font-size:16vw;margin:20px 0}
