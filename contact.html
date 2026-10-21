@@ -51,7 +51,7 @@
         <button type="button" id="sendWhatsApp" class="result-action">SPEICHERN & WHATSAPP <b>↗</b></button>
       </div>
       <p id="inquiryStatus" class="inquiry-status" role="status" aria-live="polite"></p>
-      <button type="button" id="restartWizard" class="wizard-restart">Antworten neu starten</button>
+      <div class="result-edit-actions"><button type="button" id="editAnswers" class="wizard-restart">← Antworten bearbeiten</button><button type="button" id="restartWizard" class="wizard-restart">Alles neu starten</button></div>
       <p class="result-note">Beim Absenden werden deine Angaben und Projekt-Antworten in der geschützten PRDXQ-Anfragedatenbank gespeichert. Details stehen in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
     </div>
   </div>
@@ -138,7 +138,7 @@
 .result-chip small{display:block;font:7px DM Mono;color:#88959b;letter-spacing:.1em;margin-bottom:8px}.result-chip strong{font:500 11px Manrope}.result-chip p{font:9px DM Mono;color:#aeb8bd;line-height:1.45;margin:7px 0 0}
 .contact-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
 .contact-details label{display:block}.contact-details span{display:block;font:8px DM Mono;letter-spacing:.1em;color:#95a0a6;margin:0 0 8px}.contact-details input{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:15px;padding:15px 16px;outline:none;font:500 12px Manrope}.contact-details input:focus{border-color:#c7ff38}.contact-details input::placeholder{color:#7f8b91}
-.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.result-action{border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:16px;background:transparent;color:#fff;font:8px DM Mono;letter-spacing:.08em;cursor:pointer}.result-action.primary{background:#c7ff38;border-color:#c7ff38;color:#111}.result-action b{float:right;font-size:13px}.wizard-restart{display:block;margin:22px auto 0;border:0;background:transparent;color:#8f9ba1;font:8px DM Mono;text-decoration:underline;cursor:pointer}.result-note{text-align:center;color:#6f7b81;font:7px DM Mono;line-height:1.5;max-width:560px;margin:25px auto 0}
+.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.result-action{border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:16px;background:transparent;color:#fff;font:8px DM Mono;letter-spacing:.08em;cursor:pointer}.result-action.primary{background:#c7ff38;border-color:#c7ff38;color:#111}.result-action b{float:right;font-size:13px}.wizard-restart{display:block;margin:22px auto 0;border:0;background:transparent;color:#8f9ba1;font:8px DM Mono;text-decoration:underline;cursor:pointer}.result-edit-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.result-edit-actions .wizard-restart{margin:0}.result-note{text-align:center;color:#6f7b81;font:7px DM Mono;line-height:1.5;max-width:560px;margin:25px auto 0}
 .wizard-panel.step-enter{animation:wizardIn .4s cubic-bezier(.2,.8,.2,1)}@keyframes wizardIn{from{opacity:0;transform:translateX(25px)}to{opacity:1;transform:none}}
 @media(max-width:800px){
  .project-start{padding:105px 12px 90px}.project-start-head{padding:0 8px;margin-bottom:30px}.project-start-head h1{font-size:58px}.project-lead{font-size:14px}.project-wizard{border-radius:27px}.wizard-top{padding:17px 18px 11px}.wizard-progress{margin:0 18px}.wizard-panel{padding:28px 18px 22px}.wizard-question h2{font-size:42px}.wizard-options{grid-template-columns:1fr;margin-top:28px;gap:8px}.wizard-option{padding:17px;border-radius:18px}.wizard-option strong{font-size:12px}.wizard-option small{font-size:7px}.wizard-info{grid-template-columns:27px 1fr auto}.wizard-info p{font-size:11px}.wizard-result{padding:30px 18px}.wizard-result h2{font-size:43px}.result-grid{grid-template-columns:1fr 1fr;margin:26px 0}.result-chip{padding:14px}.contact-details,.result-actions{grid-template-columns:1fr}.contact-details{gap:9px}.result-action{padding:15px}.project-system-line{font-size:7px}
@@ -382,6 +382,7 @@
      if(!response.ok)throw new Error(data.error||'submission_failed');
      if(!data.id) throw new Error('submission_failed');
      savedInquiryId=data.id;
+     window.__prdxqEmailSent=data.emailSent===true;
      statusEl.textContent='Danke! Deine Anfrage wurde gespeichert.';
      return true;
    }catch(error){
@@ -394,13 +395,13 @@
    }
  }
  sendButton.addEventListener('click',async()=>{
-   if(await submitInquiry()) window.location.assign('thank-you.html');
+   if(await submitInquiry()) window.location.assign('thank-you.html?email='+(window.__prdxqEmailSent===true?'sent':'pending'));
  });
  whatsappButton.addEventListener('click',async()=>{
    if(!await submitInquiry())return;
    const text=encodeURIComponent(buildMessage());
    window.open('https://wa.me/491777963990?text='+text,'_blank','noopener,noreferrer');
-   window.location.assign('thank-you.html');
+   window.location.assign('thank-you.html?email='+(window.__prdxqEmailSent===true?'sent':'pending'));
  });
  document.getElementById('restartWizard').addEventListener('click',()=>{state.answers={};state.history=[];state.current=0;result.hidden=true;panel.hidden=false;render();root.scrollIntoView({behavior:'smooth',block:'start'})});
  render();
