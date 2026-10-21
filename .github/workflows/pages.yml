@@ -47,7 +47,8 @@ jobs:
           assert "submit-prdxq-inquiry" in contact, "Supabase submission endpoint missing"
           admin = Path("admin.html").read_text(encoding="utf-8")
           assert 'id="loginForm"' in admin and 'is_prdxq_admin' in admin, "admin login/access check missing"
-          assert 'script.js' in admin, "admin must load shared navigation and contact widget"
+          assert 'styles.css' in admin, "admin stylesheet missing"
+          assert Path("admin-link.js").exists(), "admin navigation link script missing"
           print("Static site checks passed.")
           PY
       - name: Setup Pages
