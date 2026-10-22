@@ -29,6 +29,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import os
+          import re
           from pathlib import Path
           for page in Path('.').glob('*.html'):
               text = page.read_text(encoding='utf-8')
@@ -40,12 +41,8 @@ jobs:
                       text = text.replace('</body>', f'<script src="{filename}"></script>' + '</body>')
               version = os.environ.get('PRDXQ_ASSET_VERSION', '1')
               # Replace cached asset URLs on every deploy so mobile browsers do not keep stale JS/CSS.
-              for attribute, asset in (('href', 'theme.css'), ('src', 'script.js')):
-                  marker = f'{attribute}="{asset}'
-                  while marker in text:
-                      start = text.index(marker)
-                      end = text.index('"', start + len(marker))
-                      text = text[:start] + f'{attribute}="{asset}?v={version}' + text[end:]
+              text = re.sub(r'href="theme\.css(?:\?[^"]*)?"', 'href="theme.css?v=' + version + '"', text)
+              text = re.sub(r'src="script\.js(?:\?[^"]*)?"', 'src="script.js?v=' + version + '"', text)
               page.write_text(text, encoding='utf-8')
           PY
       - name: Validate JavaScript syntax
