@@ -24,8 +24,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Inject shared navigation and theme assets into pages
+        env:
+          PRDXQ_ASSET_VERSION: ${{ github.run_number }}
         run: |
           python3 - <<'PY'
+          import os
           from pathlib import Path
           for page in Path('.').glob('*.html'):
               text = page.read_text(encoding='utf-8')
@@ -35,6 +38,14 @@ jobs:
               for filename in ('admin-link.js', 'theme-switch.js'):
                   if f'src="{filename}' not in text:
                       text = text.replace('</body>', f'<script src="{filename}"></script>' + '</body>')
+              version = os.environ.get('PRDXQ_ASSET_VERSION', '1')
+              # Replace cached asset URLs on every deploy so mobile browsers do not keep stale JS/CSS.
+              for attribute, asset in (('href', 'theme.css'), ('src', 'script.js')):
+                  marker = f'{attribute}="{asset}'
+                  while marker in text:
+                      start = text.index(marker)
+                      end = text.index('"', start + len(marker))
+                      text = text[:start] + f'{attribute}="{asset}?v={version}' + text[end:]
               page.write_text(text, encoding='utf-8')
           PY
       - name: Validate JavaScript syntax
