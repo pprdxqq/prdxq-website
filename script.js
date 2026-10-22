@@ -745,10 +745,12 @@ document.querySelectorAll('.challenge-options button').forEach(btn=>btn.addEvent
  const trigger=widget.querySelector('.prdxq-contact-trigger'),panel=widget.querySelector('.prdxq-contact-panel'),close=widget.querySelector('.prdxq-contact-close');
  const copy={de:{trigger:'Kontakt',available:'Direkter Kontakt',line:'Falls du mich doch direkt kontaktieren willst:',call:'Anrufen',close:'Kontaktkarte schließen'},en:{trigger:'Contact',available:'Direct contact',line:'If you’d prefer to contact me directly:',call:'Call me',close:'Close contact card'}};
  const setLocale=lang=>{const d=copy[lang]||copy.de;widget.setAttribute('aria-label',lang==='en'?'Direct contact card':'Direkte Kontaktkarte');widget.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=d[el.dataset.i18n]);close.setAttribute('aria-label',d.close);widget.querySelectorAll('[data-locale]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.locale===lang)));widget.dataset.locale=lang};
- const setOpen=open=>{trigger.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));panel.inert=!open;widget.classList.toggle('is-open',open);if(open)close.focus();else trigger.focus()};
+ const setOpen=(open,restoreFocus=false)=>{trigger.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));panel.inert=!open;widget.classList.toggle('is-open',open);if(open)close.focus();else if(restoreFocus)trigger.focus()};
  trigger.addEventListener('click',()=>setOpen(trigger.getAttribute('aria-expanded')!=='true'));
- close.addEventListener('click',()=>setOpen(false));
+ close.addEventListener('click',()=>setOpen(false,true));
  widget.querySelectorAll('[data-locale]').forEach(b=>b.addEventListener('click',()=>setLocale(b.dataset.locale)));
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&trigger.getAttribute('aria-expanded')==='true')setOpen(false)});
+ // Close on any click/tap outside the floating card, not only on the X.
+ document.addEventListener('pointerdown',e=>{if(trigger.getAttribute('aria-expanded')==='true'&&!widget.contains(e.target))setOpen(false)},true);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&trigger.getAttribute('aria-expanded')==='true')setOpen(false,true)});
  setLocale((navigator.language||'de').toLowerCase().startsWith('en')?'en':'de');
 })();
