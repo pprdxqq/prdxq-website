@@ -51,3 +51,107 @@ html[data-theme="dark"] a:focus-visible,html[data-theme="dark"] button:focus-vis
 
 /* Keep the contact card visibly glassy in both themes. */
 html[data-theme="dark"] .prdxq-contact-trigger,html[data-theme="dark"] .prdxq-contact-panel{background:rgba(24,26,32,.67)!important;backdrop-filter:blur(34px) saturate(155%);-webkit-backdrop-filter:blur(34px) saturate(155%)}
+
+
+/* Dark mode: remove light-theme neumorphic highlights and strengthen contrast. */
+html[data-theme="dark"]{
+  --shadow:0 18px 42px rgba(0,0,0,.46);
+  --soft:0 9px 26px rgba(0,0,0,.40);
+}
+html[data-theme="dark"] .nav.scrolled,
+html[data-theme="dark"] .hero-poster,
+html[data-theme="dark"] .manifesto-section,
+html[data-theme="dark"] .statement-block,
+html[data-theme="dark"] .mobile-dock,
+html[data-theme="dark"] .cap-card:hover,
+html[data-theme="dark"] .experience-cards a,
+html[data-theme="dark"] .skill-dropdown-menu,
+html[data-theme="dark"] .lab-mobile-playground,
+html[data-theme="dark"] .lab-tool{box-shadow:0 14px 34px rgba(0,0,0,.42)!important}
+html[data-theme="dark"] .hero-word{text-shadow:none!important}
+html[data-theme="dark"] .hero-poster:before,
+html[data-theme="dark"] .hero-poster:after{box-shadow:none!important;border-color:rgba(255,255,255,.12)!important}
+html[data-theme="dark"] .cap-card:hover{border-color:rgba(255,255,255,.18)!important}
+html[data-theme="dark"] .mobile-dock a.active{
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)!important;
+  background:rgba(255,255,255,.10)!important;color:#f4f6f8!important;
+}
+html[data-theme="dark"] .mobile-dock a:last-child{background:#c7ff38!important;color:#111!important;box-shadow:none!important}
+
+/* The lime manifesto intentionally stays a light surface in both themes. */
+html[data-theme="dark"] .manifesto-section{
+  color:#111!important;border:1px solid rgba(25,35,4,.22);background:#c7ff38!important;
+}
+html[data-theme="dark"] .manifesto-section .manifesto-kicker,
+html[data-theme="dark"] .manifesto-section .manifesto-stack small{color:rgba(17,25,3,.68)!important}
+html[data-theme="dark"] .manifesto-section .manifesto-stack strong{color:#111!important;text-shadow:none!important}
+html[data-theme="dark"] .manifesto-section>p{color:rgba(17,25,3,.86)!important}
+html[data-theme="dark"] .statement-block{
+  color:#111!important;background:linear-gradient(135deg,#c7ff38,#e1ff91)!important;border-color:rgba(20,30,4,.16)!important;
+}
+html[data-theme="dark"] .statement-block .statement-number,
+html[data-theme="dark"] .statement-block h2{color:#111!important;text-shadow:none!important}
+html[data-theme="dark"] .statement-block h2 em{color:#3e4b13!important}
+html[data-theme="dark"] .statement-pills span{
+  background:rgba(23,28,17,.90)!important;border-color:rgba(23,28,17,.45)!important;color:#eef2e6!important;box-shadow:none!important;
+}
+
+/* Lab quiz: dark opaque glass, high-contrast question, options and metadata. */
+html[data-theme="dark"] .lab-challenge{
+  color:#f3f5f7!important;background:linear-gradient(145deg,rgba(27,30,36,.97),rgba(14,16,20,.97))!important;
+  border-color:rgba(255,255,255,.16)!important;box-shadow:0 18px 42px rgba(0,0,0,.44)!important;
+}
+html[data-theme="dark"] .lab-challenge h2,
+html[data-theme="dark"] .lab-challenge h3,
+html[data-theme="dark"] .quiz-card h3{color:#f5f7fa!important;text-shadow:none!important}
+html[data-theme="dark"] .lab-console-head h2 em,
+html[data-theme="dark"] .lab-challenge h2 em{color:#c3ccd5!important}
+html[data-theme="dark"] .quiz-card{
+  color:#f2f5f8!important;background:rgba(25,28,34,.98)!important;border-color:rgba(255,255,255,.17)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.40)!important;
+}
+html[data-theme="dark"] .quiz-card-top{color:#c2cad3!important}
+html[data-theme="dark"] .quiz-options button{
+  color:#eef2f6!important;background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.19)!important;box-shadow:none!important;
+}
+html[data-theme="dark"] .quiz-options button:hover{
+  color:#fff!important;background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.30)!important;
+}
+html[data-theme="dark"] .quiz-options button.correct{background:#c7ff38!important;border-color:#c7ff38!important;color:#111!important}
+html[data-theme="dark"] .quiz-options button.incorrect{border-color:#ef9797!important}
+html[data-theme="dark"] .quiz-feedback,
+html[data-theme="dark"] .quiz-next-hint{color:#c0c8d1!important}
+html[data-theme="dark"] .quiz-feedback.good{color:#d9ff8a!important}
+html[data-theme="dark"] .quiz-feedback.bad{color:#ffaaa8!important}
+
+/* More transparent contact glass: another 20 percentage points, with restrained dark shadows. */
+html[data-theme="dark"] .prdxq-contact-trigger{
+  background:rgba(24,26,32,.37)!important;border-color:rgba(255,255,255,.18)!important;color:#f4f6f8!important;
+  box-shadow:0 13px 30px rgba(0,0,0,.42)!important;
+}
+html[data-theme="dark"] .prdxq-contact-trigger:hover{background:rgba(38,41,49,.50)!important}
+html[data-theme="dark"] .prdxq-contact-panel{
+  background:rgba(24,26,32,.47)!important;border-color:rgba(255,255,255,.19)!important;color:#f4f6f8!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.46)!important;
+}
+html[data-theme="dark"] .prdxq-contact-close,
+html[data-theme="dark"] .prdxq-contact-phone,
+html[data-theme="dark"] .prdxq-contact-email{
+  background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.16)!important;color:#f4f6f8!important;box-shadow:none!important;
+}
+html[data-theme="dark"] .prdxq-contact-phone strong,
+html[data-theme="dark"] .prdxq-contact-email strong,
+html[data-theme="dark"] .prdxq-contact-line,
+html[data-theme="dark"] .prdxq-contact-top h2{color:#f4f6f8!important}
+html[data-theme="dark"] .prdxq-contact-close{color:#f4f6f8!important}
+html[data-theme="dark"] .prdxq-contact-email span,
+html[data-theme="dark"] .prdxq-contact-phone span,
+html[data-theme="dark"] .prdxq-contact-top small,
+html[data-theme="dark"] .prdxq-contact-status,
+html[data-theme="dark"] .prdxq-contact-bottom,
+html[data-theme="dark"] .prdxq-locale button{color:#c5ced8!important}
+html[data-theme="dark"] .prdxq-contact-widget .prdxq-contact-top img{box-shadow:0 5px 15px rgba(0,0,0,.35)!important}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="dark"] .prdxq-contact-panel,
+  html[data-theme="dark"] .prdxq-contact-trigger{transition:none!important}
+}
