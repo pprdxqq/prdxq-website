@@ -62,6 +62,10 @@
 <div class="admin-card">
 <p class="admin-kicker">02 / INBOX</p><div class="admin-tools"><div><h2 style="margin:8px 0;letter-spacing:-.05em">Eingegangene Anfragen</h2><p id="signedInAs" class="admin-count"></p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="refreshButton" class="admin-btn secondary" type="button">AKTUALISIEREN ↻</button><button id="logoutButton" class="admin-btn secondary" type="button">ABMELDEN</button></div></div>
 <p id="dashboardStatus" class="admin-status" role="status" aria-live="polite"></p><div id="inquiryList" class="inquiry-list"></div><p id="emptyState" class="admin-empty" hidden>Noch keine Anfragen gespeichert.</p>
+<section class="admin-card" id="rewardAdminCard">
+<p class="admin-kicker">03 / HIDDEN SIGNAL</p><div class="admin-tools"><div><h2 style="margin:8px 0;letter-spacing:-.05em">Gutscheine & Rätsel</h2><p id="rewardAdminSummary" class="admin-count">Wird geladen …</p></div><button id="refreshRewardsButton" class="admin-btn secondary" type="button">AKTUALISIEREN ↻</button></div>
+<p id="rewardAdminStatus" class="admin-status" role="status" aria-live="polite"></p><div id="rewardAdminList" class="inquiry-list"></div><p id="rewardAdminEmpty" class="admin-empty" hidden>Noch keine Gutscheine ausgegeben.</p>
+</section>
 </div>
 </section>
 </main>
@@ -110,14 +114,14 @@
       logout.hidden = false;
       return;
     }
-    await loadInquiries();
+    await Promise.all([loadInquiries(), loadRewards()]);
   }
 
   async function loadInquiries() {
     dashboardStatus.textContent = "Anfragen werden geladen …";
     list.replaceChildren();
     const { data, error } = await client.from("inquiries")
-      .select("id,name,email,phone,message,project_answers,status,created_at")
+      .select("id,name,email,phone,message,project_answers,status,created_at,demo_due_at,demo_status")
       .order("created_at", { ascending: false });
     if (error) {
       dashboardStatus.textContent = "Laden fehlgeschlagen. Bitte Anmeldung und Datenbank-Richtlinien prüfen.";
@@ -129,12 +133,44 @@
     for (const item of data) list.appendChild(renderInquiry(item));
   }
 
+  async function loadRewards() {
+    const summary = document.getElementById("rewardAdminSummary");
+    const status = document.getElementById("rewardAdminStatus");
+    const list = document.getElementById("rewardAdminList");
+    const empty = document.getElementById("rewardAdminEmpty");
+    if (!summary || !list) return;
+    status.textContent = "Gutscheine und Rätselstatus werden geladen …";
+    list.replaceChildren();
+    const [redemptions, challenges] = await Promise.all([
+      client.from("reward_redemptions").select("id,email,voucher_code,created_at,expires_at,redeemed_at,email_status").order("created_at", {ascending:false}).limit(100),
+      client.from("reward_challenges").select("id,created_at,expires_at,solved_at,attempts").order("created_at", {ascending:false}).limit(200)
+    ]);
+    if (redemptions.error || challenges.error) {
+      status.textContent = "Gutschein-Übersicht konnte nicht geladen werden. Prüfe Admin-Richtlinien und Datenbankmigrationen.";
+      summary.textContent = "Status nicht verfügbar";
+      empty.hidden = true;
+      return;
+    }
+    const solved = (challenges.data || []).filter(x => x.solved_at).length;
+    summary.textContent = (challenges.data || []).length + " gestartet · " + solved + " gelöst · " + (redemptions.data || []).length + " Gutscheine ausgegeben";
+    status.textContent = "";
+    empty.hidden = (redemptions.data || []).length > 0;
+    for (const item of (redemptions.data || [])) {
+      const card = node("article", "inquiry-card");
+      card.append(node("h3", "inquiry-name", item.voucher_code));
+      card.append(node("p", "inquiry-meta", item.email + " · Ausgegeben " + new Date(item.created_at).toLocaleString("de-DE")));
+      card.append(node("p", "inquiry-meta", "Gültig bis " + new Date(item.expires_at).toLocaleDateString("de-DE") + " · E-Mail: " + item.email_status + " · Eingelöst: " + (item.redeemed_at ? new Date(item.redeemed_at).toLocaleString("de-DE") : "Noch nicht erfasst")));
+      list.append(card);
+    }
+  }
+
   function renderInquiry(item) {
     const card = node("article", "inquiry-card");
     const top = node("div", "inquiry-top");
     const identity = node("div");
     identity.append(node("h3", "inquiry-name", item.name || "Ohne Namen"));
     identity.append(node("p", "inquiry-meta", "Eingegangen am " + new Date(item.created_at).toLocaleString("de-DE")));
+    identity.append(node("p", "inquiry-meta", "Demo fällig: " + new Date(item.demo_due_at).toLocaleString("de-DE") + " · Status: " + ({not_started:"Noch nicht begonnen",in_progress:"In Arbeit",ready:"Bereit",sent:"Versendet",blocked:"Blockiert"}[item.demo_status] || item.demo_status)));
     const select = node("select", "inquiry-status-select");
     select.setAttribute("aria-label", "Status der Anfrage von " + (item.name || ""));
     for (const [value, label] of statuses) {
@@ -203,6 +239,7 @@
   });
 
   document.getElementById("refreshButton").addEventListener("click", loadInquiries);
+  document.getElementById("refreshRewardsButton")?.addEventListener("click", loadRewards);
   document.getElementById("logoutButton").addEventListener("click", async () => {
     await client.auth.signOut();
     dashboard.hidden = true;
