@@ -2,8 +2,8 @@
  const track=document.querySelector('#workShowcaseTrack');
  if(!track)return;
  const projects=[
-  {name:'Coffee Zey',repo:'coffee-zey',kind:'Website',status:'Projekt / Umsetzung',desc:'Responsive Landingpage für Specialty Coffee, Matcha und Brunch. Statisches Frontend; README sieht Vercel-Deployment vor.',mark:'ZEY',tone:'#c7ff38'},
-  {name:'ALEX Frankfurt',repo:'dein-Alex',kind:'Redesign',status:'Konzept',desc:'Editoriales Hospitality-Konzept mit großer Typografie, cinematischen Bildern und klarer Conversion-Route.',mark:'ALEX',tone:'#d9c6a0'},
+  {name:'Coffee Zey',repo:'coffee-zey',kind:'Website',status:'Projektstatus prüfen',desc:'Responsive Landingpage für Specialty Coffee, Matcha und Brunch. Statisches Frontend; README sieht Vercel-Deployment vor.',mark:'ZEY',tone:'#c7ff38'},
+  {name:'ALEX Frankfurt',repo:'dein-Alex',kind:'Redesign',status:'Unbeauftragtes Konzept',desc:'Editoriales Hospitality-Konzept mit großer Typografie, cinematischen Bildern und klarer Conversion-Route.',mark:'ALEX',tone:'#d9c6a0'},
   {name:'MC Media',repo:'Mc-media',kind:'Mehrseitige Website',status:'Unbeauftragtes Konzept',desc:'Unabhängiges Redesign-Konzept. Nicht als offizielle Website oder bestätigte Kundenarbeit zu verstehen.',mark:'MC MEDIA',tone:'#91d7ca'},
   {name:'Autoglasservice Jürgen Full',repo:'prdxq-concept-autoglasservice-juergen-full',kind:'Business-Website',status:'Unbeauftragtes Konzept',desc:'Lokales Website-Konzept mit klarer Kontaktstrecke; das Repository kennzeichnet es ausdrücklich als nicht beauftragt.',mark:'AUTOGLAS',tone:'#c7ff38'},
   {name:'AIC Airport Immobilien Consulting',repo:'prdxq-concept-aic-airport-immobilien-consulting',kind:'Business-Website',status:'Unbeauftragtes Konzept',desc:'Mehrseitiges Konzept für Immobilienberatung. Nicht offiziell, nicht beauftragt; Details müssen vor Geschäftsnutzung bestätigt werden.',mark:'AIC',tone:'#d4dbe0'},
