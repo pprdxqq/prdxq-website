@@ -62,20 +62,39 @@ Deno.serve(async (req: Request) => {
   const action = typeof body.action === "string" ? body.action : "";
   try {
     if (action === "start") {
-      const answer = "PRDXQ";
+      const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      const random = crypto.getRandomValues(new Uint8Array(6));
+      const answer = Array.from(random, n => alphabet[n % alphabet.length]).join("");
       const id = crypto.randomUUID();
       const answerHash = await sha256(id + ":" + answer);
-      await db("reward_challenges", "POST", { id, answer_hash: answerHash }, "return=minimal");
+      await db("reward_challenges", "POST", { id, answer_hash: answerHash, answer, found_fragments: [] }, "return=minimal");
       return json(201, { ok: true, challengeId: id, expiresInSeconds: 1800 }, headers);
+    }
+    if (action === "fragment") {
+      const id = typeof body.challengeId === "string" ? body.challengeId : "";
+      const index = Number(body.fragmentIndex);
+      if (!/^[0-9a-f-]{36}$/.test(id) || !Number.isInteger(index) || index < 0 || index > 2) return json(400, { error: "invalid_fragment" }, headers);
+      const rows = await db("reward_challenges?id=eq." + encodeURIComponent(id) + "&select=id,answer,expires_at,found_fragments,attempts", "GET");
+      const challenge = rows?.[0];
+      if (!challenge || new Date(challenge.expires_at).getTime() < Date.now() || challenge.attempts >= 10) return json(400, { error: "challenge_expired" }, headers);
+      const found = Array.isArray(challenge.found_fragments) ? challenge.found_fragments : [];
+      if (!found.includes(index)) {
+        found.push(index);
+        found.sort((a: number, b: number) => a - b);
+        await db("reward_challenges?id=eq." + encodeURIComponent(id), "PATCH", { found_fragments: found }, "return=minimal");
+      }
+      return json(200, { ok: true, fragment: String(challenge.answer).slice(index * 2, index * 2 + 2), foundFragments: found }, headers);
     }
     if (action === "solve") {
       const id = typeof body.challengeId === "string" ? body.challengeId : "";
       const answer = typeof body.answer === "string" ? body.answer.trim().toUpperCase() : "";
       if (!/^[0-9a-f-]{36}$/.test(id) || answer.length < 1 || answer.length > 32) return json(400, { error: "invalid_answer" }, headers);
-      const rows = await db("reward_challenges?id=eq." + encodeURIComponent(id) + "&select=id,answer_hash,expires_at,solved_at,attempts", "GET");
+      const rows = await db("reward_challenges?id=eq." + encodeURIComponent(id) + "&select=id,answer_hash,expires_at,solved_at,attempts,found_fragments", "GET");
       const challenge = rows?.[0];
       if (!challenge || new Date(challenge.expires_at).getTime() < Date.now() || challenge.attempts >= 10) return json(400, { error: "challenge_expired" }, headers);
       if (challenge.solved_at) return json(200, { ok: true, solved: true }, headers);
+      const found = Array.isArray(challenge.found_fragments) ? challenge.found_fragments : [];
+      if (found.length < 3 || ![0,1,2].every(index => found.includes(index))) return json(400, { error: "fragments_missing" }, headers);
       const correct = (await sha256(id + ":" + answer)) === challenge.answer_hash;
       await db("reward_challenges?id=eq." + encodeURIComponent(id), "PATCH", { attempts: challenge.attempts + 1, ...(correct ? { solved_at: new Date().toISOString() } : {}) }, "return=minimal");
       return json(correct ? 200 : 400, correct ? { ok: true, solved: true } : { error: "not_solved", attemptsLeft: 9 - challenge.attempts }, headers);
