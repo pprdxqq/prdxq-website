@@ -46,7 +46,7 @@ jobs:
               page.write_text(text, encoding='utf-8')
           PY
       - name: Validate JavaScript syntax
-        run: node --check script.js && node --check admin-link.js && node --check theme-switch.js
+        run: node --check script.js && node --check admin-link.js && node --check theme-switch.js && node --check work-showcase.js && node --check reward.js
       - name: Validate required shared UI and service count
         run: |
           python3 - <<'PY'
