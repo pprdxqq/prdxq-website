@@ -11,6 +11,7 @@
         <span><i>01</i> Idee</span><span class="project-route-connector" aria-hidden="true"></span><span><i>02</i> Konzept</span><span class="project-route-connector" aria-hidden="true"></span><span><i>03</i> Build</span><span class="project-route-connector" aria-hidden="true"></span><span><i>04</i> Launch</span>
       </div>
     </div>
+    <div class="demo-promise"><span class="demo-promise-dot"></span><div><strong>Deine erste Demo innerhalb von 3 Tagen.</strong><p>Nach dem Absenden bestätigen wir deine Anfrage per E-Mail. Wenn wichtige Angaben fehlen, melden wir uns bei dir.</p></div></div>
   </div>
 
   <div class="project-wizard" id="projectWizard" aria-live="polite">
@@ -48,7 +49,6 @@
       </div>
       <div class="result-actions">
         <button type="button" id="sendMail" class="result-action primary">ANFRAGE SENDEN <b>↗</b></button>
-        <button type="button" id="sendWhatsApp" class="result-action">SPEICHERN & WHATSAPP <b>↗</b></button>
       </div>
       <p id="inquiryStatus" class="inquiry-status" role="status" aria-live="polite"></p>
       <div class="result-edit-actions"><button type="button" id="editAnswers" class="wizard-restart">← Zurückgehen & Antworten ändern</button><button type="button" id="restartWizard" class="wizard-restart">Alles neu starten</button></div>
@@ -59,6 +59,7 @@
 </main>
 
 <style id="project-wizard-motion">
+.demo-promise{display:flex;align-items:flex-start;gap:13px;margin-top:22px;padding:16px 18px;border:1px solid rgba(120,130,138,.2);border-radius:16px;background:rgba(199,255,56,.09)}.demo-promise-dot{width:8px;height:8px;flex-shrink:0;margin-top:5px;border-radius:50%;background:#9ac91c;box-shadow:0 0 0 5px rgba(199,255,56,.18)}.demo-promise strong{display:block;font-size:13px;letter-spacing:-.02em}.demo-promise p{margin:5px 0 0;font-size:12px;line-height:1.55;color:#69757c}
 .project-wizard{--wizard-progress:10%}
 .wizard-progress{position:relative;height:3px!important;background:rgba(120,130,138,.12)!important;overflow:visible!important}
 .wizard-progress:before{content:"";position:absolute;left:0;top:0;width:var(--wizard-progress);height:100%;background:#354043;box-shadow:0 0 16px rgba(53,64,67,.22);transition:width .55s cubic-bezier(.2,.8,.2,1)}
@@ -243,7 +244,7 @@
  const kicker=document.getElementById('wizardKicker'), question=document.getElementById('wizardQuestion'), hint=document.getElementById('wizardHint');
  const info=document.getElementById('wizardInfo'), infoTitle=document.getElementById('wizardInfoTitle'), infoText=document.getElementById('wizardInfoText');
  const infoClose=document.getElementById('wizardInfoClose'), resultGrid=document.getElementById('resultGrid');
- const nameInput=document.getElementById('leadName'),emailInput=document.getElementById('leadEmail'),phoneInput=document.getElementById('leadPhone'),messageInput=document.getElementById('leadMessage'),websiteInput=document.getElementById('leadWebsite'),sendButton=document.getElementById('sendMail'),whatsappButton=document.getElementById('sendWhatsApp'),statusEl=document.getElementById('inquiryStatus');
+ const nameInput=document.getElementById('leadName'),emailInput=document.getElementById('leadEmail'),phoneInput=document.getElementById('leadPhone'),messageInput=document.getElementById('leadMessage'),websiteInput=document.getElementById('leadWebsite'),sendButton=document.getElementById('sendMail'),statusEl=document.getElementById('inquiryStatus');
  const state={answers:{},history:[],current:0};
 
  const types=[
@@ -388,7 +389,7 @@
  async function submitInquiry(){
    if(!validate())return false;
    if(savedInquiryId)return true;
-   sendButton.disabled=true;whatsappButton.disabled=true;statusEl.textContent='Anfrage wird sicher gespeichert …';
+   sendButton.disabled=true;statusEl.textContent='Anfrage wird sicher gespeichert …';
    try{
      const response=await fetch('https://nolygqnmpmegkotejuli.supabase.co/functions/v1/submit-prdxq-inquiry',{
        method:'POST',
@@ -415,17 +416,11 @@
        :'Die Anfrage konnte gerade nicht gespeichert werden. Bitte versuche es gleich noch einmal.';
      return false;
    }finally{
-     sendButton.disabled=false;whatsappButton.disabled=false;
+     sendButton.disabled=false;
    }
  }
  sendButton.addEventListener('click',async()=>{
    if(await submitInquiry()) window.location.assign('thank-you.html?email='+(window.__prdxqEmailSent===true?'sent':'pending'));
- });
- whatsappButton.addEventListener('click',async()=>{
-   if(!await submitInquiry())return;
-   const text=encodeURIComponent(buildMessage());
-   window.open('https://wa.me/491777963990?text='+text,'_blank','noopener,noreferrer');
-   window.location.assign('thank-you.html?email='+(window.__prdxqEmailSent===true?'sent':'pending'));
  });
  document.getElementById('restartWizard').addEventListener('click',()=>{state.answers={};state.history=[];state.current=0;result.hidden=true;panel.hidden=false;render();root.scrollIntoView({behavior:'smooth',block:'start'})});
  render();
