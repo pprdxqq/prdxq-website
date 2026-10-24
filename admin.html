@@ -187,6 +187,22 @@
     });
     top.append(identity, select);
     card.appendChild(top);
+    const demoRow = node("div", "admin-tools");
+    const demoLabel = node("p", "inquiry-meta", "Demo-Status");
+    const demoSelect = node("select", "inquiry-status-select");
+    demoSelect.setAttribute("aria-label", "Demo-Status für " + (item.name || ""));
+    const demoStatuses = [["not_started","Noch nicht begonnen"],["in_progress","In Arbeit"],["ready","Demo bereit"],["sent","Versendet"],["blocked","Blockiert"]];
+    for (const [value,label] of demoStatuses) {
+      const option = node("option", "", label); option.value = value; option.selected = value === item.demo_status; demoSelect.appendChild(option);
+    }
+    demoSelect.addEventListener("change", async () => {
+      demoSelect.disabled = true;
+      const { error } = await client.from("inquiries").update({ demo_status: demoSelect.value }).eq("id", item.id);
+      demoSelect.disabled = false;
+      dashboardStatus.textContent = error ? "Demo-Status konnte nicht gespeichert werden." : "Demo-Status aktualisiert.";
+    });
+    demoRow.append(demoLabel, demoSelect);
+    card.appendChild(demoRow);
     const contacts = node("div", "inquiry-contact");
     const mail = node("a", "", item.email);
     mail.href = "mailto:" + item.email;
@@ -238,7 +254,7 @@
       : "Falls die Adresse in Supabase Auth registriert ist, wurde ein Login-Link versendet. Öffne ihn auf diesem Gerät.";
   });
 
-  document.getElementById("refreshButton").addEventListener("click", loadInquiries);
+  document.getElementById("refreshButton").addEventListener("click", () => Promise.all([loadInquiries(), loadRewards()]));
   document.getElementById("refreshRewardsButton")?.addEventListener("click", loadRewards);
   document.getElementById("logoutButton").addEventListener("click", async () => {
     await client.auth.signOut();
