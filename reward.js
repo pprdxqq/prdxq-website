@@ -14,7 +14,7 @@
  const navRight=document.querySelector('.nav-right');
  const menuToggle=navRight?.querySelector('.menu-toggle');
  const placeRewardTab=()=>{
-  const mobile=window.matchMedia('(max-width:800px)').matches;
+  const mobile=window.matchMedia('(max-width:700px)').matches;
   if(mobile&&navRight&&menuToggle){
    if(tab.parentElement!==navRight)navRight.insertBefore(tab,menuToggle);
    tab.classList.add('prdxq-reward-tab-in-nav');
