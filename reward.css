@@ -20,3 +20,12 @@
 @keyframes rewardFadeIn{from{opacity:0}to{opacity:1}}
 @media(max-width:800px){.prdxq-reward-tab{left:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));padding:10px 12px 10px 10px;font-size:9px}.prdxq-reward-overlay{padding:10px}.prdxq-reward-dialog{border-radius:20px;padding:24px 20px}}
 @media(prefers-reduced-motion:reduce){.prdxq-reward-overlay.is-open{animation:none}.prdxq-reward-tab{transition:none}}
+/* On mobile the reward entry belongs in the header, not above the bottom dock. */
+@media(max-width:800px){
+ .prdxq-reward-tab-in-nav{position:relative;left:auto;bottom:auto;z-index:auto;flex:0 1 auto;min-width:0;max-width:150px;gap:7px;padding:8px 10px 8px 8px;border:1px solid rgba(255,255,255,.55);border-radius:999px;box-shadow:none;font-size:8px;letter-spacing:.035em;white-space:nowrap;transform:none}
+ .prdxq-reward-tab-in-nav span:first-child{width:22px;height:22px;flex:0 0 22px;font-size:13px}
+ .prdxq-reward-tab-in-nav span:last-child{overflow:hidden;text-overflow:ellipsis}
+ .prdxq-reward-tab-in-nav:hover{transform:translateY(-1px)}
+}
+@media(max-width:360px){.prdxq-reward-tab-in-nav{gap:5px;padding:7px 8px 7px 7px;font-size:7px;letter-spacing:0}.prdxq-reward-tab-in-nav span:first-child{width:20px;height:20px;flex-basis:20px}}
+
