@@ -10,7 +10,21 @@
  try{state={...state,...JSON.parse(sessionStorage.getItem(key)||'{}')}}catch{}
  const save=()=>sessionStorage.setItem(key,JSON.stringify(state));
  const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
- const tab=el('button','prdxq-reward-tab');tab.type='button';tab.setAttribute('aria-label','PRDXQ-Rätsel und 10%-Gutschein öffnen');tab.append(el('span','','✳'),el('span','','10% FREISCHALTEN'));document.body.append(tab);
+ const tab=el('button','prdxq-reward-tab');tab.type='button';tab.setAttribute('aria-label','PRDXQ-Rätsel und 10%-Gutschein öffnen');tab.append(el('span','','✳'),el('span','','10% FREISCHALTEN'));
+ const navRight=document.querySelector('.nav-right');
+ const menuToggle=navRight?.querySelector('.menu-toggle');
+ const placeRewardTab=()=>{
+  const mobile=window.matchMedia('(max-width:800px)').matches;
+  if(mobile&&navRight&&menuToggle){
+   if(tab.parentElement!==navRight)navRight.insertBefore(tab,menuToggle);
+   tab.classList.add('prdxq-reward-tab-in-nav');
+  }else{
+   if(tab.parentElement!==document.body)document.body.append(tab);
+   tab.classList.remove('prdxq-reward-tab-in-nav');
+  }
+ };
+ placeRewardTab();
+ window.addEventListener('resize',placeRewardTab,{passive:true});
  const overlay=el('div','prdxq-reward-overlay');overlay.setAttribute('aria-hidden','true');
  const dialog=el('section','prdxq-reward-dialog');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-labelledby','rewardTitle');
  const close=el('button','prdxq-reward-close','×');close.type='button';close.setAttribute('aria-label','Popup schließen');dialog.append(close);
