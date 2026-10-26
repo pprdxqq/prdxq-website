@@ -12,11 +12,13 @@
  const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
  const tab=el('button','prdxq-reward-tab');tab.type='button';tab.setAttribute('aria-label','PRDXQ-Rätsel und 10%-Gutschein öffnen');tab.append(el('span','','✳'),el('span','','10% FREISCHALTEN'));
  const navRight=document.querySelector('.nav-right');
- const menuToggle=navRight?.querySelector('.menu-toggle');
  const placeRewardTab=()=>{
-  const mobile=window.matchMedia('(max-width:700px)').matches;
-  if(mobile&&navRight&&menuToggle){
-   if(tab.parentElement!==navRight)navRight.insertBefore(tab,menuToggle);
+  if(navRight){
+   const mobile=window.matchMedia('(max-width:800px)').matches;
+   const menuToggle=navRight.querySelector('.menu-toggle');
+   const primaryCta=navRight.querySelector('.nav-cta:not(.prdxq-admin-link)');
+   const anchor=mobile&&menuToggle?menuToggle:primaryCta||menuToggle;
+   if(anchor)navRight.insertBefore(tab,anchor);else navRight.append(tab);
    tab.classList.add('prdxq-reward-tab-in-nav');
   }else{
    if(tab.parentElement!==document.body)document.body.append(tab);
