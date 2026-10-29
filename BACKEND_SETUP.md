@@ -15,7 +15,7 @@ In **Supabase Dashboard → Edge Functions → Secrets**, configure these for th
 
 Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Edge Functions. Never add the service-role key to browser code or Git.
 
-The endpoint saves an inquiry first, then sends the customer receipt and admin notification. Transient network, HTTP 429, and HTTP 5xx failures get one short retry. Delivery outcomes are written to `public.inquiries`:
+The endpoint saves an inquiry first, then sends the customer receipt and admin notification. Transient network, HTTP 429, and HTTP 5xx failures get one short retry. Provider outcomes are written to `public.inquiries`. A `sent` status means the provider accepted the API request; it is not proof that the message reached the inbox or device:
 - Admin email: `notification_status`, `notification_sent_at`, `notification_error_code`.
 - Customer receipt: `receipt_status`, `receipt_sent_at`, `receipt_error_code`.
 
