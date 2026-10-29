@@ -211,7 +211,7 @@
     card.appendChild(demoRow);
 
     const deliveryList = node("div", "delivery-status-list");
-    const deliveryLabels = {sent:"Gesendet",pending:"Noch nicht bestätigt",failed:"Fehlgeschlagen",not_configured:"Nicht eingerichtet"};
+    const deliveryLabels = {sent:"Anbieter hat angenommen",pending:"Noch nicht bestätigt",failed:"Fehlgeschlagen",not_configured:"Nicht eingerichtet"};
     const deliveryItems = [
       ["E-Mail an dich", item.notification_status, item.notification_error_code],
       ["Bestätigung an Kunde", item.receipt_status, item.receipt_error_code],
