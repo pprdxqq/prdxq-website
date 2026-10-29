@@ -144,7 +144,7 @@ async function sendWhatsAppAdminNotification(
     return { sent: false, status: "failed", errorCode: "whatsapp_configuration_invalid" };
   }
 
-  return await postJsonWithRetry(
+  const result = await postJsonWithRetry(
     `https://graph.facebook.com/${apiVersion}/${phoneNumberId}/messages`,
     { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
     {
@@ -166,7 +166,8 @@ async function sendWhatsAppAdminNotification(
       },
     },
     "whatsapp",
-  ).then((result) => ({ ...result, status: result.sent ? "sent" : "failed" }));
+  );
+  return { ...result, status: result.sent ? "sent" as const : "failed" as const };
 }
 
 async function saveDeliveryStatus(
