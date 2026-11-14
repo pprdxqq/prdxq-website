@@ -7,7 +7,7 @@
     const parent=node&&node.parentElement;
     if(!parent||skip.has(parent.tagName)||parent.closest("[aria-hidden='true'],.prdxq-arrow-glyph"))return;
     const value=node.nodeValue||"";
-    if(!/[↗↘↖↙←→↑↓]/.test(value))return;
+    if(!/[↗↘↖↙←→↑↓]/.test(value)||(value.match(/[↗↘↖↙←→↑↓]/g)||[]).length>1)return;
     const fragment=document.createDocumentFragment();
     let last=0;const re=/[↗↘↖↙←→↑↓]/g;let match;
     while((match=re.exec(value))){
