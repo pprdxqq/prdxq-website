@@ -8,7 +8,7 @@
     const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
       acceptNode(node){
         const parent=node.parentElement;
-        if(!parent||skip.has(parent.tagName)||parent.closest("[aria-label],[aria-hidden='true'],.prdxq-arrow-glyph"))return NodeFilter.FILTER_REJECT;
+        if(!parent||skip.has(parent.tagName)||parent.closest("[aria-hidden='true'],.prdxq-arrow-glyph"))return NodeFilter.FILTER_REJECT;
         return /[↗↘↖↙←→↑↓]/.test(node.nodeValue||"")?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
       }
     });
