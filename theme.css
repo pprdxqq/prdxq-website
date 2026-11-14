@@ -260,3 +260,56 @@ html[data-theme="dark"] .prdxq-reward-dialog p{color:#c0c9d1}html[data-theme="da
 }
 @media(max-width:420px){.nav{width:calc(100% - 16px);margin-inline:8px;padding-inline:10px}.brand{font-size:19px}.nav-right{gap:4px}.prdxq-reward-tab-in-nav{max-width:122px;padding-inline:7px;gap:5px;font-size:7px}.cap-grid{grid-template-columns:1fr}.experience-cards{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.hero-poster .hero-3d-canvas{display:none!important}}
+
+
+/* Contrast pass: mobile navigation and its controls must remain legible in dark mode. */
+html[data-theme="dark"] .nav .brand,
+html[data-theme="dark"] .nav .brand-word,
+html[data-theme="dark"] .nav .brand sup { color:#f4f6f8!important; opacity:1!important; }
+html[data-theme="dark"] .nav .menu-toggle {
+  background:rgba(255,255,255,.10)!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  box-shadow:0 5px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+html[data-theme="dark"] .nav .menu-toggle i {
+  display:block;background:#f5f7fa!important;opacity:1!important;
+}
+html[data-theme="dark"] .mobile-menu {
+  background:rgba(19,22,28,.98)!important;
+  border-color:rgba(255,255,255,.24)!important;
+  color:#f4f6f8!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.55)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(145%);
+  backdrop-filter:blur(28px) saturate(145%);
+}
+html[data-theme="dark"] .mobile-menu a,
+html[data-theme="dark"] .mobile-menu a b {color:#f4f6f8!important;opacity:1!important}
+html[data-theme="dark"] .mobile-menu a {border-color:rgba(255,255,255,.17)!important}
+html[data-theme="dark"] .mobile-menu a:hover {background:rgba(255,255,255,.09)!important}
+html[data-theme="dark"] .mobile-menu .mobile-menu-theme {
+  background:#292e37!important;border-color:#77818e!important;color:#fff!important;
+}
+
+/* First-visit appearance chooser */
+.prdxq-theme-onboarding[hidden]{display:none!important}
+.prdxq-theme-onboarding{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:22px;background:rgba(5,8,12,.68);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.prdxq-theme-dialog{width:min(100%,440px);padding:30px;border:1px solid rgba(255,255,255,.72);border-radius:28px;background:linear-gradient(145deg,rgba(250,252,253,.97),rgba(225,232,237,.96));color:#172027;box-shadow:0 28px 90px rgba(0,0,0,.35)}
+.prdxq-theme-dialog .eyebrow{margin:0 0 14px;color:#66717b;font:10px 'DM Mono',monospace;letter-spacing:.16em;text-transform:uppercase}
+.prdxq-theme-dialog h2{margin:0 0 10px;color:#151b20;font:800 clamp(27px,7vw,36px)/1.05 Manrope,sans-serif;letter-spacing:-.055em}
+.prdxq-theme-dialog>p:not(.eyebrow){margin:0;color:#4b5660;font:14px/1.65 Manrope,sans-serif}
+.prdxq-theme-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.prdxq-theme-choice{min-height:104px;padding:16px;text-align:left;border:1px solid #b9c2c9;border-radius:18px;background:#fff;color:#172027;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.prdxq-theme-choice:hover{transform:translateY(-2px);border-color:#6d7b86;background:#f4f7f8}
+.prdxq-theme-choice strong{display:block;margin-bottom:6px;font:700 15px Manrope,sans-serif}
+.prdxq-theme-choice span{display:block;color:#65717b;font:11px/1.45 'DM Mono',monospace}
+.prdxq-theme-choice[data-mode="dark"]{background:#171a20;border-color:#515b68;color:#f5f7fa}
+.prdxq-theme-choice[data-mode="dark"] span{color:#c1cad4}
+.prdxq-theme-dialog .prdxq-theme-note{margin-top:18px;color:#66717b;font:11px/1.5 'DM Mono',monospace}
+html[data-theme="dark"] .prdxq-theme-dialog{background:linear-gradient(145deg,#252a33,#171a20);border-color:rgba(255,255,255,.24);color:#f4f6f8}
+html[data-theme="dark"] .prdxq-theme-dialog h2{color:#f4f6f8}
+html[data-theme="dark"] .prdxq-theme-dialog .eyebrow,
+html[data-theme="dark"] .prdxq-theme-dialog>p:not(.eyebrow),
+html[data-theme="dark"] .prdxq-theme-dialog .prdxq-theme-note{color:#c4ccd5}
+html[data-theme="dark"] .prdxq-theme-choice[data-mode="light"]{background:#f6f8fa;color:#172027;border-color:#c4ccd5}
+@media(max-width:480px){.prdxq-theme-dialog{padding:24px;border-radius:24px}.prdxq-theme-options{gap:9px}.prdxq-theme-choice{padding:13px;min-height:96px}}
+@media(prefers-reduced-motion:reduce){.prdxq-theme-choice{transition:none}}
