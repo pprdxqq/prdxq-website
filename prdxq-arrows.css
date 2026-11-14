@@ -1,0 +1,70 @@
+/* PRDXQ / bespoke directional glyph system
+   Drawn from two precise strokes: no icon-font or stock component dependency. */
+.prdxq-arrow-glyph{
+  --prdxq-arrow-angle:0deg;
+  position:relative;
+  display:inline-block;
+  width:.9em;
+  height:.9em;
+  margin-inline:.035em;
+  vertical-align:-.075em;
+  color:inherit;
+  font-size:1em;
+  line-height:1;
+  transform:rotate(var(--prdxq-arrow-angle));
+  transform-origin:50% 50%;
+  transition:transform .28s cubic-bezier(.2,.75,.25,1),filter .28s ease;
+  pointer-events:none;
+}
+.prdxq-arrow-glyph::before,
+.prdxq-arrow-glyph::after{
+  content:"";
+  position:absolute;
+  display:block;
+  background:currentColor;
+}
+.prdxq-arrow-glyph::before{
+  width:72%;
+  height:1.5px;
+  left:3%;
+  top:calc(50% - .75px);
+  border-radius:2px;
+}
+.prdxq-arrow-glyph::after{
+  width:35%;
+  height:35%;
+  right:7%;
+  top:calc(50% - 17.5%);
+  background:transparent;
+  border-top:1.5px solid currentColor;
+  border-right:1.5px solid currentColor;
+  border-radius:0 1px 0 0;
+  transform:rotate(45deg);
+  transform-origin:center;
+}
+.prdxq-arrow-glyph[data-arrow="ne"]{--prdxq-arrow-angle:-45deg}
+.prdxq-arrow-glyph[data-arrow="se"]{--prdxq-arrow-angle:45deg}
+.prdxq-arrow-glyph[data-arrow="nw"]{--prdxq-arrow-angle:-135deg}
+.prdxq-arrow-glyph[data-arrow="sw"]{--prdxq-arrow-angle:135deg}
+.prdxq-arrow-glyph[data-arrow="west"]{--prdxq-arrow-angle:180deg}
+.prdxq-arrow-glyph[data-arrow="north"]{--prdxq-arrow-angle:-90deg}
+.prdxq-arrow-glyph[data-arrow="south"]{--prdxq-arrow-angle:90deg}
+a:hover .prdxq-arrow-glyph,
+button:hover .prdxq-arrow-glyph,
+a:focus-visible .prdxq-arrow-glyph,
+button:focus-visible .prdxq-arrow-glyph{
+  transform:translate(2px,-1px) rotate(var(--prdxq-arrow-angle));
+  filter:drop-shadow(0 0 5px currentColor);
+}
+a:active .prdxq-arrow-glyph,
+button:active .prdxq-arrow-glyph{transform:translate(3px,-1px) rotate(var(--prdxq-arrow-angle)) scale(.92)}
+#workShowcasePrev:hover .prdxq-arrow-glyph,
+#workShowcasePrev:focus-visible .prdxq-arrow-glyph{transform:translateX(-2px) rotate(var(--prdxq-arrow-angle))}
+#workShowcaseNext:hover .prdxq-arrow-glyph,
+#workShowcaseNext:focus-visible .prdxq-arrow-glyph{transform:translateX(2px) rotate(var(--prdxq-arrow-angle))}
+@media(hover:none){
+  a:hover .prdxq-arrow-glyph,button:hover .prdxq-arrow-glyph{filter:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .prdxq-arrow-glyph{transition:none!important}
+}
